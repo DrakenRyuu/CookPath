@@ -1,0 +1,18 @@
+{
+  "name": "CookPath — Daily Kitchen Practice",
+  "short_name": "CookPath",
+  "description": "A 30-day cooking journey with 150 practical tasks and 300 untimed multiple-choice questions.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f5ef",
+  "theme_color": "#1e342a",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
