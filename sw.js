@@ -1,5 +1,5 @@
-const CACHE = 'cookpath-shell-v5';
-const FILES = ['./', './index.html', './developer.html', './lessons.js', './questions.js', './quotes.js', './manifest.json', './icon.svg'];
+const CACHE = 'cookpath-shell-v6';
+const FILES = ['./', './index.html', './lessons.js', './questions.js', './quotes.js', './manifest.json', './icon.svg'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)));
   self.skipWaiting();
