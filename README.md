@@ -12,6 +12,6 @@ node server.mjs
 
 Then visit <http://127.0.0.1:4173>.
 
-Tasks are marked complete by the learner; no photos are collected or evaluated in this version. Future days remain previewable, while actual progress follows the midnight unlock schedule. A rotating set of chef quotes appears on the welcome page, with source links. Open `developer.html` to review every lesson, all three-choice questions, and answer explanations without changing learner progress.
+Tasks are marked complete by the learner; no photos are collected or evaluated in this version. Future days remain previewable, while actual progress follows the midnight unlock schedule. A rotating set of chef quotes appears on the welcome page, with source links. The developer curriculum review page remains in the owner’s local copy and is excluded from the public deployment.
 
 The PWA manifest and service worker are included. Home-screen installation requires serving the app from HTTPS (or localhost during development).
