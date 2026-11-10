@@ -1,0 +1,57 @@
+/* The small school banner stays in place across all three pages. */
+.nav{margin-bottom:10px;padding-bottom:8px;border-bottom:0}
+.school-banner{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:11px;background:var(--ink);color:#fffdf1;font-size:13px;line-height:1.3;letter-spacing:.015em}
+.school-banner-mark{display:grid;place-items:center;width:24px;height:24px;flex:none;border-radius:50%;background:#ffffff1e;color:#f5e1a9;font-size:16px}
+.cuisine-card-header{display:flex;justify-content:space-between;align-items:center;gap:6px 10px;flex-wrap:wrap;margin-bottom:6px}
+.cuisine-tour{display:inline-flex;align-items:center;gap:7px;text-align:left;padding:4px 6px 4px 4px;background:#f4f5ec;border:1px solid #d9dfce;border-radius:9px;color:#35452d}
+.cuisine-tour:hover{background:#e9eddf}
+.cuisine-tour:focus-visible,.recipe-summary:focus-visible,.tour-credits summary:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.tour-thumb{position:relative;flex:none;width:48px;height:30px;border-radius:5px;overflow:hidden;background:#cbd6bf}
+.tour-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.tour-thumb span{position:absolute;inset:0;display:grid;place-items:center;color:white;background:#13281845;text-shadow:0 1px 3px #000;font-size:14px}
+.tour-button-copy{font-size:12px;font-weight:750;line-height:1.4}
+.tour-button-copy small{display:block;color:var(--ink2);font-size:10px;font-weight:500}
+.tour-dialog{width:min(720px,calc(100% - 24px));max-height:calc(100dvh - 24px);overflow:auto;background:var(--white);color:var(--ink);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 20px 75px #0a1a1675}
+.tour-dialog::backdrop{background:#14231bba}
+.tour-header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.tour-header h2{margin:3px 0 0}
+.tour-note{margin:8px 0 12px;color:var(--ink2);font-size:12px;line-height:1.5}
+.tour-dialog video{width:100%;height:auto;display:block;aspect-ratio:720/406;background:#20291c;border-radius:10px}
+.tour-credits{padding:11px 2px 0;color:var(--ink2);font-size:12px;line-height:1.55}
+.tour-credits summary{cursor:pointer;font-weight:700;color:var(--ink)}
+.tour-credits ol{padding-left:22px}.tour-credits li+li{margin-top:6px}.tour-credits p{margin:0 0 4px}
+.tour-credits a{color:var(--green)}
+.day-recipe{background:#f2f4eb;border:1px solid #d8dfcc;border-radius:16px;margin:0 0 14px;overflow:hidden}
+.recipe-summary{display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:center;gap:16px;padding:12px;list-style:none}
+summary.recipe-summary{cursor:pointer}
+summary.recipe-summary:hover{background:#e9eee1}
+.recipe-summary::-webkit-details-marker{display:none}
+.recipe-summary img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:9px;background:#d8dfcd}
+.recipe-title{display:block;font-size:clamp(17px,2.5vw,22px);line-height:1.2;letter-spacing:-.025em;margin:3px 0}
+.recipe-skill{display:block;font-size:12px;color:var(--ink2);line-height:1.45;margin:4px 0 7px}
+.recipe-meta{display:flex;flex-wrap:wrap;gap:6px;color:#3c5137;font-size:11px}
+.recipe-meta span,.recipe-toggle{border-radius:7px;background:#e2e9d9;padding:4px 7px}
+.recipe-toggle{margin-right:4px;font-size:11px;font-weight:750;color:#35452d;padding:8px 10px}
+.recipe-expand::after{content:' +'}
+.recipe-collapse::after{content:' −'}
+.recipe-collapse,[open]>.recipe-summary .recipe-expand{display:none}
+[open]>.recipe-summary .recipe-collapse{display:inline}
+.recipe-body{padding:16px 20px 19px;background:var(--white);border-top:1px solid #d8dfcc}
+.recipe-photo{margin:20px 0 0;max-width:560px}
+.recipe-photo img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:10px;background:#d8dfcd}
+.recipe-image-note{margin-top:6px;color:var(--ink2);font-size:11px}
+.recipe-method{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.65fr);gap:22px}
+.recipe-method h4{margin:0 0 8px;font-size:14px}
+.recipe-method ul,.recipe-method ol{padding-left:20px;margin:0;color:var(--ink2);font-size:13px;line-height:1.55}
+.recipe-method li+li{margin-top:6px}
+.recipe-method ol li+li{margin-top:11px}
+@media(max-width:600px){
+ .recipe-summary{grid-template-columns:96px minmax(0,1fr);gap:9px 11px}
+ .recipe-toggle{grid-column:2;justify-self:start}
+ .recipe-method{grid-template-columns:1fr;gap:16px}
+ .tour-dialog{padding:14px}
+}
+
+.language-picker{display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border:1px solid var(--line);border-radius:9px;background:var(--white);color:var(--ink);font-size:12px}
+.language-picker select{font:inherit;color:inherit;background:transparent;border:0;cursor:pointer;padding:4px 1px}
+@media(max-width:540px){.status .status-pill:first-child{display:none}}

@@ -1,0 +1,20 @@
+{
+  "id": "./index.html",
+  "lang": "el",
+  "name": "CookPath — Καθημερινή εξάσκηση στην κουζίνα",
+  "short_name": "CookPath",
+  "description": "Μια σχολή μαγειρικής 30 ημερών με 150 πρακτικές ασκήσεις, 30 συνταγές και 300 ερωτήσεις χωρίς χρονικό όριο.",
+  "start_url": "./index.html?lang=el",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f5ef",
+  "theme_color": "#1e342a",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

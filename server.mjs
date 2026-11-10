@@ -1,5 +1,6 @@
 import http from 'node:http';
-import { readFile, stat } from 'node:fs/promises';
+import { createReadStream } from 'node:fs';
+import { stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -11,7 +12,9 @@ const MIME = {
   '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/manifest+json; charset=utf-8',
   '.svg': 'image/svg+xml',
-  '.css': 'text/css; charset=utf-8'
+  '.css': 'text/css; charset=utf-8',
+  '.jpg': 'image/jpeg',
+  '.mp4': 'video/mp4'
 };
 
 const server = http.createServer(async (req, res) => {
@@ -32,13 +35,33 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(404);
       return res.end('Not found.');
     }
-    const content = await readFile(file);
-    res.writeHead(200, {
+    const headers = {
       'Content-Type': MIME[path.extname(file)] || 'application/octet-stream',
       'X-Content-Type-Options': 'nosniff',
-      'Cache-Control': 'no-cache'
-    });
-    res.end(req.method === 'HEAD' ? undefined : content);
+      'Cache-Control': 'no-cache',
+      'Accept-Ranges': 'bytes'
+    };
+    let start=0, end=info.size-1, status=200;
+    if(req.headers.range){
+      const range=/^bytes=(\d*)-(\d*)$/.exec(req.headers.range);
+      if(range && (range[1]||range[2])){
+        start=range[1]?Number(range[1]):Math.max(0,info.size-Number(range[2]));
+        if(range[1]&&range[2])end=Math.min(end,Number(range[2]));
+      }
+      if(!range||!(range[1]||range[2])||start>end||start>=info.size){
+        res.writeHead(416,{...headers,'Content-Range':`bytes */${info.size}`});
+        return res.end();
+      }
+      status=206;
+      headers['Content-Range']=`bytes ${start}-${end}/${info.size}`;
+    }
+    headers['Content-Length']=end-start+1;
+    res.writeHead(status,headers);
+    if(req.method==='HEAD'||info.size===0)return res.end();
+    const stream=createReadStream(file,{start,end});
+    stream.on('error',()=>res.destroy());
+    res.on('close',()=>stream.destroy());
+    stream.pipe(res);
   } catch {
     res.writeHead(500);
     res.end('Could not serve this page.');

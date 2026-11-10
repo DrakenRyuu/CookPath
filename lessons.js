@@ -223,15 +223,17 @@ function cookpathPracticeCheck(text) {
   return text;
 }
 
+const cookpathLessonText = window.COOKPATH_I18N?.translate || (text => text);
+window.COOKPATH_PLAN.forEach(day => { day.theme = cookpathLessonText(day.theme); });
 window.COOKPATH_TASKS = window.COOKPATH_PLAN.flatMap((day, dayIndex) => day.tasks.map((row, taskIndex) => ({
   id: dayIndex * 5 + taskIndex + 1,
   day: dayIndex + 1,
   slot: taskIndex + 1,
   theme: day.theme,
-  title: row[0],
-  how: row[1],
-  why: row[2],
-  proof: cookpathPracticeCheck(row[3]),
-  question: `Why is this step important: ${row[0].toLowerCase()}?`,
-  answer: row[2]
+  title: cookpathLessonText(row[0]),
+  how: cookpathLessonText(row[1]),
+  why: cookpathLessonText(row[2]),
+  proof: cookpathLessonText(cookpathPracticeCheck(row[3])),
+  question: window.COOKPATH_I18N?.greek ? `Γιατί έχει σημασία το βήμα «${cookpathLessonText(row[0])}»;` : `Why is this step important: ${row[0].toLowerCase()}?`,
+  answer: cookpathLessonText(row[2])
 })));

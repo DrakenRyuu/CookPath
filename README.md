@@ -1,6 +1,6 @@
 # CookPath
 
-CookPath is a 30-day cooking practice app with five self-confirmed tasks and ten untimed multiple-choice questions per day. It includes 150 tasks and 300 questions. Progress is stored in the browser on the device where you use the app.
+CookPath is a 30-day cooking practice app with five self-confirmed tasks, one guided recipe and ten untimed multiple-choice questions per day. It includes 150 tasks, 30 recipes and 300 questions. Progress is stored in the browser on the device where you use the app.
 
 ## Run locally
 
@@ -13,5 +13,7 @@ node server.mjs
 Then visit <http://127.0.0.1:4173>.
 
 Tasks are marked complete by the learner; no photos are collected or evaluated in this version. Future days remain previewable, while actual progress follows the midnight unlock schedule. A rotating set of chef quotes appears on the welcome page, with source links. The developer curriculum review page remains in the owner’s local copy and is excluded from the public deployment.
+
+Lessons show the ingredients, steps and serving illustration when a recipe’s day unlocks. You can review every recipe without unlocking days in the local `developer.html` page. On Welcome, each country card opens a silent 25-second postcard with five places and five dishes. The scene list credits each Wikimedia photo and its license. Video files stream on demand and recipe illustrations load as needed.
 
 The PWA manifest and service worker are included. Home-screen installation requires serving the app from HTTPS (or localhost during development).
