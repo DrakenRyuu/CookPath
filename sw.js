@@ -1,5 +1,5 @@
-const CACHE = 'cookpath-shell-v18';
-const FILES = ['./', './index.html', './greek.js', './language.js', './lessons.js', './questions.js', './quotes.js', './recipes.js', './additions.css', './tours.js', './cuisines.js', './manifest.json', './manifest-el.json', './icon.svg', './refinements.css', './portraits.js', './knife-data.js', './knife-photos.js', './knives.js', './assets/olive-sprigs.svg', './assets/crossed-knives.svg?v=2'];
+const CACHE = 'cookpath-shell-v22';
+const FILES = ['./', './index.html', './greek.js', './language.js', './lessons.js', './questions.js', './quotes.js', './recipes.js', './additions.css', './tours.js', './cuisines.js', './manifest.json', './manifest-el.json', './icon.svg', './refinements.css', './portraits.js', './knife-data.js', './knife-photos.js', './knives.js', './assets/olive-sprigs.svg', './assets/knife-crossed-illustration.jpg'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)));
   self.skipWaiting();
