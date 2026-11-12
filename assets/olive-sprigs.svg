@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="780" viewBox="0 0 780 780">
+  <defs>
+    <g id="sprig" fill="none" stroke="#63734f" stroke-width="1" stroke-linecap="round">
+      <path d="M0 185C30 142 42 91 57 0"/>
+      <g fill="#72825c" stroke-width=".7">
+        <path d="M10 169C-16 158-28 137-22 122C-4 129 8 147 10 169Z"/>
+        <path d="M22 142C44 143 68 129 72 113C51 111 34 122 22 142Z"/>
+        <path d="M29 117C5 110-8 88-3 72C17 79 27 95 29 117Z"/>
+        <path d="M39 87C60 89 82 74 87 58C66 57 49 67 39 87Z"/>
+        <path d="M46 56C24 49 14 29 18 13C37 22 46 37 46 56Z"/>
+        <path d="M52 28C69 25 81 11 82-3C66 0 57 11 52 28Z"/>
+      </g>
+    </g>
+  </defs>
+  <g opacity=".115"><use href="#sprig" transform="translate(39 92) rotate(-22)"/><use href="#sprig" transform="translate(679 449) rotate(148)"/></g>
+  <g opacity=".095"><use href="#sprig" transform="translate(410 747) rotate(-67) scale(.72)"/><use href="#sprig" transform="translate(424 174) rotate(54) scale(.57)"/></g>
+</svg>

@@ -1,5 +1,8 @@
 // Greek translations for the public CookPath curriculum and interface.
 window.COOKPATH_GREEK = {
+  "Knives": "Μαχαίρια",
+  "Your cooking school": "Η δική σας σχολή μαγειρικής",
+  "wherever you are.": "όπου κι αν βρίσκεστε.",
   "Knife foundations": "Βασικές τεχνικές μαχαιριού",
   "Onions: from whole to mince": "Κρεμμύδι: από ολόκληρο μέχρι ψιλοκομμένο",
   "Vegetable cuts & board control": "Κοπή λαχανικών και σταθερότητα στην επιφάνεια κοπής",

@@ -19,17 +19,18 @@
     @media(max-width:620px){.quote-panel{grid-template-columns:1fr;padding:18px}.quote-panel .quote-button{justify-self:start}.choice-button{font-size:12px}}
   </style>
   <link rel="stylesheet" href="additions.css">
+  <link rel="stylesheet" href="refinements.css">
 </head>
 <body>
   <div class="shell">
     <header class="topbar"><div class="brand"><div class="brandmark">✳</div><span>CookPath</span></div><div class="status"><span class="status-pill">Self-paced practice</span><span class="status-pill extra"><strong id="total-done">0</strong> / 150 tasks</span><label class="language-picker" data-language-picker><span aria-hidden="true">🌐</span><select id="language-select" aria-label="Language / Γλώσσα"><option value="en" lang="en">English</option><option value="el" lang="el">Ελληνικά</option></select></label></div></header>
-    <nav class="nav" aria-label="Main navigation"><button class="active" data-page="welcome">Welcome</button><button data-page="lessons">Lessons</button><button data-page="qa">Q&amp;A</button></nav>
-    <div class="school-banner"><span class="school-banner-mark" aria-hidden="true">✳</span><strong>Your cooking school, wherever you are.</strong></div>
+    <nav class="nav" aria-label="Main navigation"><button class="active" data-page="welcome">Welcome</button><button data-page="lessons">Lessons</button><button data-page="qa">Q&amp;A</button><button data-page="knives">Knives</button></nav>
+    <div class="school-banner"><strong class="banner-first">Your cooking school</strong><span class="school-banner-mark" aria-hidden="true">✳</span><strong class="banner-second">wherever you are.</strong></div>
 
     <main>
       <section class="page active" id="page-welcome">
         <div class="hero"><div><div class="eyebrow">Welcome to CookPath</div><h1>Cooking is learning to notice.</h1><p class="lead">A good cook doesn’t just follow steps. They notice how ingredients change, understand why a technique works, taste with purpose, and adjust with care.</p><p class="muted">Over 30 days, you’ll practice five small tasks a day. Every task explains what to do and why it matters. Mark each one complete as you practice.</p><div class="actions"><button class="btn" data-go="lessons">Continue to lessons</button><button class="btn secondary" data-go="qa">Start the Q&amp;A</button></div></div><aside class="hero-stamp"><strong>30 days<br>150 skills</strong><span>Five focused tasks, one recipe and ten untimed questions each day. Learn at your own pace; the next day opens at local midnight.</span></aside></div>
-        <section class="card quote-panel" aria-label="Daily inspiration"><div><div class="eyebrow">A little kitchen encouragement</div><blockquote id="quote-text" aria-live="polite"></blockquote><div class="quote-credit"><span id="quote-credit"></span><a id="quote-source" target="_blank" rel="noopener">Read the interview</a></div><div class="quote-change-note">A new chef’s words appear each time you open the app.</div></div><button class="btn outline quote-button" id="quote-next" type="button">Another quote ↻</button></section>
+        <section class="card quote-panel" aria-label="Daily inspiration"><figure class="quote-portrait"><img id="quote-portrait" alt="" width="112" height="134" decoding="async"><figcaption><a id="quote-photo-credit" target="_blank" rel="noopener"></a><br><a id="quote-photo-license" target="_blank" rel="noopener"></a></figcaption></figure><div><div class="eyebrow">A little kitchen encouragement</div><blockquote id="quote-text" aria-live="polite"></blockquote><div class="quote-credit"><span id="quote-credit"></span><a id="quote-source" target="_blank" rel="noopener">Read the interview</a></div><div class="quote-change-note">A new chef’s words appear each time you open the app.</div></div><button class="btn outline quote-button" id="quote-next" type="button">Another quote ↻</button></section>
         <section class="section"><div class="section-intro"><div class="eyebrow">How cooking gets better</div><h2 style="margin-top:8px">The same useful habits show up everywhere.</h2><p class="muted">Cuisine changes the ingredients, flavors, and traditions. The craft still comes from preparation, control, tasting, and practice.</p></div><div class="principles"><article class="principle"><i>01</i><b>Prepare first</b><p>Read the task and gather ingredients before heat or knives come out.</p></article><article class="principle"><i>02</i><b>Work safely</b><p>Stable boards, controlled cuts, clean hands, and safe temperatures matter.</p></article><article class="principle"><i>03</i><b>Control heat</b><p>Gentle, direct, and dry heat create different textures and flavors.</p></article><article class="principle"><i>04</i><b>Taste with purpose</b><p>Salt, acid, aroma, and texture each change how food tastes.</p></article><article class="principle"><i>05</i><b>Repeat and reflect</b><p>Small observations turn practice into judgment you can use anywhere.</p></article></div></section>
         <section class="section"><div class="section-intro"><div class="eyebrow">A small tour of food traditions</div><h2 style="margin-top:8px">Cuisines are ways of thinking about food.</h2><p class="muted">Scroll through the places and techniques that inspire the journey. These are introductions, not rules: every country holds regional and family traditions of its own.</p></div>
           <div class="cuisine-grid">
@@ -51,6 +52,7 @@
       <section class="page" id="page-lessons"><div class="toolbar"><div><div class="eyebrow">30-day monthly challenge</div><h1>Today’s kitchen practice</h1><p class="muted">Five tasks with clear steps and a reason, plus a recipe that puts the day’s skill to work.</p></div><div class="progress-wrap"><div class="progress-label"><strong>Challenge progress</strong><span id="all-progress-label">0 / 150</span></div><div class="bar"><span id="all-progress"></span></div></div></div><div class="day-selector" id="lesson-days"></div><div id="lesson-content"></div></section>
 
       <section class="page" id="page-qa"><div class="toolbar"><div><div class="eyebrow">300 questions · untimed · three choices each</div><h1>Test what you know</h1><p class="muted">Choose the best answer for each question. You’ll get the explanation right away; there’s no clock.</p></div><div class="progress-wrap"><div class="progress-label"><strong>Today’s Q&amp;A</strong><span id="qa-progress-label">0 / 10</span></div><div class="bar"><span id="qa-progress"></span></div></div></div><div class="level-box" id="level-box"><div class="eyebrow" style="color:#e7d89e">Your learning snapshot</div><h2 id="level-title">Let’s find your starting point</h2><p id="level-copy">Your snapshot updates as you answer the 300 multiple-choice questions.</p></div><div class="qa-layout"><aside><div class="card"><div class="eyebrow">Choose a day</div><div class="qa-days" id="qa-days"></div></div></aside><div id="qa-content"></div></div></section>
+      <section class="page" id="page-knives" aria-label="Knives"></section>
     </main>
     <footer class="footer"><span>CookPath · 30 days of practical kitchen learning</span><span>Progress is saved in this browser on this device.</span><a href="https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures" target="_blank" rel="noopener">Food safety source</a></footer>
   </div>
@@ -67,9 +69,13 @@
   <script src="lessons.js"></script>
   <script src="questions.js"></script>
   <script src="quotes.js"></script>
+  <script src="portraits.js"></script>
   <script src="recipes.js"></script>
   <script src="tours.js"></script>
   <script src="cuisines.js"></script>
+  <script src="knife-data.js"></script>
+  <script src="knife-photos.js"></script>
+  <script src="knives.js"></script>
   <script>
   (()=>{
     const {choose:L,translate:T,changeLanguage}=window.COOKPATH_I18N;
@@ -95,7 +101,7 @@
     function taskComplete(id){return state.completed.includes(id)}
     function dayProgress(day){const ts=dayTasks(day),qs=dayQuestions(day),done=ts.filter(t=>taskComplete(t.id)).length,qa=qs.filter(q=>state.qnaAnswers[q.id]!==undefined).length,correct=qs.filter(q=>state.qnaAnswers[q.id]?.correct).length;return {done,qa,correct,total:ts.length,questions:qs.length}}
     function maybeCompleteDay(day){if(dayDone(day))return;const p=dayProgress(day);if(p.done===5&&p.qa===10){state.dayCompletions[day]={dateKey:todayKey(),completedAt:Date.now()};save();toast(day===30?L('Monthly challenge complete — wonderful work.','Ολοκληρώσατε τη μηνιαία πρόκληση. Μπράβο!'):L('Day complete. The next five tasks open at the start of the new day.','Η ημέρα ολοκληρώθηκε. Οι επόμενες πέντε ασκήσεις ανοίγουν με την έναρξη της νέας ημέρας.'))}}
-    function showNextQuote(){if(!CHEF_QUOTES.length)return;let previous=-1;try{previous=Number(sessionStorage.getItem('cookpath-quote-index')??-1)}catch(e){}let index=Math.floor(Math.random()*CHEF_QUOTES.length);if(CHEF_QUOTES.length>1&&index===previous)index=(previous+1+Math.floor(Math.random()*(CHEF_QUOTES.length-1)))%CHEF_QUOTES.length;const q=CHEF_QUOTES[index];try{sessionStorage.setItem('cookpath-quote-index',String(index))}catch(e){}$('#quote-text').textContent=`${L(`“${q.quote}”`,`«${T(q.quote)}»`)}`;$('#quote-credit').textContent=`— ${T(q.chef)} · ${T(q.origin)}`;const source=$('#quote-source');const sourceName=q.source.replace("translated from Spanish",L("translated from Spanish","μετάφραση από τα ισπανικά"));source.textContent=`${L("Source","Πηγή")}: ${sourceName}`;source.href=q.url;source.setAttribute('aria-label',L(`Read the ${q.source} interview with ${q.chef}`,`Διαβάστε τη συνέντευξη με τον ή τη ${T(q.chef)} στο ${sourceName}`))}
+    function showNextQuote(){if(!CHEF_QUOTES.length)return;let previous=-1;try{previous=Number(sessionStorage.getItem('cookpath-quote-index')??-1)}catch(e){}let index=Math.floor(Math.random()*CHEF_QUOTES.length);if(CHEF_QUOTES.length>1&&index===previous)index=(previous+1+Math.floor(Math.random()*(CHEF_QUOTES.length-1)))%CHEF_QUOTES.length;const q=CHEF_QUOTES[index];window.COOKPATH_SHOW_PORTRAIT?.(q);try{sessionStorage.setItem('cookpath-quote-index',String(index))}catch(e){}$('#quote-text').textContent=`${L(`“${q.quote}”`,`«${T(q.quote)}»`)}`;$('#quote-credit').textContent=`— ${T(q.chef)} · ${T(q.origin)}`;const source=$('#quote-source');const sourceName=q.source.replace("translated from Spanish",L("translated from Spanish","μετάφραση από τα ισπανικά"));source.textContent=`${L("Source","Πηγή")}: ${sourceName}`;source.href=q.url;source.setAttribute('aria-label',L(`Read the source for this quote from ${q.chef}`,`Δείτε την πηγή για το απόσπασμα του/της ${T(q.chef)} στο ${sourceName}`))}
     function page(name){$$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));$$('.page').forEach(p=>p.classList.toggle('active',p.id===`page-${name}`));if(name==='lessons')renderLessons();if(name==='qa')renderQA();window.scrollTo({top:0,behavior:'smooth'})}
     $$('.nav button').forEach(b=>b.onclick=()=>page(b.dataset.page));
     $$('[data-go]').forEach(b=>b.onclick=()=>page(b.dataset.go));
@@ -148,8 +154,8 @@
         if(Number.isInteger(resume.qa)&&resume.qa>=1&&resume.qa<=30)selectedQADay=resume.qa;
       }
       renderLessons();
-      if(resume&&['lessons','qa'].includes(resume.view))page(resume.view);
-      let observedDate=todayKey();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js?v=12').catch(()=>{});setInterval(()=>{const clock=$('#midnight-clock');if(clock)clock.textContent=countdown(nextMidnight()-Date.now());const now=todayKey();if(now!==observedDate){observedDate=now;const day=availableOrCurrentDay();selectedLessonDay=day;selectedQADay=Math.min(selectedQADay,day);if($('#page-lessons').classList.contains('active'))renderLessons();if($('#page-qa').classList.contains('active'))renderQA()}},1000)}
+      if(resume&&['welcome','lessons','qa','knives'].includes(resume.view))page(resume.view);
+      let observedDate=todayKey();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js?v=18').catch(()=>{});setInterval(()=>{const clock=$('#midnight-clock');if(clock)clock.textContent=countdown(nextMidnight()-Date.now());const now=todayKey();if(now!==observedDate){observedDate=now;const day=availableOrCurrentDay();selectedLessonDay=day;selectedQADay=Math.min(selectedQADay,day);if($('#page-lessons').classList.contains('active'))renderLessons();if($('#page-qa').classList.contains('active'))renderQA()}},1000)}
     init();
   })();
   </script>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 108" fill="none">
+  <defs>
+    <g id="knife">
+      <path d="M64 60V13Q64 7 68 4C74 15 82 32 82 51V60Z" fill="#eeeade" stroke="#1e342a" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M79 35Q81 44 80 58H68" stroke="#b6bca9" stroke-width="1" stroke-linecap="round"/>
+      <path d="M63 60H77V65H63Z" fill="#d6bc79" stroke="#1e342a" stroke-width="1.5"/>
+      <path d="M64 65H76V94Q76 98 72 98H68Q64 98 64 94Z" fill="#17261f" stroke="#a69d75" stroke-width="1"/>
+      <circle cx="70" cy="74" r="1.4" fill="#d6bc79"/>
+      <circle cx="70" cy="89" r="1.4" fill="#d6bc79"/>
+    </g>
+  </defs>
+  <use href="#knife" transform="rotate(-55 70 54)"/>
+  <use href="#knife" transform="translate(140 0) scale(-1 1) rotate(-55 70 54)"/>
+</svg>

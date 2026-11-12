@@ -1,0 +1,127 @@
+/* Quiet olive branches sit behind the existing CookPath paper and cards. */
+body{background-image:url('assets/olive-sprigs.svg');background-size:780px 780px;background-repeat:repeat}
+.nav{justify-content:space-evenly;gap:clamp(8px,4vw,48px)}
+[hidden]{display:none!important}
+.school-banner{display:grid;grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr);justify-content:center;gap:14px;padding:10px 18px;text-align:center;background:var(--ink)}
+.school-banner .banner-first{text-align:right}.school-banner .banner-second{text-align:left}
+.school-banner-mark{width:30px;height:30px;font-size:19px;margin:auto}
+.quote-panel{grid-template-columns:112px minmax(0,1fr) auto;gap:24px}
+.quote-portrait{margin:0;align-self:center;max-width:112px}
+.quote-portrait img{display:block;width:112px;height:134px;object-fit:cover;object-position:center 28%;border-radius:52% 52% 14px 14px;background:#d9dfce;filter:saturate(.68);border:1px solid #d2d1bd}
+.quote-portrait figcaption{font-size:9px;line-height:1.4;margin-top:7px;color:#64705b;text-align:center}
+.quote-portrait a{text-decoration-thickness:.7px;text-underline-offset:2px}
+.knife-hero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,1fr);gap:28px;align-items:center;padding:36px 0 28px}
+.knife-hero h1{font-size:clamp(32px,4.3vw,49px);line-height:1.1;margin:10px 0 17px;letter-spacing:-.05em}
+.knife-hero p,.knife-intro{font-size:14px;line-height:1.75;color:var(--ink2);max-width:760px}
+.knife-hero-meta{display:flex;gap:9px;flex-wrap:wrap;font-size:11px;color:var(--green);font-weight:650;line-height:1.6}
+.knife-hero-meta>span{color:#97a28d}
+.knife-hero-illustration{background:var(--ink);border-radius:50% 50% 16px 16px;min-height:250px;padding:30px 18px 21px;display:flex;flex-direction:column;justify-content:center;gap:10px;align-items:center;color:#b8c3a5;position:relative;overflow:hidden}
+.knife-hero-illustration:before{content:'';position:absolute;inset:15px;border:1px solid #ffffff16;border-radius:inherit}
+.knife-hero-logo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+.knife-hero-logo-mark{display:grid;place-items:center;width:96px;height:96px;font-size:88px;line-height:1;color:#efd58e}
+.knife-hero-crossed{display:block;width:122px;height:auto;position:absolute;left:50%;top:calc(50% + 23px);transform:translateX(-50%)}
+.knife-drawing{display:block;width:100%;max-height:90px;color:#42563b}
+.knife-drawing-hero{transform:rotate(-12deg);color:#a49a73;max-height:none}
+.knife-tabs{display:flex;gap:7px;padding:11px 0 17px;overflow-x:auto;border-bottom:1px solid var(--line);margin-bottom:26px}
+.knife-tabs button{flex:0 0 auto;border:1px solid var(--line);border-radius:9px;background:var(--white);color:var(--ink2);padding:11px 15px;font-size:12px}
+.knife-tabs button[aria-selected=true]{background:var(--ink);border-color:var(--ink);color:white}
+.knife-tabs button:hover{border-color:#9ba98d}
+.knife-panel{animation:knife-enter .2s ease}
+@keyframes knife-enter{from{opacity:.4;transform:translateY(3px)}to{opacity:1;transform:none}}
+.knife-section-heading{display:flex;gap:20px;align-items:center;justify-content:space-between}
+.knife-section-heading h2{margin:7px 0 10px;font-size:clamp(23px,3vw,29px)}
+.reference-number{font-family:Georgia,serif;font-style:italic;font-size:48px;color:#bec6b0;line-height:1}
+.knife-controls{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(180px,1fr);gap:14px;margin-top:25px}
+.knife-controls label{display:grid;gap:7px;font-size:11px;color:var(--ink2);font-weight:650}
+.knife-controls input,.knife-controls select{width:100%;font:inherit;font-size:13px;color:var(--ink);background:var(--white);border:1px solid #d7ddcf;border-radius:10px;padding:12px 13px;min-height:44px}
+.knife-controls input::placeholder{color:#7f8a78;font-weight:400}
+.knife-result-count{font-size:11px;color:var(--ink2);margin:12px 0 17px}
+.knife-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;align-items:start}
+.knife-type-card{border:1px solid #dce1d3;border-radius:13px;background:var(--white);overflow:hidden}
+.knife-type-card summary{cursor:pointer;position:relative;list-style:none}
+.knife-type-card summary::-webkit-details-marker,.sharpen-step summary::-webkit-details-marker{display:none}
+.knife-type-art{padding:9px 22px 3px;background:#edf0e6;min-height:100px;display:grid;place-items:center}
+.knife-type-label{padding:15px 36px 16px 16px;min-height:112px}
+.knife-type-label .eyebrow{font-size:9px}
+.knife-type-label h3{font-size:15px;line-height:1.35;margin:6px 0 4px}
+.bevel-note{font-size:10px;color:var(--ink2);line-height:1.4;display:block}
+.knife-card-plus{font-size:21px;font-weight:400;line-height:1;color:#78906d;display:inline-block;transition:transform .15s}
+.knife-type-card .knife-card-plus{position:absolute;right:15px;bottom:24px}
+.knife-type-card[open] .knife-card-plus,.sharpen-step[open] .knife-card-plus{transform:rotate(45deg)}
+.knife-type-body{border-top:1px solid var(--line);padding:15px 16px;font-size:12px;line-height:1.7;color:var(--ink2)}
+.knife-type-body p:last-child{margin-bottom:0}
+.knife-detail-box{background:#f1f3e9;border-radius:8px;padding:12px;margin:12px 0;color:var(--ink2)}
+.knife-detail-box b{font-size:10px;letter-spacing:.04em;color:var(--green)}
+.knife-detail-box p{margin:5px 0 0}
+.knife-care-note{font-size:11px}.knife-care-note b{color:var(--ink);display:block}
+.knife-purpose-label{display:block;color:var(--green);font-size:11px;margin-bottom:5px}
+.knife-real-photo-frame{background:#f4eadc;padding:0;min-height:0}
+.knife-real-photo{display:block;width:100%;height:auto;aspect-ratio:2 / 1;object-fit:cover}
+.knife-image-credit{font-size:9px;line-height:1.65;border-top:1px solid var(--line);padding-top:11px;margin-top:15px;overflow-wrap:anywhere}
+.knife-image-credit a{color:var(--green);text-underline-offset:2px}
+.knife-photo-note{display:block;color:var(--ink2);margin-bottom:5px}
+@media(max-width:600px){.knife-real-photo-frame{padding:0}.knife-real-photo{height:auto}.knife-image-credit{font-size:8px}}
+.steel-hrc{white-space:nowrap}.steel-hrc strong{font-size:15px;color:var(--ink);font-variant-numeric:tabular-nums}.steel-hrc small{display:block;font-size:9px;letter-spacing:.05em;color:var(--ink2)}
+.hrc-explainer{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:26px;border:1px solid #d7dfcd;border-radius:13px;padding:22px;background:#edf1e6;margin:23px 0 16px}
+.hrc-explainer h3{margin:8px 0;font-size:17px}.hrc-explainer p{font-size:12px;line-height:1.75;color:var(--ink2);margin:0}
+.hrc-example{align-self:center}.hrc-example>strong{display:block;font-family:Georgia,serif;font-size:35px;color:#667b51;font-weight:400;margin-bottom:7px}.hrc-example strong span{font-size:21px;color:#a4ad8d}.hrc-example>span{display:block;font-size:11px;line-height:1.7;color:var(--ink2)}
+@media(max-width:600px){.hrc-explainer{grid-template-columns:1fr;gap:14px;padding:18px}.hrc-example{display:flex;align-items:center;gap:17px}.hrc-example>strong{flex-shrink:0;margin:0;font-size:30px}}
+.knife-empty{padding:25px;text-align:center;background:var(--white);border:1px dashed var(--line);border-radius:10px;color:var(--ink2);font-size:13px}
+.knife-source-line{font-size:11px;line-height:2;color:var(--ink2);margin:25px 0 10px}
+.knife-source-line a,.knife-references a{color:var(--green);text-underline-offset:3px}
+.stone-grit-selector{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:25px 0 13px}
+.stone-grit-selector button{background:#eef0e5;border:1px solid #dce1d1;color:var(--ink);border-radius:10px;padding:14px 5px;text-align:center}
+.stone-grit-selector strong{display:block;font-family:Georgia,serif;font-weight:500;font-size:20px;margin-bottom:6px;letter-spacing:-.04em}
+.stone-grit-selector span{display:block;font-size:10px}
+.stone-grit-selector button[aria-pressed=true]{background:var(--ink);color:#f7f2e1;border-color:var(--ink)}
+.grit-detail{display:grid;grid-template-columns:150px minmax(0,1fr);gap:26px;background:var(--white);border:1px solid var(--line);border-radius:14px;padding:25px;align-items:center;min-height:174px}
+.grit-range{font-size:32px;font-family:Georgia,serif;color:#7c8c65;letter-spacing:-.04em}
+.grit-detail h3{font-size:18px;margin-bottom:9px}.grit-detail p{font-size:13px;line-height:1.7;color:var(--ink2);margin-bottom:0}
+.knife-small-note{font-size:11px;line-height:1.7;color:var(--ink2);margin:12px 0 22px;max-width:900px}
+.stone-info-grid,.steel-family-grid,.steel-glossary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:25px 0}
+.knife-info-card{padding:21px;border:1px solid var(--line);border-radius:13px;background:var(--white)}
+.knife-info-card h3{font-size:16px;margin:13px 0 10px;line-height:1.4}.knife-info-card p{font-size:12px;line-height:1.75;color:var(--ink2);margin:0 0 12px}.knife-info-card p:last-child{margin-bottom:0}
+.knife-info-card b{font-size:11px;color:var(--green)}
+.knife-info-icon{font-size:26px;color:#7d8a64;line-height:1}
+.knife-callout{border-left:3px solid #8e9f70;background:#edf1e5;border-radius:0 11px 11px 0;padding:19px 22px;margin:25px 0}
+.knife-callout>strong{font-size:14px}.knife-callout>p{font-size:12px;line-height:1.75;color:var(--ink2);margin:7px 0 0}
+.angle-lab{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;padding:25px;border:1px solid #d8dfce;background:#f0f3e8;border-radius:15px;margin:25px 0}
+.angle-lab h3{margin:8px 0}.angle-lab p{font-size:12px;line-height:1.7;color:var(--ink2)}
+.angle-lab label{display:flex;justify-content:space-between;font-size:11px;font-weight:650;margin:15px 0 8px}
+.angle-lab output{color:var(--green);font-size:15px}
+.angle-lab input{width:100%;accent-color:var(--green)}
+.angle-lab svg{align-self:center;width:100%;height:auto}
+.angle-lab .angle-reading{font-size:10px;margin:9px 0 0}
+.guide-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11px;color:var(--ink2);margin-bottom:13px}
+.guide-tools .btn{font-size:11px;padding:9px 12px}
+.sharpen-steps{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.sharpen-step{background:var(--white);border:1px solid var(--line);border-radius:11px;overflow:hidden}
+.sharpen-step summary{display:flex;align-items:center;gap:14px;cursor:pointer;list-style:none;padding:17px 19px}
+.sharpen-step summary h3{margin:0;flex:1;font-size:14px;line-height:1.5}
+.sharpen-step-number{font-family:Georgia,serif;font-size:23px;color:#82946b;min-width:30px}
+.sharpen-step-body{padding:0 21px 18px 63px;font-size:13px;line-height:1.8;color:var(--ink2)}
+.sharpen-step-body>p{margin-bottom:8px}
+.steel-family-dot{width:12px;height:12px;display:inline-block;border-radius:50%}
+.steel-family-dot.stainless{background:#9cae9c}.steel-family-dot.semi{background:#b19c6b}.steel-family-dot.carbon{background:#886548}
+.steel-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:13px;background:var(--white);margin-top:16px}
+.steel-table{width:100%;min-width:1050px;border-collapse:collapse;font-size:11px;text-align:left}
+.steel-table caption{text-align:left;padding:14px 17px;background:#f0f2e9;font-weight:750;color:var(--ink)}
+.steel-table thead{background:var(--ink);color:#f5f2e5}
+.steel-table th,.steel-table td{padding:15px 13px;vertical-align:top;line-height:1.65;border-bottom:1px solid var(--line)}
+.steel-table th{font-weight:700}.steel-table td{color:var(--ink2)}
+.steel-table tbody tr:last-child>*{border-bottom:0}
+.steel-table tbody tr:nth-child(even){background:#f8f9f2}
+.steel-table th:first-child{width:18%;min-width:160px}.steel-table td:nth-child(2){width:14%}.steel-table td:nth-child(3){width:10%;white-space:nowrap}.steel-table td:nth-child(4){width:9%}.steel-table td:nth-child(5){width:30%}
+.steel-family-tag{display:inline-block;border-radius:6px;padding:3px 6px;font-size:9px;line-height:1.6;background:#e7eee3;color:#3c5d42}
+.steel-family-tag.semi{background:#f2ead5;color:#796441}.steel-family-tag.carbon{background:#eee3d9;color:#78583e}
+.steel-glossary article{padding:19px 0;border-top:1px solid #cdd6c0}
+.steel-glossary h3{font-size:14px}.steel-glossary p{font-size:12px;line-height:1.75;color:var(--ink2);margin:9px 0 0}
+.knife-references{padding:18px 0;font-size:12px;color:var(--ink2)}
+.knife-references summary{cursor:pointer;font-weight:700;color:var(--ink)}.knife-references ul{line-height:2;padding-left:20px}
+.knife-tabs button:focus-visible,.knife-controls input:focus-visible,.knife-controls select:focus-visible,.stone-grit-selector button:focus-visible,.knife-type-card summary:focus-visible,.sharpen-step summary:focus-visible,.angle-lab input:focus-visible,.steel-table-wrap:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+@media(max-width:850px){.quote-panel{grid-template-columns:94px minmax(0,1fr);gap:18px}.quote-portrait{grid-row:1/3}.quote-portrait img{width:94px;height:116px}.quote-panel .quote-button{grid-column:2;justify-self:start}.knife-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.knife-hero-illustration{min-height:250px}.knife-hero{grid-template-columns:1.5fr 1fr}.knife-info-card{padding:17px}}
+@media(max-width:600px){body{background-size:590px 650px}.school-banner{font-size:11px;gap:9px;padding:9px 10px;grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr)}.school-banner-mark{width:26px;height:26px}.quote-panel{grid-template-columns:76px minmax(0,1fr);padding:18px;gap:13px}.quote-portrait img{width:76px;height:102px}.quote-panel blockquote{font-size:17px}.quote-credit a{margin-left:0;display:block;margin-top:5px}.quote-portrait figcaption{font-size:8px}.knife-hero{grid-template-columns:1fr;gap:19px;padding-top:26px}.knife-hero h1{font-size:35px}.knife-hero-illustration{border-radius:14px;min-height:220px;gap:8px;padding:22px 20px 16px}.knife-hero-logo-mark{width:84px;height:84px;font-size:76px}.knife-hero-crossed{width:108px;top:calc(50% + 20px)}.knife-tabs{margin-top:0;gap:6px}.knife-tabs button{font-size:11px;padding:10px 12px}.knife-controls{grid-template-columns:1fr;gap:12px}.knife-card-grid{gap:10px}.knife-type-label{padding:12px 25px 13px 12px}.knife-type-label h3{font-size:13px}.knife-type-label .eyebrow{font-size:8px}.knife-type-card .knife-card-plus{right:10px;bottom:19px}.knife-type-art{padding:5px 8px;min-height:76px}.knife-type-body{padding:12px;font-size:11px}.reference-number{font-size:38px}.stone-grit-selector{gap:4px}.stone-grit-selector strong{font-size:15px}.stone-grit-selector span{font-size:8px}.stone-grit-selector button{padding:12px 2px}.grit-detail{grid-template-columns:1fr;gap:10px;padding:20px}.grit-range{font-size:25px}.stone-info-grid,.steel-family-grid,.steel-glossary{grid-template-columns:1fr;gap:12px}.angle-lab{grid-template-columns:1fr;gap:10px;padding:20px}.angle-lab svg{max-width:350px;justify-self:center}.sharpen-step summary{padding:15px 13px;gap:10px}.sharpen-step summary h3{font-size:13px}.sharpen-step-body{padding:0 15px 16px;font-size:12px}.knife-intro{font-size:13px}.steel-glossary{gap:0}}
+@media(max-width:380px){.knife-card-grid{grid-template-columns:1fr}.knife-type-art{min-height:85px}.knife-type-label{min-height:95px}.knife-hero h1{font-size:31px}}
+@media(max-width:600px){.nav{justify-content:space-between;gap:4px}.nav button{font-size:12px;padding:10px 9px;flex-shrink:0}.knife-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}.knife-tabs button{text-align:center}}
+@media(max-width:360px){.nav button{font-size:11px;padding:9px 5px}}
+@media(prefers-reduced-motion:reduce){.knife-panel{animation:none}.knife-card-plus{transition:none}}

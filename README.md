@@ -1,19 +1,15 @@
 # CookPath
 
-CookPath is a 30-day cooking practice app with five self-confirmed tasks, one guided recipe and ten untimed multiple-choice questions per day. It includes 150 tasks, 30 recipes and 300 questions. Progress is stored in the browser on the device where you use the app.
+A bilingual English/Greek cooking school: 30 days, 150 practical tasks, 300 three-choice questions and 30 complete practice recipes. Five tasks and ten untimed questions per day; the next day unlocks at local midnight after completion. Progress is stored in each learner’s browser.
+
+## November 2026 update
+
+Centered navigation and school banner, subtle olive branches, 29 chefs with 37 rotating sourced quotes, and a new knife reference with 16 matching AI-generated knife images, sharpening guides, whetstones and grit ranges, and 30 steel entries with indicative HRC ranges. The knife-room panel features the centered CookPath symbol and two identical mirrored crossed knives.
+
+See PHOTO-CREDITS.md, QUOTE-SOURCES.md and KNIFE-IMAGE-PROMPTS.md for source credits and generated-image prompts.
 
 ## Run locally
 
-To preview, open `index.html` in a browser. For the installable app shell, serve this folder from localhost or HTTPS. A simple local server is included; if you have Node.js installed, run:
+Run `node server.mjs` and open http://127.0.0.1:4173/. The public app is hosted at https://cookpath.onrender.com/. Updates to main deploy automatically on Render.
 
-```sh
-node server.mjs
-```
-
-Then visit <http://127.0.0.1:4173>.
-
-Tasks are marked complete by the learner; no photos are collected or evaluated in this version. Future days remain previewable, while actual progress follows the midnight unlock schedule. A rotating set of chef quotes appears on the welcome page, with source links. The developer curriculum review page remains in the owner’s local copy and is excluded from the public deployment.
-
-Lessons show the ingredients, steps and serving illustration when a recipe’s day unlocks. You can review every recipe without unlocking days in the local `developer.html` page. On Welcome, each country card opens a silent 25-second postcard with five places and five dishes. The scene list credits each Wikimedia photo and its license. Video files stream on demand and recipe illustrations load as needed.
-
-The PWA manifest and service worker are included. Home-screen installation requires serving the app from HTTPS (or localhost during development).
+Tasks are self-confirmed; photo judging is disabled. The owner’s developer review page is excluded from the public deployment. The app includes a PWA manifest and service worker. Home-screen installation requires HTTPS or localhost.
