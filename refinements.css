@@ -122,3 +122,12 @@ body{background-image:url('assets/olive-sprigs.svg');background-size:780px 780px
 @media(max-width:600px){.nav{justify-content:space-between;gap:4px}.nav button{font-size:12px;padding:10px 9px;flex-shrink:0}.knife-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}.knife-tabs button{text-align:center}}
 @media(max-width:360px){.nav button{font-size:11px;padding:9px 5px}}
 @media(prefers-reduced-motion:reduce){.knife-panel{animation:none}.knife-card-plus{transition:none}}
+
+/* A personal note at the end of the welcome page. */
+.about-cookpath{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);gap:48px;margin-top:12px;padding:38px 0}
+.about-heading h2{font-size:clamp(26px,3.4vw,38px);line-height:1.15;margin:12px 0 0;max-width:290px}
+.about-story{max-width:680px;color:var(--ink2);font-size:14px;line-height:1.85}
+.about-story p{margin:0 0 18px}
+.about-story .about-belief{border-left:3px solid var(--green);padding:4px 0 4px 20px;color:var(--ink);font-size:19px;line-height:1.55;font-weight:600;margin:24px 0}
+.about-story .about-signature{font-family:Georgia,serif;font-size:21px;font-style:italic;color:var(--ink);margin:22px 0 0}
+@media(max-width:600px){.about-cookpath{grid-template-columns:1fr;gap:22px;padding:28px 0}.about-heading h2{max-width:none}.about-story{font-size:13px}.about-story .about-belief{font-size:17px}}

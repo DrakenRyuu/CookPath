@@ -1230,3 +1230,14 @@ window.COOKPATH_GREEK = {
   "David Chang": "Ντέιβιντ Τσανγκ",
   "Kwame Onwuachi": "Κουάμε Ονουάτσι"
 };
+
+// About CookPath: the founder’s note.
+Object.assign(window.COOKPATH_GREEK, {
+  "About CookPath": "Για το CookPath",
+  "Cooking belongs to everyone.": "Η μαγειρική είναι για όλους.",
+  "I believe everyone should have the chance to learn to cook. You don’t need an expensive culinary education to begin, just curiosity, a willingness to practice, and a clear place to start.": "Πιστεύω πως όλοι πρέπει να έχουν την ευκαιρία να μάθουν να μαγειρεύουν. Δεν χρειάζεται μια ακριβή σχολή μαγειρικής για να ξεκινήσεις· χρειάζονται περιέργεια, διάθεση για εξάσκηση και μια ξεκάθαρη αφετηρία.",
+  "CookPath grew out of my own effort to become a better cook. I keep learning through studying, asking questions, and the work I put in every day at the restaurant. There is always something to understand more clearly or do with greater care.": "Το CookPath γεννήθηκε μέσα από τη δική μου προσπάθεια να γίνομαι καλύτερος μάγειρας. Συνεχίζω να μαθαίνω μελετώντας, κάνοντας ερωτήσεις και δουλεύοντας καθημερινά στο εστιατόριο. Πάντα υπάρχει κάτι που μπορώ να κατανοήσω καλύτερα ή να κάνω με περισσότερη προσοχή.",
+  "The basics, practiced consistently, are what turn a good cook into an exceptional one.": "Τα βασικά, όταν τα εξασκείς με συνέπεια, είναι αυτά που κάνουν έναν καλό μάγειρα εξαιρετικό.",
+  "That is the idea behind this site: a clear path through the foundations, with practical lessons and explanations of why things work. Whether you are starting from scratch or revisiting the basics with some experience, I want CookPath to help you build understanding, confidence, and habits you can carry into your own kitchen.": "Αυτή είναι η ιδέα πίσω από το site: μια ξεκάθαρη διαδρομή στα θεμέλια της μαγειρικής, με πρακτικά μαθήματα και εξηγήσεις για το γιατί λειτουργεί κάθε τεχνική. Είτε ξεκινάς από το μηδέν είτε επιστρέφεις στα βασικά έχοντας ήδη κάποια εμπειρία, θέλω το CookPath να σε βοηθήσει να χτίσεις κατανόηση, αυτοπεποίθηση και συνήθειες που θα σε ακολουθούν στη δική σου κουζίνα.",
+  "Everyone can learn. A clear path and steady practice make the next step possible.": "Όλοι μπορούν να μάθουν. Μια ξεκάθαρη πορεία και η σταθερή εξάσκηση κάνουν το επόμενο βήμα εφικτό."
+});
