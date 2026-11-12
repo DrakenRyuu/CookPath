@@ -24,7 +24,7 @@
 <body>
   <div class="shell">
     <header class="topbar"><div class="brand"><div class="brandmark">✳</div><span>CookPath</span></div><div class="status"><span class="status-pill">Self-paced practice</span><span class="status-pill extra"><strong id="total-done">0</strong> / 150 tasks</span><label class="language-picker" data-language-picker><span aria-hidden="true">🌐</span><select id="language-select" aria-label="Language / Γλώσσα"><option value="en" lang="en">English</option><option value="el" lang="el">Ελληνικά</option></select></label></div></header>
-    <nav class="nav" aria-label="Main navigation"><button class="active" data-page="welcome">Welcome</button><button data-page="lessons">Lessons</button><button data-page="qa">Q&amp;A</button><button data-page="knives">Knives</button></nav>
+    <nav class="nav" aria-label="Main navigation"><button class="active" data-page="welcome">Welcome</button><button data-page="lessons">Lessons</button><button data-page="qa">Q&amp;A</button><button data-page="knives">Knives</button><button data-page="about">About CookPath</button></nav>
     <div class="school-banner"><strong class="banner-first">Your cooking school</strong><span class="school-banner-mark" aria-hidden="true">✳</span><strong class="banner-second">wherever you are.</strong></div>
 
     <main>
@@ -46,10 +46,6 @@
             <article class="cuisine" data-cuisine="china"><div class="flag">🇨🇳</div><div><h3>China</h3><div class="tradition">Wok craft · regional cuisines · texture and timing</div><p>Chinese cuisines are exceptionally varied. High-heat stir-frying, careful ingredient sizing, steaming, braising, and fermented seasonings all show how technique and regional ingredients shape a dish.</p><div class="dish">Try noticing: why even cuts and a hot, uncrowded wok matter.</div></div></article>
           </div>
         </section>
-        <section class="section about-cookpath" id="about-cookpath" aria-labelledby="about-cookpath-title">
-          <div class="about-heading"><div class="eyebrow">About CookPath</div><h2 id="about-cookpath-title">Cooking belongs to everyone.</h2></div>
-          <div class="about-story"><p>I believe everyone should have the chance to learn to cook. You don’t need an expensive culinary education to begin, just curiosity, a willingness to practice, and a clear place to start.</p><p>CookPath grew out of my own effort to become a better cook. I keep learning through studying, asking questions, and the work I put in every day at the restaurant. There is always something to understand more clearly or do with greater care.</p><p class="about-belief">The basics, practiced consistently, are what turn a good cook into an exceptional one.</p><p>That is the idea behind this site: a clear path through the foundations, with practical lessons and explanations of why things work. Whether you are starting from scratch or revisiting the basics with some experience, I want CookPath to help you build understanding, confidence, and habits you can carry into your own kitchen.</p><p>Everyone can learn. A clear path and steady practice make the next step possible.</p><p class="about-signature">— Thanos. L.</p></div>
-        </section>
         <div class="welcome-end"><div class="eyebrow">Your first month</div><h2>Build your own kitchen instincts.</h2><p class="muted" style="margin:0">Start with knife grip and cutting motion, then build toward heat, stocks, sauces, world cuisines, and a complete dinner. Every step includes the reason behind the technique.</p><div class="actions"><button class="btn" data-go="lessons">Continue to lessons</button><button class="btn secondary" data-go="qa">Go to Q&amp;A</button></div></div>
       </section>
 
@@ -57,6 +53,10 @@
 
       <section class="page" id="page-qa"><div class="toolbar"><div><div class="eyebrow">300 questions · untimed · three choices each</div><h1>Test what you know</h1><p class="muted">Choose the best answer for each question. You’ll get the explanation right away; there’s no clock.</p></div><div class="progress-wrap"><div class="progress-label"><strong>Today’s Q&amp;A</strong><span id="qa-progress-label">0 / 10</span></div><div class="bar"><span id="qa-progress"></span></div></div></div><div class="level-box" id="level-box"><div class="eyebrow" style="color:#e7d89e">Your learning snapshot</div><h2 id="level-title">Let’s find your starting point</h2><p id="level-copy">Your snapshot updates as you answer the 300 multiple-choice questions.</p></div><div class="qa-layout"><aside><div class="card"><div class="eyebrow">Choose a day</div><div class="qa-days" id="qa-days"></div></div></aside><div id="qa-content"></div></div></section>
       <section class="page" id="page-knives" aria-label="Knives"></section>
+        <section class="page" id="page-about" aria-labelledby="about-cookpath-title">
+          <div class="about-cookpath"><div class="about-heading"><div class="eyebrow">About CookPath</div><h1 id="about-cookpath-title">Cooking belongs to everyone.</h1></div>
+          <div class="about-story"><p>I believe everyone should have the chance to learn to cook. You don’t need an expensive culinary education to begin, just curiosity, a willingness to practice, and a clear place to start.</p><p>CookPath grew out of my own effort to become a better cook. I keep learning through studying, asking questions, and the work I put in every day at the restaurant. There is always something to understand more clearly or do with greater care.</p><p class="about-belief">The basics, practiced consistently, are what turn a good cook into an exceptional one.</p><p>That is the idea behind this site: a clear path through the foundations, with practical lessons and explanations of why things work. Whether you are starting from scratch or revisiting the basics with some experience, I want CookPath to help you build understanding, confidence, and habits you can carry into your own kitchen.</p><p>Everyone can learn. A clear path and steady practice make the next step possible.</p><p class="about-signature">— Thanos. L.</p></div>
+        </div></section>
     </main>
     <footer class="footer"><span>CookPath · 30 days of practical kitchen learning</span><span>Progress is saved in this browser on this device.</span><a href="https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures" target="_blank" rel="noopener">Food safety source</a></footer>
   </div>
@@ -158,7 +158,7 @@
         if(Number.isInteger(resume.qa)&&resume.qa>=1&&resume.qa<=30)selectedQADay=resume.qa;
       }
       renderLessons();
-      if(resume&&['welcome','lessons','qa','knives'].includes(resume.view))page(resume.view);
+      if(resume&&['welcome','lessons','qa','knives','about'].includes(resume.view))page(resume.view);
       let observedDate=todayKey();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js?v=18').catch(()=>{});setInterval(()=>{const clock=$('#midnight-clock');if(clock)clock.textContent=countdown(nextMidnight()-Date.now());const now=todayKey();if(now!==observedDate){observedDate=now;const day=availableOrCurrentDay();selectedLessonDay=day;selectedQADay=Math.min(selectedQADay,day);if($('#page-lessons').classList.contains('active'))renderLessons();if($('#page-qa').classList.contains('active'))renderQA()}},1000)}
     init();
   })();
