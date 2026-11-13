@@ -1,4 +1,4 @@
-/* Supabase Auth + account-owned progress. Disabled until a verified project is configured. */
+/* Supabase Auth and account-owned progress. */
 (() => {
   const config = window.COOKPATH_ACCOUNT_CONFIG || {};
   const P = window.COOKPATH_PROGRESS;
@@ -43,9 +43,16 @@
           box.querySelector('button').onclick = async event => {
             event.target.disabled = true;
             try {
-              await rpc('cookpath_import_progress',{p_progress:legacy});
-              try { localStorage.setItem(importedKey,'yes'); } catch {}
-              box.remove(); notice(L('Your earlier progress is saved to this account.','Η προηγούμενη πρόοδός σας αποθηκεύτηκε στον λογαριασμό.'));
+              const imported = await rpc('cookpath_import_progress',{p_progress:legacy});
+              const allImported = legacy.completed.every(id=>imported.completed.includes(id))
+                && Object.keys(legacy.qnaAnswers).every(id=>imported.qnaAnswers[id] !== undefined);
+              if (allImported) {
+                try { localStorage.setItem(importedKey,'yes'); } catch {}
+                box.remove(); notice(L('Your earlier progress is saved to this account.','Η προηγούμενη πρόοδός σας αποθηκεύτηκε στον λογαριασμό.'));
+              } else {
+                event.target.disabled = false;
+                notice(L('Available earlier progress is saved. Finish the preceding challenges, then import the remaining history. Your browser copy is kept.','Αποθηκεύτηκε η διαθέσιμη προηγούμενη πρόοδος. Ολοκληρώστε τις προηγούμενες προκλήσεις και μεταφέρετε ξανά το υπόλοιπο ιστορικό. Το αντίγραφο στον περιηγητή διατηρείται.'));
+              }
             } catch { event.target.disabled = false; notice(L('Import did not finish. Your browser copy is safe; try again.','Η μεταφορά δεν ολοκληρώθηκε. Το τοπικό αντίγραφο διατηρείται· δοκιμάστε ξανά.'),true); }
           };
         }

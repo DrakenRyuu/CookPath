@@ -67,3 +67,17 @@ test('legacy progress requires an explicit import and is not silently assigned',
   assert.equal(x.calls.some(c=>c.name==='cookpath_import_progress'),false);
   assert.deepEqual(x.states.at(-1).completed,[1]);x.dom.window.close();
 });
+
+test('gated legacy history stays available until every earlier completion is imported',async()=>{
+  const x=await setup(a,{completed:[1,2,6],qnaAnswers:{1:{selectedIndex:2}}});
+  x.handle(()=>({data:{completed:[1,2],qnaAnswers:{1:{selectedIndex:0}}},error:null}));
+  x.w.document.querySelector('#account-import').click();await tick();
+  assert.equal(x.w.localStorage.getItem('cookpath-imported:a'),null);
+  assert.equal(x.w.document.querySelector('#account-import').disabled,false);
+  assert.match(x.w.document.querySelector('#account-message').textContent,/remaining history/);
+  x.handle(()=>({data:{completed:[1,2,6],qnaAnswers:{1:{selectedIndex:0}}},error:null}));
+  x.w.document.querySelector('#account-import').click();await tick();
+  assert.equal(x.w.localStorage.getItem('cookpath-imported:a'),'yes');
+  assert.equal(x.w.document.querySelector('#account-import'),null);
+  assert.equal(x.states.at(-1).qnaAnswers['1'].selectedIndex,0);x.dom.window.close();
+});

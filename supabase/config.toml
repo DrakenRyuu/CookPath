@@ -7,3 +7,15 @@ additional_redirect_urls = ["https://cookpath.onrender.com/", "https://cookpath.
 
 [auth.email]
 enable_confirmations = true
+
+# Custom SMTP is configured privately in Supabase (Brevo, port 587).
+# Leave the SMTP block undeclared so config pushes preserve its encrypted settings.
+# The 30-emails/hour limit is configured in the dashboard; CLI v3.1 does not manage it.
+
+[auth.email.template.confirmation]
+subject = "Sign in to CookPath / Σύνδεση στο CookPath"
+content_path = "./supabase/templates/sign-in.html"
+
+[auth.email.template.magic_link]
+subject = "Sign in to CookPath / Σύνδεση στο CookPath"
+content_path = "./supabase/templates/sign-in.html"
