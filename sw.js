@@ -1,5 +1,5 @@
-const CACHE = 'cookpath-shell-v24';
-const FILES = ['./', './index.html', './greek.js', './language.js', './lessons.js', './questions.js', './quotes.js', './recipes.js', './additions.css', './tours.js', './cuisines.js', './manifest.json', './manifest-el.json', './icon.svg', './refinements.css', './portraits.js', './knife-data.js', './knife-photos.js', './knives.js', './assets/olive-sprigs.svg', './assets/knife-crossed-illustration.jpg'];
+const CACHE = 'cookpath-shell-v25';
+const FILES = ['./', './index.html', './app.js', './progress.js', './account-config.js', './accounts.js', './accounts.css', './greek.js', './language.js', './lessons.js', './questions.js', './quotes.js', './recipes.js', './additions.css', './tours.js', './cuisines.js', './manifest.json', './manifest-el.json', './icon.svg', './refinements.css', './portraits.js', './knife-data.js', './knife-photos.js', './knives.js', './assets/olive-sprigs.svg', './assets/knife-crossed-illustration.jpg'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)));
   self.skipWaiting();

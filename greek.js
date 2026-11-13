@@ -1241,3 +1241,22 @@ Object.assign(window.COOKPATH_GREEK, {
   "That is the idea behind this site: a clear path through the foundations, with practical lessons and explanations of why things work. Whether you are starting from scratch or revisiting the basics with some experience, I want CookPath to help you build understanding, confidence, and habits you can carry into your own kitchen.": "Αυτή είναι η ιδέα πίσω από το site: μια ξεκάθαρη διαδρομή στα θεμέλια της μαγειρικής, με πρακτικά μαθήματα και εξηγήσεις για το γιατί λειτουργεί κάθε τεχνική. Είτε ξεκινάς από το μηδέν είτε επιστρέφεις στα βασικά έχοντας ήδη κάποια εμπειρία, θέλω το CookPath να σε βοηθήσει να χτίσεις κατανόηση, αυτοπεποίθηση και συνήθειες που θα σε ακολουθούν στη δική σου κουζίνα.",
   "Everyone can learn. A clear path and steady practice make the next step possible.": "Όλοι μπορούν να μάθουν. Μια ξεκάθαρη πορεία και η σταθερή εξάσκηση κάνουν το επόμενο βήμα εφικτό."
 });
+
+// Challenge-based course copy.
+Object.assign(window.COOKPATH_GREEK, {
+  "CookPath — 30 Cooking Challenges": "CookPath — 30 μαγειρικές προκλήσεις",
+  "30 cooking challenges with five practical tasks, one guided recipe and ten untimed quiz questions in each challenge. Learn at your own pace.": "30 μαγειρικές προκλήσεις με πέντε πρακτικές ασκήσεις, μία πλήρη συνταγή και δέκα ερωτήσεις χωρίς χρονικό όριο σε κάθε πρόκληση. Μάθετε με τον ρυθμό σας.",
+  "Work through 30 challenges with five focused tasks each. Every task explains what to do and why it matters. Mark each one complete as you practice.": "Προχωρήστε σε 30 προκλήσεις με πέντε στοχευμένες ασκήσεις η καθεμία. Κάθε άσκηση εξηγεί τι να κάνετε και γιατί έχει σημασία. Σημειώστε την ολοκλήρωσή της καθώς εξασκείστε.",
+  "30 challenges": "30 προκλήσεις",
+  "5 tasks each": "5 ασκήσεις σε καθεμία",
+  "One recipe and ten untimed questions per challenge. Finish a set to unlock the next. Learn at your own pace.": "Μία συνταγή και δέκα ερωτήσεις χωρίς χρονικό όριο ανά πρόκληση. Ολοκληρώστε μία ενότητα για να ανοίξει η επόμενη. Μάθετε με τον ρυθμό σας.",
+  "Your cooking challenge": "Η μαγειρική πρόκλησή σας",
+  "30 challenges · 5 tasks each": "30 προκλήσεις · 5 ασκήσεις σε καθεμία",
+  "Your next kitchen challenge": "Η επόμενη πρόκλησή σας στην κουζίνα",
+  "Five tasks with clear steps and a reason, plus a recipe to put each challenge into practice.": "Πέντε ασκήσεις με σαφή βήματα και εξηγήσεις, μαζί με μία συνταγή για πρακτική εφαρμογή κάθε πρόκλησης.",
+  "Challenge Q&A": "Το κουίζ της πρόκλησης",
+  "Choose a challenge": "Επιλέξτε πρόκληση",
+  "CookPath · 30 challenges. Five tasks at a time.": "CookPath · 30 προκλήσεις. Πέντε ασκήσεις κάθε φορά.",
+  "Progress is saved on this device.": "Η πρόοδος αποθηκεύεται σε αυτή τη συσκευή.",
+  "Choose carefully: your first answer is final. You’ll get an explanation right away; there’s no clock.": "Επιλέξτε προσεκτικά: η πρώτη απάντηση είναι οριστική. Θα δείτε αμέσως την εξήγηση, χωρίς χρονόμετρο."
+});

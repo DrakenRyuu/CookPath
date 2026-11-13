@@ -1,7 +1,7 @@
 {
-  "name": "CookPath — Daily Kitchen Practice",
+  "name": "CookPath — 30 Cooking Challenges",
   "short_name": "CookPath",
-  "description": "A 30-day cooking journey with 150 practical tasks and 300 untimed multiple-choice questions.",
+  "description": "30 cooking challenges with five tasks, one recipe and ten questions each. Learn at your own pace.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
