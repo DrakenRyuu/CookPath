@@ -2,21 +2,21 @@
 
 ## Status — 13 November 2026
 
-Supabase is connected. Created the CookPath project in the existing CookPath organization on its free plan, in Frankfurt (`eu-central-1`). Project reference: `wmeljscrxrrvikrhnqsn`.
+The browser and CLI now both access the CookPath project owned by the user’s GitHub account, DrakenRyuu. Created the CookPath organization on its free plan and the CookPath project in Frankfurt (`eu-central-1`). The authoritative project is `kcohdrjkgvnhlsecvolc`, organization `zgwibreywcchpxkpsrfw`.
 
-The hosted progress database is installed and verified. The sign-in dialog and account adapter are implemented in English and Greek. Public account mode remains disabled until Auth return URLs and a verified email sender are configured and a real email sign-in succeeds. Existing public visitors can keep practicing with their browser progress.
+The hosted progress database is installed and verified. The sign-in dialog and account adapter are implemented in English and Greek. Auth return URLs are configured and verified. Public account mode remains disabled until a verified email sender is connected and a real delivered email sign-in succeeds. Existing public visitors can keep practicing with their browser progress.
 
-- Project: https://supabase.com/dashboard/project/wmeljscrxrrvikrhnqsn
-- URL settings: https://supabase.com/dashboard/project/wmeljscrxrrvikrhnqsn/auth/url-configuration
-- Email delivery: https://supabase.com/dashboard/project/wmeljscrxrrvikrhnqsn/auth/smtp
+- Project: https://supabase.com/dashboard/project/kcohdrjkgvnhlsecvolc
+- URL settings: https://supabase.com/dashboard/project/kcohdrjkgvnhlsecvolc/auth/url-configuration
+- Email delivery: https://supabase.com/dashboard/project/kcohdrjkgvnhlsecvolc/auth/smtp
 - API URL and public publishable key are saved in `account-config.js`; `enabled: false` is intentional.
 - Migration applied: `supabase/migrations/20261113120005_cookpath_accounts.sql`.
 
 ## Remaining activation
 
-1. Sign into the Supabase dashboard. The connected plugin can manage the database but has no Auth-settings or SMTP tool. The dashboard currently requires a separate sign-in, and the local Supabase CLI is not authenticated. No access tokens or passwords were obtained from browser storage.
-2. Set Auth Site URL to `https://cookpath.onrender.com/`. Allow return URLs `https://cookpath.onrender.com/` and `https://cookpath.onrender.com/index.html`. Only add specific localhost return URLs while testing.
-3. Configure a verified SMTP sender for public learners. Supabase's built-in sender accepts only project-team email addresses and is limited to two messages per hour. Its default service cannot provide public sign-in. See [Supabase SMTP documentation](https://supabase.com/docs/guides/auth/auth-smtp). Keep email verification enabled.
+1. Account access is resolved through the official Supabase CLI browser login. The new project is visibly accessible in the GitHub dashboard. The plugin still reports an earlier, different organization/project (`gopcxdjvpkykohckhevz` / `wmeljscrxrrvikrhnqsn`); do not use that target for this app. Use the directly authenticated CLI with explicit `--remote=kcohdrjkgvnhlsecvolc`.
+2. Completed: Auth Site URL is `https://cookpath.onrender.com/`; allowed return URLs are that root and `https://cookpath.onrender.com/index.html`. `supabase/config.toml` saves these public settings with email verification enabled. Config diff reports zero declared updates; unrelated undeclared defaults are not pushed.
+3. Remaining: connect a verified SMTP sender for public learners. Supabase’s built-in sender accepts only project-team addresses. No SMTP provider is configured. Brevo has a free transactional-email plan with 300 daily emails and no credit-card requirement. Its signup page is open for the owner to create/verify their account and accept the provider’s terms. Provider setup and real email delivery remain unverified. See [Supabase SMTP](https://supabase.com/docs/guides/auth/auth-smtp) and [Brevo free plan](https://help.brevo.com/hc/en-us/articles/208589409-About-Brevo-s-pricing-plans). Keep email verification enabled.
 4. Test a real email link, task completion and an answer. Reload and sign in on a second device. Verify the same first answer and task progress; also test another account and sign-out.
 5. Set `enabled: true`, advance the app shell cache, publish and verify the public flow. Do not publish an enabled sign-in button before email delivery works.
 
@@ -41,9 +41,13 @@ Earlier browser progress is offered as an explicit import. It is never silently 
 
 - `node --test tests/progress.test.cjs tests/accounts.test.cjs`: 10 tests passed.
 - `node tests/database.mjs`: applies the actual migration to PGlite and verifies isolation, immutable answers, denied direct writes, challenge gates, safe legacy import, anonymous denial, private catalogue denial, absence of public SECURITY DEFINER functions, and exact parity with all 300 app question IDs and correct-choice indices.
-- Hosted database transaction: two synthetic users verified account isolation, answer immutability, rejected direct updates/deletes, challenge unlocks and anonymous denial. The transaction was rolled back; no test accounts or progress remain.
+- Hosted real Auth test on the authoritative project: two synthetic users and three independently authenticated passwordless sessions verified cross-session task/answer persistence, first-answer immutability, account isolation, direct-write rejection, sequential unlocks and anonymous denial. The admin-generated test links were verified without email delivery. All synthetic sessions were signed out and test users/progress removed. This does not verify SMTP delivery. See `tests/cloud-accounts.mjs`.
 - Real anonymous REST request returns HTTP 401, permission denied for the progress RPC. Public Auth settings respond successfully and show email enabled.
-- Supabase advisors: no security or performance warnings/errors. Informational findings: the private catalogue has no client RLS policy by design (deny access); two new indexes have not yet seen production usage. See [RLS no-policy explanation](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy) and [unused index explanation](https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index).
-- Browser preview: English desktop and Greek at 390px; no console errors. No claim of real email login or cross-device Auth verification is made yet.
+- Supabase CLI advisors on the authoritative project: no security or performance warnings/errors. The private catalogue intentionally has no client access policy or table grants.
+- Browser preview: English desktop and Greek at 390px; no console errors. Real passwordless API sessions have passed the hosted test; delivered-email and physical-device sign-in remain outstanding.
 
 Test dependencies are pinned in `/tmp/cookpath-test-runtime/package.json` and its lockfile. Override `COOKPATH_TEST_RUNTIME` to use another location. The vendored browser Supabase client is version 2.119.0, MIT-licensed; its licence is retained in `vendor/supabase-LICENSE`. It loads only when account mode is enabled.
+
+## Hosted test command
+
+Run only against a deliberately selected project. Set `COOKPATH_CLOUD_TEST_URL` and `COOKPATH_CLOUD_TEST_KEYS` (a private file outside the repository containing that project’s API-key response), then run `node tests/cloud-accounts.mjs`. The test creates only uniquely named `@example.invalid` users and removes them with their synthetic progress. Never publish the private key file or put secret/service-role keys in browser code.

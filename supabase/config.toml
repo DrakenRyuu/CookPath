@@ -1,0 +1,9 @@
+# Public project configuration; no private keys or SMTP passwords belong here.
+project_id = "cookpath"
+
+[auth]
+site_url = "https://cookpath.onrender.com/"
+additional_redirect_urls = ["https://cookpath.onrender.com/", "https://cookpath.onrender.com/index.html"]
+
+[auth.email]
+enable_confirmations = true
