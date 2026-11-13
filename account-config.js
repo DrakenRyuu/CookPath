@@ -2,6 +2,6 @@
    Enable only after applying the SQL migration and verifying the project Auth settings. */
 window.COOKPATH_ACCOUNT_CONFIG = Object.freeze({
   enabled: false,
-  supabaseUrl: '',
-  publishableKey: ''
+  supabaseUrl: 'https://wmeljscrxrrvikrhnqsn.supabase.co',
+  publishableKey: 'sb_publishable_iziDdgHM5Ln3iNfRGAciXQ_PYGza1EO'
 });

@@ -2,42 +2,48 @@
 
 ## Status — 13 November 2026
 
-The account UI, Supabase client adapter and database migration are implemented. They are not activated on the public site: the Supabase plugin reports not installed/connected, and the dashboard requires sign-in. No Supabase project, database or Auth configuration has been changed by this update. `account-config.js` deliberately keeps `enabled: false` until a project is connected and verified.
+Supabase is connected. Created the CookPath project in the existing CookPath organization on its free plan, in Frankfurt (`eu-central-1`). Project reference: `wmeljscrxrrvikrhnqsn`.
 
-The challenge and quiz changes work independently with the existing browser progress. This is not cross-device account storage yet.
+The hosted progress database is installed and verified. The sign-in dialog and account adapter are implemented in English and Greek. Public account mode remains disabled until Auth return URLs and a verified email sender are configured and a real email sign-in succeeds. Existing public visitors can keep practicing with their browser progress.
 
-## Activation
+- Project: https://supabase.com/dashboard/project/wmeljscrxrrvikrhnqsn
+- URL settings: https://supabase.com/dashboard/project/wmeljscrxrrvikrhnqsn/auth/url-configuration
+- Email delivery: https://supabase.com/dashboard/project/wmeljscrxrrvikrhnqsn/auth/smtp
+- API URL and public publishable key are saved in `account-config.js`; `enabled: false` is intentional.
+- Migration applied: `supabase/migrations/20261113120005_cookpath_accounts.sql`.
 
-1. Connect the Supabase plugin to the intended CookPath project. Inspect existing schema before applying the migration.
-2. Apply `supabase/migrations/202611130001_cookpath_accounts.sql` once. It creates two account-owned progress tables, the private answer catalogue and four authenticated RPC functions.
-3. In Supabase Auth, enable email sign-in. Set Site URL to `https://cookpath.onrender.com/`. Allow return URLs `https://cookpath.onrender.com/`, `https://cookpath.onrender.com/index.html`, and the chosen localhost URLs for development.
-4. Configure production email delivery before inviting the public. Supabase’s built-in sender is limited to project-team addresses; use an existing verified SMTP sender for real learners. See [Supabase SMTP documentation](https://supabase.com/docs/guides/auth/auth-smtp).
-5. Put the project URL and **public publishable key** in `account-config.js`. A legacy anon key is also supported. Never use a secret or service-role key. Set `enabled: true` only after the migration and Auth configuration are verified.
-6. Test a real email sign-in, task completion and an answer; reload and sign in on a second device. Verify the same first answer and task progress. Test a different account and sign-out. Publish the enabled configuration only after these pass.
+## Remaining activation
+
+1. Sign into the Supabase dashboard. The connected plugin can manage the database but has no Auth-settings or SMTP tool. The dashboard currently requires a separate sign-in, and the local Supabase CLI is not authenticated. No access tokens or passwords were obtained from browser storage.
+2. Set Auth Site URL to `https://cookpath.onrender.com/`. Allow return URLs `https://cookpath.onrender.com/` and `https://cookpath.onrender.com/index.html`. Only add specific localhost return URLs while testing.
+3. Configure a verified SMTP sender for public learners. Supabase's built-in sender accepts only project-team email addresses and is limited to two messages per hour. Its default service cannot provide public sign-in. See [Supabase SMTP documentation](https://supabase.com/docs/guides/auth/auth-smtp). Keep email verification enabled.
+4. Test a real email link, task completion and an answer. Reload and sign in on a second device. Verify the same first answer and task progress; also test another account and sign-out.
+5. Set `enabled: true`, advance the app shell cache, publish and verify the public flow. Do not publish an enabled sign-in button before email delivery works.
+
+The local UI preview is `http://127.0.0.1:4175/?lang=en` while the temporary preview server runs. It shows the real account interface with the public project client, but no email was sent and it is not an activated public login service. Review images are saved in `review-screenshots/account-login-preview-2026-11-13.jpg` and `review-screenshots/account-login-greek-phone-2026-11-13.jpg`.
 
 ## Login and saved progress
 
-The login dialog uses [Supabase email magic links](https://supabase.com/docs/guides/auth/auth-email-passwordless); learners do not need a password. New accounts are confirmed through their email link. Sign-out clears the displayed account state. Cached progress is keyed by user ID. A delayed response from one account cannot populate another account’s view.
+The dialog uses [Supabase email magic links](https://supabase.com/docs/guides/auth/auth-email-passwordless); learners do not need a password. New accounts are confirmed through their email link. Sign-out clears the displayed account state. Cached progress is keyed by user ID. A delayed response from one account cannot populate another account's view.
 
-Earlier browser progress is offered as an explicit import, rather than silently assigning a shared browser’s history to a signed-in account. Existing server answers retain their first choice during import. The browser copy is retained.
+Earlier browser progress is offered as an explicit import. It is never silently assigned to a signed-in account. Existing server answers retain their first choice during import. The browser copy is retained.
 
 ## Database guarantees
 
-- Row-level security restricts each account to its own task and quiz rows.
-- Browser roles cannot insert, update or delete progress tables directly; only scoped authenticated RPCs can write.
-- The `(user_id, question_id)` primary key and append-only submission function retain the first submitted choice. Retrying a different choice returns the original saved answer.
+- RLS restricts each account to its own task and quiz rows. Browser roles cannot insert, update or delete progress tables directly.
+- Public RPC entry points are SECURITY INVOKER. Privileged implementations stay in the unexposed `cookpath_private` schema, check `auth.uid()` and accept no user ID argument.
+- The `(user_id, question_id)` primary key and append-only submission function retain the first submitted choice. Retrying another choice returns the original answer.
 - Correctness is calculated against the private 300-question catalogue by the database.
-- Sequential challenge unlocks are enforced on the server. Every earlier set needs five tasks and ten submitted answers. There is no calendar gate.
+- Sequential challenge unlocks are enforced on the server. Every earlier set requires five tasks and ten submitted answers. No calendar gate remains.
 - Each write takes a per-account transaction lock to serialize competing submissions.
 
-## Validation
+## Verification completed
 
-`node --test tests/progress.test.cjs tests/accounts.test.cjs`
+- `node --test tests/progress.test.cjs tests/accounts.test.cjs`: 10 tests passed.
+- `node tests/database.mjs`: applies the actual migration to PGlite and verifies isolation, immutable answers, denied direct writes, challenge gates, safe legacy import, anonymous denial, private catalogue denial, absence of public SECURITY DEFINER functions, and exact parity with all 300 app question IDs and correct-choice indices.
+- Hosted database transaction: two synthetic users verified account isolation, answer immutability, rejected direct updates/deletes, challenge unlocks and anonymous denial. The transaction was rolled back; no test accounts or progress remain.
+- Real anonymous REST request returns HTTP 401, permission denied for the progress RPC. Public Auth settings respond successfully and show email enabled.
+- Supabase advisors: no security or performance warnings/errors. Informational findings: the private catalogue has no client RLS policy by design (deny access); two new indexes have not yet seen production usage. See [RLS no-policy explanation](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy) and [unused index explanation](https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index).
+- Browser preview: English desktop and Greek at 390px; no console errors. No claim of real email login or cross-device Auth verification is made yet.
 
-`node tests/database.mjs`
-
-Account tests use a local mocked SDK with JSDOM. Database tests apply the actual migration to local PostgreSQL through PGlite with two users and authenticated/anonymous roles. They verify isolation, immutable first answers, denied direct writes, challenge gates and legacy import. These are local tests, not a claim of successful cloud configuration.
-
-The test runtimes were installed under `/tmp/cookpath-test-runtime` using `npm install --prefix /tmp/cookpath-test-runtime @electric-sql/pglite @supabase/supabase-js jsdom`. Override `COOKPATH_TEST_RUNTIME` if using another location.
-
-The vendored Supabase client is version 2.119.0, MIT-licensed; its licence is retained in `vendor/supabase-LICENSE`. It loads only when account mode is enabled.
+Test dependencies are pinned in `/tmp/cookpath-test-runtime/package.json` and its lockfile. Override `COOKPATH_TEST_RUNTIME` to use another location. The vendored browser Supabase client is version 2.119.0, MIT-licensed; its licence is retained in `vendor/supabase-LICENSE`. It loads only when account mode is enabled.

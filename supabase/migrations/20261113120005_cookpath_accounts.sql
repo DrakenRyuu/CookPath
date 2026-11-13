@@ -8,6 +8,7 @@ create table cookpath_private.question_catalog (
   challenge_no integer not null check (challenge_no between 1 and 30),
   correct_index integer not null check (correct_index between 0 and 2)
 );
+revoke all on cookpath_private.question_catalog from public, anon, authenticated;
 create index question_catalog_challenge on cookpath_private.question_catalog (challenge_no);
 
 insert into cookpath_private.question_catalog(question_id,challenge_no,correct_index) values
@@ -327,6 +328,8 @@ create table public.cookpath_quiz_answers (
   primary key (user_id, question_id)
 );
 
+create index cookpath_quiz_answers_question on public.cookpath_quiz_answers(question_id);
+
 alter table public.cookpath_task_completions enable row level security;
 alter table public.cookpath_quiz_answers enable row level security;
 alter table cookpath_private.question_catalog enable row level security;
@@ -352,7 +355,7 @@ returns boolean language sql stable set search_path = '' as $$
 $$;
 revoke all on function cookpath_private.challenge_available(uuid,integer) from public, anon, authenticated;
 
-create function public.cookpath_get_progress()
+create function cookpath_private.cookpath_get_progress()
 returns jsonb language plpgsql security definer set search_path = '' as $$
 declare v_user uuid := auth.uid();
 begin
@@ -364,7 +367,7 @@ begin
 end;
 $$;
 
-create function public.cookpath_complete_task(p_task_id integer)
+create function cookpath_private.cookpath_complete_task(p_task_id integer)
 returns jsonb language plpgsql security definer set search_path = '' as $$
 declare v_user uuid := auth.uid();
 begin
@@ -375,11 +378,11 @@ begin
     and not cookpath_private.challenge_available(v_user,((p_task_id-1)/5)+1)
   then raise exception 'Complete the previous challenge first' using errcode='42501'; end if;
   insert into public.cookpath_task_completions(user_id,task_id) values(v_user,p_task_id) on conflict do nothing;
-  return public.cookpath_get_progress();
+  return cookpath_private.cookpath_get_progress();
 end;
 $$;
 
-create function public.cookpath_submit_answer(p_question_id integer, p_selected_index integer)
+create function cookpath_private.cookpath_submit_answer(p_question_id integer, p_selected_index integer)
 returns jsonb language plpgsql security definer set search_path = '' as $$
 declare v_user uuid := auth.uid(); v_question cookpath_private.question_catalog%rowtype;
 begin
@@ -389,16 +392,16 @@ begin
   if not found then raise exception 'Invalid question' using errcode='22023'; end if;
   perform pg_advisory_xact_lock(hashtextextended(v_user::text,0));
   if exists(select 1 from public.cookpath_quiz_answers where user_id=v_user and question_id=p_question_id)
-    then return public.cookpath_get_progress(); end if;
+    then return cookpath_private.cookpath_get_progress(); end if;
   if not cookpath_private.challenge_available(v_user,v_question.challenge_no)
     then raise exception 'Complete the previous challenge first' using errcode='42501'; end if;
   insert into public.cookpath_quiz_answers(user_id,question_id,selected_index,correct)
     values(v_user,p_question_id,p_selected_index,p_selected_index=v_question.correct_index) on conflict do nothing;
-  return public.cookpath_get_progress();
+  return cookpath_private.cookpath_get_progress();
 end;
 $$;
 
-create function public.cookpath_import_progress(p_progress jsonb)
+create function cookpath_private.cookpath_import_progress(p_progress jsonb)
 returns jsonb language plpgsql security definer set search_path = '' as $$
 declare v_user uuid := auth.uid(); v_challenge integer; v_task integer; v_question record; v_answer jsonb;
 begin
@@ -412,19 +415,41 @@ begin
   for v_challenge in 1..30 loop
     exit when not cookpath_private.challenge_available(v_user,v_challenge);
     for v_task in ((v_challenge-1)*5+1)..(v_challenge*5) loop
-      if (p_progress->'completed') @> jsonb_build_array(v_task) then perform public.cookpath_complete_task(v_task); end if;
+      if (p_progress->'completed') @> jsonb_build_array(v_task) then perform cookpath_private.cookpath_complete_task(v_task); end if;
     end loop;
     for v_question in select question_id from cookpath_private.question_catalog where challenge_no=v_challenge order by question_id loop
       v_answer := p_progress->'qnaAnswers'->(v_question.question_id::text)->'selectedIndex';
       if v_answer is not null and v_answer::text in ('0','1','2') then
-        perform public.cookpath_submit_answer(v_question.question_id,(v_answer::text)::integer);
+        perform cookpath_private.cookpath_submit_answer(v_question.question_id,(v_answer::text)::integer);
       end if;
     end loop;
   end loop;
-  return public.cookpath_get_progress();
+  return cookpath_private.cookpath_get_progress();
 end;
 $$;
 
+revoke all on function cookpath_private.cookpath_get_progress(), cookpath_private.cookpath_complete_task(integer), cookpath_private.cookpath_submit_answer(integer,integer), cookpath_private.cookpath_import_progress(jsonb) from public, anon, authenticated;
+grant execute on function cookpath_private.cookpath_get_progress(), cookpath_private.cookpath_complete_task(integer), cookpath_private.cookpath_submit_answer(integer,integer), cookpath_private.cookpath_import_progress(jsonb) to authenticated;
+
+-- Privileged implementations stay outside the Data API. Public RPC entry points
+-- run as the caller; every implementation checks auth.uid() before any access.
+grant usage on schema cookpath_private to authenticated;
+create function public.cookpath_get_progress()
+returns jsonb language sql security invoker set search_path = '' as $$
+  select cookpath_private.cookpath_get_progress();
+$$;
+create function public.cookpath_complete_task(p_task_id integer)
+returns jsonb language sql security invoker set search_path = '' as $$
+  select cookpath_private.cookpath_complete_task(p_task_id);
+$$;
+create function public.cookpath_submit_answer(p_question_id integer, p_selected_index integer)
+returns jsonb language sql security invoker set search_path = '' as $$
+  select cookpath_private.cookpath_submit_answer(p_question_id,p_selected_index);
+$$;
+create function public.cookpath_import_progress(p_progress jsonb)
+returns jsonb language sql security invoker set search_path = '' as $$
+  select cookpath_private.cookpath_import_progress(p_progress);
+$$;
 revoke all on function public.cookpath_get_progress(), public.cookpath_complete_task(integer), public.cookpath_submit_answer(integer,integer), public.cookpath_import_progress(jsonb) from public, anon, authenticated;
 grant execute on function public.cookpath_get_progress(), public.cookpath_complete_task(integer), public.cookpath_submit_answer(integer,integer), public.cookpath_import_progress(jsonb) to authenticated;
 
