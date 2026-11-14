@@ -130,7 +130,7 @@
     if (stamp !== generation || user?.id !== id) throw new Error('Account changed');
     if (error) { syncError = true; renderProgress(); paintStatus(L('Not saved · open your account to retry','Δεν αποθηκεύτηκε · ανοίξτε τον λογαριασμό για νέα προσπάθεια')); throw error; }
     const received = P.normalize(data);
-    const next = P.normalize({completed:[...canonical.completed,...received.completed],qnaAnswers:{...canonical.qnaAnswers,...received.qnaAnswers}});
+    const next = P.normalize({...received,completed:[...canonical.completed,...received.completed],qnaAnswers:{...canonical.qnaAnswers,...received.qnaAnswers},taskReviews:{...canonical.taskReviews,...received.taskReviews}});
     canonical = next;
     ready = true; syncError = false; publish(next);
     try { localStorage.setItem(`cookpath-account:${id}`,JSON.stringify(next)); } catch {}
@@ -141,6 +141,7 @@
     const nextUser = session?.user || null;
     if (nextUser?.id && nextUser.id === user?.id) return;
     generation++; user = nextUser; ready = false; syncError = false; progressView = false; canonical = P.fresh(); publish(P.fresh()); paintStatus();
+    window.dispatchEvent(new CustomEvent('cookpath-account-changed'));
     if (dialog?.open) renderDialog();
     if (!user) return;
     try {
@@ -183,6 +184,16 @@
   window.COOKPATH_ACCOUNTS = {enabled,start,open,refresh,
     get canWrite(){return !enabled || !!(user && ready);},
     get signedIn(){return !!user;},
+    async reviewEvidence(body){
+      const id=user?.id,stamp=generation;
+      if(!id||!ready){open();throw new Error('sign_in_required');}
+      const {data,error}=await client.functions.invoke('review-evidence',{body});
+      if(stamp!==generation||user?.id!==id)throw new Error('account_changed');
+      if(error){let code='review_unavailable';try{code=(await error.context.json()).error||code;}catch{}throw new Error(code);}
+      try{await refresh();}catch{throw new Error('progress_refresh_failed');}
+      if(stamp!==generation||user?.id!==id)throw new Error('account_changed');
+      return data;
+    },
     completeTask:id=>rpc('cookpath_complete_task',{p_task_id:id}),
     answer:(id,choice)=>rpc('cookpath_submit_answer',{p_question_id:id,p_selected_index:choice})
   };

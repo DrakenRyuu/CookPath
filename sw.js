@@ -1,5 +1,5 @@
-const CACHE = 'cookpath-shell-v28';
-const FILES = ['./', './index.html', './app.js', './progress.js', './account-config.js', './accounts.js', './vendor/supabase.js', './accounts.css', './greek.js', './language.js', './lessons.js', './questions.js', './quotes.js', './recipes.js', './additions.css', './tours.js', './cuisines.js', './manifest.json', './manifest-el.json', './icon.svg', './refinements.css', './portraits.js', './knife-data.js', './knife-photos.js', './knives.js', './assets/olive-sprigs.svg', './assets/knife-crossed-illustration.jpg'];
+const CACHE = 'cookpath-shell-v29';
+const FILES = ['./', './index.html', './app.js', './progress.js', './account-config.js', './accounts.js', './vendor/supabase.js', './accounts.css', './evidence-data.js', './evidence.js', './evidence.css', './greek.js', './language.js', './lessons.js', './questions.js', './quotes.js', './recipes.js', './additions.css', './tours.js', './cuisines.js', './manifest.json', './manifest-el.json', './icon.svg', './refinements.css', './portraits.js', './knife-data.js', './knife-photos.js', './knives.js', './assets/olive-sprigs.svg', './assets/knife-crossed-illustration.jpg'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)));
   self.skipWaiting();

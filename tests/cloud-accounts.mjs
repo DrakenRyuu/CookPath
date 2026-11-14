@@ -42,7 +42,12 @@ try{
   assert.equal(repeated.qnaAnswers['1'].selectedIndex,0);assert.equal(repeated.qnaAnswers['1'].correct,false);
   const update=await a.from('cookpath_quiz_answers').update({selected_index:2}).eq('question_id',1);
   assert.equal(update.error?.code,'42501');
-  assert.deepEqual(await rpc(b,'cookpath_get_progress'),{completed:[],qnaAnswers:{}});
+  assert.deepEqual(await rpc(b,'cookpath_get_progress'),{completed:[],qnaAnswers:{},evidenceEnabled:false,taskReviews:{}});
+  const reviewStatus=ok(await a.functions.invoke('review-evidence',{body:{action:'status'}}));
+  assert.equal(reviewStatus.enabled,false);assert.equal(typeof reviewStatus.configured,'boolean');
+  const cannotApprove=await a.rpc('cookpath_finish_evidence',{p_attempt_id:randomUUID(),p_user_id:aUser.id,p_status:'approved',p_result:{}});
+  assert.equal(cannotApprove.error?.code,'42501');
+  assert.deepEqual(ok(await b.from('cookpath_evidence_attempts').select('*')),[]);
   assert.deepEqual(ok(await b.from('cookpath_quiz_answers').select('*')),[]);
   const future=await a.rpc('cookpath_complete_task',{p_task_id:6});assert.equal(future.error?.code,'42501');
   for(let id=2;id<=5;id++)await rpc(a,'cookpath_complete_task',{p_task_id:id});
@@ -51,7 +56,7 @@ try{
   assert.ok((await rpc(aSecondDevice,'cookpath_get_progress')).completed.includes(6));
   const anonymous=createClient(url,publicKey,options);
   assert.ok((await anonymous.rpc('cookpath_get_progress')).error);
-  console.log('PASS: real passwordless Auth sessions, progress across two independent sessions, immutable first answers, RLS isolation, denied direct writes, challenge gates and anonymous denial. Email delivery is not tested.');
+  console.log('PASS: real Auth sessions, cross-session progress, immutable answers, RLS isolation, challenge gates, signed-in Edge Function access, denied self-approval and anonymous denial. Email and live AI judgments are not tested.');
 }finally{
   for(const client of sessions)await client.auth.signOut({scope:'global'});
   for(const user of users){const result=await admin.auth.admin.deleteUser(user.id);if(result.error)throw new Error('Could not clean up a synthetic test account.');}

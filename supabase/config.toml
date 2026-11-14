@@ -19,3 +19,7 @@ content_path = "./supabase/templates/sign-in.html"
 [auth.email.template.magic_link]
 subject = "CookPath sign-in code / Κωδικός σύνδεσης"
 content_path = "./supabase/templates/sign-in.html"
+
+[functions.review-evidence]
+# Keep the platform guard; the handler also verifies the user before processing media.
+verify_jwt = true

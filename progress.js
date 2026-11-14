@@ -1,10 +1,16 @@
 /* Shared progress rules. Quiz answers are append-only; challenge unlocks are completion-based. */
 (() => {
   const questions = new Map((window.COOKPATH_QUESTIONS || []).map(q => [q.id, q]));
-  const fresh = () => ({completed: [], qnaAnswers: {}, dayCompletions: {}});
+  const fresh = () => ({completed: [], qnaAnswers: {}, dayCompletions: {}, taskReviews: {}, evidenceEnabled:false});
   function normalize(value) {
     const input = value && typeof value === 'object' ? value : {};
     const result = fresh();
+    result.evidenceEnabled = input.evidenceEnabled === true;
+    for (const [key,review] of Object.entries(input.taskReviews || {})) {
+      const id=Number(key), feedback=review?.feedback;
+      if (!Number.isInteger(id) || id<1 || id>150 || !['approved','retry'].includes(review?.status) || !feedback || typeof feedback.feedback_en!=='string' || typeof feedback.feedback_el!=='string') continue;
+      result.taskReviews[id] = {status:review.status,feedback:{feedback_en:feedback.feedback_en.slice(0,800),feedback_el:feedback.feedback_el.slice(0,800),checks:(Array.isArray(feedback.checks)?feedback.checks:[]).filter(c=>c&&[0,1].includes(c.id)).slice(0,2).map(c=>({id:c.id,met:c.met===true,note_en:String(c.note_en||'').slice(0,800),note_el:String(c.note_el||'').slice(0,800)}))}};
+    }
     result.completed = [...new Set((Array.isArray(input.completed) ? input.completed : []).filter(id => Number.isInteger(id) && id >= 1 && id <= 150))].sort((a,b) => a-b);
     for (const [key, answer] of Object.entries(input.qnaAnswers || {})) {
       const q = questions.get(Number(key));

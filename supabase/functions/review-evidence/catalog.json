@@ -1,0 +1,1385 @@
+[
+  {
+    "id": 1,
+    "title": "Pinch grip: hold the knife at the blade heel",
+    "how": "Pinch the blade just ahead of the handle with thumb and index finger; wrap the other fingers around the handle.",
+    "kind": "photo",
+    "checks": [
+      "Thumb and index finger pinch the blade just ahead of the handle.",
+      "The other fingers wrap around the handle; the knife is stationary."
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Learn the parts of a chef’s knife",
+    "how": "Identify tip, spine, edge, heel, bolster, tang, and handle on your knife; keep it flat while pointing.",
+    "kind": "photo",
+    "checks": [
+      "The whole knife is visible, laid flat.",
+      "Labels identify the tip, spine, edge, heel and handle. Handwritten labels are fine."
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Guide with the claw hand",
+    "how": "Curl fingertips under and let the flat of your knuckles guide the blade; keep the thumb tucked behind.",
+    "kind": "photo",
+    "checks": [
+      "Fingertips curl inward, with the thumb tucked behind.",
+      "Knuckles face the stationary blade beside a stable vegetable."
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Practice a controlled rocking motion",
+    "how": "Keep the knife tip near the board and lift the handle in a smooth arc through a soft herb.",
+    "kind": "video",
+    "checks": [
+      "Show several slow rocking cuts with the tip staying near the board.",
+      "The guiding fingers stay curled back and the knife follows a controlled arc."
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Cut even cucumber coins",
+    "how": "Stabilize a cucumber with a flat end and slice slowly into coins of similar thickness.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Keep the pieces lined up so their thickness is visible."
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Trim and halve an onion safely",
+    "how": "Cut off the stem end, halve through the root, and peel each half while keeping the root attached.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show two peeled halves resting flat with roots intact."
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Slice an onion with the grain",
+    "how": "Make controlled cuts from stem toward root, stopping just short of the root.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The slices should be fanned out so their shape."
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Make a medium onion dice",
+    "how": "Cut parallel lines, turn the onion, then cross-cut using the claw hand.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "the diced onion should be spread in a single layer."
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Mince onion into small pieces",
+    "how": "Gather the dice and use short, controlled rocking cuts until pieces are fine and even.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the minced onion next to a coin for scale."
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Compare slice, dice, and mince",
+    "how": "Prepare a few onion strips, medium dice, and fine mince in three separate piles.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Look for the three clearly separated onion cuts."
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Make a flat side on round produce",
+    "how": "Trim one thin side from a carrot or potato, then rest the flat face securely on the board.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the vegetable resting stably on its flat side."
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Cut carrot planks",
+    "how": "Trim and square a carrot, then slice it lengthwise into even planks.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "the planks should form a neat row."
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Cut carrot batons",
+    "how": "Stack the planks and cut them into even batons, keeping the claw hand tucked.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Keep the pieces lined up so Line up several batons to show consistent width."
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Make carrot matchsticks",
+    "how": "Cut batons into thin matchsticks with small, deliberate strokes.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the matchsticks beside one whole carrot."
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Dice a potato evenly",
+    "how": "Make planks, batons, then cross-cuts to produce cubes of similar size.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "the potato dice should be spread out so the sizes are easy to compare."
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Peel and trim garlic",
+    "how": "Separate a clove, press gently to loosen the skin, peel, then trim the root end.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show peeled cloves with the trimmed ends."
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Slice garlic evenly",
+    "how": "Lay the clove on its broad side and cut thin, steady slices with the claw hand.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The slices should be fanned out so Fan out the slices so their thickness is visible."
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Mince garlic without turning it to paste",
+    "how": "Slice, gather, and rock the blade through the garlic in a few controlled passes.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the mince with a little space around it."
+    ]
+  },
+  {
+    "id": 19,
+    "title": "Chiffonade leafy herbs",
+    "how": "Stack dry leaves, roll gently, and slice crosswise into ribbons.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the herb ribbons on a dry board."
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Practice a fine, repeatable dice",
+    "how": "Choose a small vegetable and repeat the same dice, comparing early and later pieces.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Compare the first and last pieces side by side."
+    ]
+  },
+  {
+    "id": 21,
+    "title": "Taste and describe before seasoning",
+    "how": "Taste a plain cooked vegetable or broth and write down two things you notice.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 22,
+    "title": "Season with salt in small layers",
+    "how": "Add a small pinch during cooking, taste, and adjust once more near the end.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 23,
+    "title": "Use acid to brighten food",
+    "how": "Add lemon juice or vinegar a few drops at a time to a cooked vegetable or soup.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 24,
+    "title": "Balance a salty dish with more base",
+    "how": "If a small portion tastes too salty, dilute with unsalted ingredients or liquid rather than masking it with sugar.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 25,
+    "title": "Finish with aroma and contrast",
+    "how": "Add a fresh herb, citrus zest, or crunchy topping just before serving.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Look for the dish before and after its finishing touch."
+    ]
+  },
+  {
+    "id": 26,
+    "title": "Preheat before adding food",
+    "how": "Warm a dry pan on moderate heat, add a little oil, then add one mushroom slice to observe.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 27,
+    "title": "Recognize shimmer, not smoke",
+    "how": "Watch the oil: add food when it moves fluidly and shimmers, and lower heat if it smokes.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 28,
+    "title": "Sauté in a single layer",
+    "how": "Cook a small batch of vegetables in a little oil, leaving visible space between pieces.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the vegetables spread across the pan."
+    ]
+  },
+  {
+    "id": 29,
+    "title": "Turn food only after it releases",
+    "how": "Let one side of a mushroom or tofu piece brown before trying to turn it.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show browned pieces after turning."
+    ]
+  },
+  {
+    "id": 30,
+    "title": "Adjust heat when the pan gets too hot",
+    "how": "If food browns too quickly, lower the heat and move the pan briefly off the burner.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Look for a finished batch with even browning and no black patches."
+    ]
+  },
+  {
+    "id": 31,
+    "title": "Sauté sliced mushrooms",
+    "how": "Dry and slice mushrooms, then cook a spaced batch until browned before seasoning.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show browned mushrooms in a single layer."
+    ]
+  },
+  {
+    "id": 32,
+    "title": "Sauté green vegetables",
+    "how": "Cook green beans or zucchini in a hot pan, turning only when color develops.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show bright vegetables with a few browned edges."
+    ]
+  },
+  {
+    "id": 33,
+    "title": "Build flavor with aromatics",
+    "how": "Soften onion first, then add garlic near the end of the sauté.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Look for the softened aromatics before adding liquid."
+    ]
+  },
+  {
+    "id": 34,
+    "title": "Deglaze a pan safely",
+    "how": "Take the pan off high heat, add a splash of water or stock, and scrape browned bits into the liquid.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the loosened browned bits incorporated into the liquid."
+    ]
+  },
+  {
+    "id": 35,
+    "title": "Make a simple pan sauce",
+    "how": "Reduce the deglazing liquid briefly, then swirl in a small piece of cold butter off heat.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the sauce lightly coating a spoon."
+    ]
+  },
+  {
+    "id": 36,
+    "title": "Dry vegetables before roasting",
+    "how": "Wash, dry thoroughly, and cut carrots or cauliflower into similar-sized pieces.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the cut, dried vegetables before they go onto the tray."
+    ]
+  },
+  {
+    "id": 37,
+    "title": "Oil and space a roasting tray",
+    "how": "Toss vegetables lightly with oil and spread them in one layer with gaps.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Look for the tray before roasting."
+    ]
+  },
+  {
+    "id": 38,
+    "title": "Roast until browned and tender",
+    "how": "Roast the vegetables, turning once after the first side has colored.",
+    "kind": "photo",
+    "checks": [
+      "Roasted pieces have visibly browned edges.",
+      "Most pieces retain their shape without heavy blackening."
+    ]
+  },
+  {
+    "id": 39,
+    "title": "Roast a potato for crisp skin",
+    "how": "Dry and pierce a potato, then roast until a knife slips into the center easily.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the whole potato and its fluffy split center."
+    ]
+  },
+  {
+    "id": 40,
+    "title": "Compare crowded and spaced vegetables",
+    "how": "Roast two small batches, one crowded and one spread out, then compare their surfaces.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show both batches side by side."
+    ]
+  },
+  {
+    "id": 41,
+    "title": "Steam broccoli gently",
+    "how": "Cut florets evenly and steam until a fork enters with slight resistance.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show vivid green florets with intact shape."
+    ]
+  },
+  {
+    "id": 42,
+    "title": "Boil potatoes evenly",
+    "how": "Start similar-sized potato pieces in cold water and simmer until a knife passes through easily.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 43,
+    "title": "Blanch and cool green vegetables",
+    "how": "Briefly boil green beans, then cool promptly and drain well.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the drained, bright beans."
+    ]
+  },
+  {
+    "id": 44,
+    "title": "Poach an egg gently",
+    "how": "Slide a fresh egg into barely simmering water and cook until the white is set.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Look for the poached egg cut open."
+    ]
+  },
+  {
+    "id": 45,
+    "title": "Choose moist or dry heat for a vegetable",
+    "how": "Steam a small portion and roast another, then compare the textures and flavors.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the two preparations labeled side by side."
+    ]
+  },
+  {
+    "id": 46,
+    "title": "Rinse rice and measure water",
+    "how": "Rinse rice until the water runs clearer, then measure rice and water consistently.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 47,
+    "title": "Cook rice by absorption",
+    "how": "Bring rice and water to a simmer, cover, lower heat, and rest before fluffing.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show separate, tender rice grains."
+    ]
+  },
+  {
+    "id": 48,
+    "title": "Cook pasta to a chosen texture",
+    "how": "Salt boiling water, taste pasta near the package time, and stop when it has a slight bite.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 49,
+    "title": "Reserve pasta water",
+    "how": "Before draining, save a small cup of the starchy cooking water.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show a small cup of pasta water beside the finished pasta."
+    ]
+  },
+  {
+    "id": 50,
+    "title": "Finish pasta in its sauce",
+    "how": "Toss drained pasta with sauce and a splash of pasta water over low heat.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show evenly coated pasta with little liquid at the bottom."
+    ]
+  },
+  {
+    "id": 51,
+    "title": "Choose clean vegetable stock scraps",
+    "how": "Collect clean onion, carrot, celery, and herb trimmings; avoid spoiled or bitter scraps.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Look for the sorted scraps before adding water."
+    ]
+  },
+  {
+    "id": 52,
+    "title": "Start stock with cold water",
+    "how": "Cover the vegetables or bones with cold water before heating gradually.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 53,
+    "title": "Keep stock at a gentle simmer",
+    "how": "Bring stock just to small steady bubbles and keep it there.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 54,
+    "title": "Skim and strain stock",
+    "how": "Remove excess foam if present, then strain stock through a fine sieve.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the strained stock and discarded solids separately."
+    ]
+  },
+  {
+    "id": 55,
+    "title": "Cool and store stock safely",
+    "how": "Divide stock into shallow containers, cool promptly, label, and refrigerate.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 56,
+    "title": "Sweat onion without browning",
+    "how": "Cook diced onion gently in a little fat until translucent and soft.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show soft, translucent onion with no dark edges."
+    ]
+  },
+  {
+    "id": 57,
+    "title": "Build a soup base in order",
+    "how": "Cook onion first, add firm vegetables next, then pour in stock or water.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Look for the finished soup with distinct tender ingredients."
+    ]
+  },
+  {
+    "id": 58,
+    "title": "Simmer soup, don’t boil hard",
+    "how": "Keep soup at a quiet simmer and stir occasionally.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 59,
+    "title": "Blend soup safely",
+    "how": "Cool slightly, blend in small batches, and vent hot steam according to blender instructions.",
+    "kind": "photo",
+    "checks": [
+      "The finished soup is visible in a bowl.",
+      "Its texture looks smooth, without large unblended pieces."
+    ]
+  },
+  {
+    "id": 60,
+    "title": "Finish soup with salt and acid",
+    "how": "Taste a spoonful, adjust salt, then add a few drops of lemon or vinegar if it tastes flat.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 61,
+    "title": "Make a pale roux",
+    "how": "Cook equal parts butter and flour gently, stirring until smooth and pale.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show a smooth pale roux with no dry flour."
+    ]
+  },
+  {
+    "id": 62,
+    "title": "Whisk milk into roux gradually",
+    "how": "Add warm milk in small pours while whisking continuously.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show a smooth béchamel base in the pan."
+    ]
+  },
+  {
+    "id": 63,
+    "title": "Simmer béchamel to coat a spoon",
+    "how": "Cook gently while whisking until the sauce lightly coats the back of a spoon.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the sauce coating a spoon without clumps."
+    ]
+  },
+  {
+    "id": 64,
+    "title": "Season a white sauce simply",
+    "how": "Add salt, a little nutmeg or pepper, and taste the béchamel.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 65,
+    "title": "Use béchamel in a simple dish",
+    "how": "Fold a little béchamel through cooked vegetables or pasta and bake until bubbling.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show an evenly coated, lightly browned serving."
+    ]
+  },
+  {
+    "id": 66,
+    "title": "Soften onion for tomato sauce",
+    "how": "Cook diced onion slowly in olive oil until soft before adding tomato.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show translucent onion in the saucepan."
+    ]
+  },
+  {
+    "id": 67,
+    "title": "Add garlic at the right time",
+    "how": "Stir sliced or minced garlic into the softened onion briefly before adding tomato.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show garlic mixed through the base with no dark bits."
+    ]
+  },
+  {
+    "id": 68,
+    "title": "Simmer tomato sauce uncovered",
+    "how": "Add tomatoes and simmer gently, stirring as the sauce thickens.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show a spoonable sauce with no watery ring."
+    ]
+  },
+  {
+    "id": 69,
+    "title": "Deglaze browned bits for a pan sauce",
+    "how": "Add a splash of liquid to a pan after sautéing and scrape up the flavorful fond.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the sauce with the fond incorporated."
+    ]
+  },
+  {
+    "id": 70,
+    "title": "Reduce and finish a pan sauce",
+    "how": "Reduce briefly, taste, then swirl in cold butter off the heat.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show glossy sauce coating the back of a spoon."
+    ]
+  },
+  {
+    "id": 71,
+    "title": "Whisk a basic vinaigrette",
+    "how": "Combine three parts oil with one part vinegar or lemon and whisk.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show a lightly emulsified dressing beside a dressed leaf."
+    ]
+  },
+  {
+    "id": 72,
+    "title": "Add oil gradually to an emulsion",
+    "how": "Whisk while streaming oil in slowly rather than pouring it all at once.",
+    "kind": "video",
+    "checks": [
+      "Show oil being added in small amounts while whisking.",
+      "The dressing becomes combined rather than leaving a large separate oil layer."
+    ]
+  },
+  {
+    "id": 73,
+    "title": "Use mustard to help bind dressing",
+    "how": "Whisk mustard with acid first, then slowly add oil.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show a stable mustard vinaigrette."
+    ]
+  },
+  {
+    "id": 74,
+    "title": "Make a yogurt herb sauce",
+    "how": "Stir thick yogurt with chopped herbs, salt, and lemon; thin with a little water if needed.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the sauce coating a spoon with herbs evenly mixed."
+    ]
+  },
+  {
+    "id": 75,
+    "title": "Understand mayonnaise safety",
+    "how": "Use pasteurized egg for uncooked mayonnaise, add oil gradually, and refrigerate promptly.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 76,
+    "title": "Crack an egg without shell shards",
+    "how": "Crack each egg on a flat surface into a small bowl before adding it to the pan.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the cleanly cracked egg in the bowl."
+    ]
+  },
+  {
+    "id": 77,
+    "title": "Scramble eggs over gentle heat",
+    "how": "Stir eggs slowly over low to medium-low heat and remove them while still softly set.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show soft, moist curds plated promptly."
+    ]
+  },
+  {
+    "id": 78,
+    "title": "Fold a simple omelet",
+    "how": "Move uncooked egg toward open pan areas, then fold when the surface is nearly set.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show a folded omelet with its interior visible."
+    ]
+  },
+  {
+    "id": 79,
+    "title": "Boil and cool an egg",
+    "how": "Lower an egg into simmering water, time it, then cool it promptly.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the peeled egg cut in half."
+    ]
+  },
+  {
+    "id": 80,
+    "title": "Taste and season eggs at the end",
+    "how": "Cook a small portion, taste, then add salt or herbs before serving.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 81,
+    "title": "Rinse dried lentils and inspect",
+    "how": "Spread lentils on a plate, remove debris, then rinse in a sieve.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the sorted lentils in a bowl."
+    ]
+  },
+  {
+    "id": 82,
+    "title": "Simmer lentils until tender",
+    "how": "Cook lentils gently in fresh water and taste near the end for doneness.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show tender lentils that remain mostly intact."
+    ]
+  },
+  {
+    "id": 83,
+    "title": "Season canned beans with aromatics",
+    "how": "Warm drained beans with softened onion or garlic and a splash of stock.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show intact beans with visible aromatic pieces."
+    ]
+  },
+  {
+    "id": 84,
+    "title": "Finish beans with acid and herbs",
+    "how": "Add lemon or vinegar and fresh herbs after the beans are tender.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 85,
+    "title": "Make a bean purée",
+    "how": "Blend cooked beans with olive oil, lemon, and small additions of water until smooth.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show a smooth scoopable spread with no oil pool."
+    ]
+  },
+  {
+    "id": 86,
+    "title": "Keep fish cold until prep",
+    "how": "Keep fish refrigerated, then pat it dry just before cooking.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 87,
+    "title": "Check fish for pin bones",
+    "how": "Run clean fingers gently along the fillet and remove any pin bones with tweezers.",
+    "kind": "photo",
+    "checks": [
+      "The fillet and any removed pin bones are shown separately.",
+      "The fillet is intact and its surface is clearly visible."
+    ]
+  },
+  {
+    "id": 88,
+    "title": "Sear fish without moving it early",
+    "how": "Place dry fish in a moderately hot oiled pan and let the first side release before turning.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show a golden, intact fish portion."
+    ]
+  },
+  {
+    "id": 89,
+    "title": "Check fish doneness",
+    "how": "Cook until fish is opaque and flakes, using a thermometer to confirm 145°F / 63°C when applicable.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 90,
+    "title": "Serve fish with a bright sauce",
+    "how": "Pair the cooked fish with lemon, herbs, or a simple vinaigrette.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show fish with the finish served in a light amount."
+    ]
+  },
+  {
+    "id": 91,
+    "title": "Separate raw poultry from ready-to-eat foods",
+    "how": "Use a dedicated plate and board for raw chicken; clean hands and surfaces after handling.",
+    "kind": "photo",
+    "checks": [
+      "Raw poultry and ready-to-eat food have visibly separate preparation areas.",
+      "Separate boards or tools are visible for the two areas."
+    ]
+  },
+  {
+    "id": 92,
+    "title": "Pat poultry dry before cooking",
+    "how": "Use a paper towel and discard it immediately, then wash hands.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the poultry ready on a clean cooking tray."
+    ]
+  },
+  {
+    "id": 93,
+    "title": "Cook poultry to a safe temperature",
+    "how": "Insert a food thermometer into the thickest portion, avoiding bone; reach 165°F / 74°C.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 94,
+    "title": "Rest poultry before slicing",
+    "how": "Rest cooked poultry briefly on a clean plate before cutting.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 95,
+    "title": "Store cooked leftovers promptly",
+    "how": "Pack leftovers in shallow containers and refrigerate within two hours.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 96,
+    "title": "Dry a steak or chop before searing",
+    "how": "Pat a whole cut dry and season just before it enters the pan.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the dry, seasoned cut beside the pan."
+    ]
+  },
+  {
+    "id": 97,
+    "title": "Sear a whole cut and turn once",
+    "how": "Place the cut in a hot pan and let a browned side release before turning.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show even browning on the cooked surface."
+    ]
+  },
+  {
+    "id": 98,
+    "title": "Use a thermometer on whole cuts",
+    "how": "Check the thickest part; follow 145°F / 63°C and a three-minute rest for whole cuts of beef, pork, lamb, or veal.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 99,
+    "title": "Cook ground meat to its safe temperature",
+    "how": "Check the center of a patty or meatball for 160°F / 71°C.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 100,
+    "title": "Rest and slice across the grain",
+    "how": "Rest the cooked cut, then identify muscle fibers and slice across them.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show slices with the grain direction visible."
+    ]
+  },
+  {
+    "id": 101,
+    "title": "Brown vegetables for a braise",
+    "how": "Sear cabbage wedges or carrots in a little oil until colored on the cut faces.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the browned faces before adding liquid."
+    ]
+  },
+  {
+    "id": 102,
+    "title": "Add a modest amount of braising liquid",
+    "how": "Add stock or water partway up the ingredient, not enough to submerge it.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the liquid level in the pot before covering."
+    ]
+  },
+  {
+    "id": 103,
+    "title": "Braise at a gentle simmer",
+    "how": "Cover and cook gently until a fork enters with little resistance.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 104,
+    "title": "Reduce braising liquid into a sauce",
+    "how": "Remove the tender ingredients and simmer the liquid until more concentrated.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the reduced sauce coating a spoon beside the braised food."
+    ]
+  },
+  {
+    "id": 105,
+    "title": "Braise beans or a tougher cut until tender",
+    "how": "Keep a low simmer and check tenderness periodically rather than increasing heat.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the tender finished braise with a little sauce."
+    ]
+  },
+  {
+    "id": 106,
+    "title": "Make a Greek lemon-olive oil dressing",
+    "how": "Whisk olive oil, lemon, oregano, and salt; taste it on tomato or greens.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the dressing lightly coating a Greek-style salad."
+    ]
+  },
+  {
+    "id": 107,
+    "title": "Build a simple Greek salad thoughtfully",
+    "how": "Combine ripe tomato, cucumber, onion, olives, and feta in large, distinct pieces.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the salad with ingredients distinct and dressing added."
+    ]
+  },
+  {
+    "id": 108,
+    "title": "Start an Italian soffritto",
+    "how": "Dice onion, carrot, and celery evenly and soften slowly in olive oil.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the softened vegetables before adding liquid."
+    ]
+  },
+  {
+    "id": 109,
+    "title": "Make a quick tomato sugo",
+    "how": "Simmer tomatoes with soffritto and finish with basil or olive oil.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show a spoonable sauce with basil added near the end."
+    ]
+  },
+  {
+    "id": 110,
+    "title": "Finish pasta the Italian way",
+    "how": "Toss pasta in the pan with sauce and a little pasta water until glossy.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show evenly coated pasta in a warm bowl."
+    ]
+  },
+  {
+    "id": 111,
+    "title": "Make a mirepoix",
+    "how": "Cut onion, carrot, and celery into similar pieces for a stock or stew base.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the three vegetables cut and separated."
+    ]
+  },
+  {
+    "id": 112,
+    "title": "Prepare a light vegetable stock",
+    "how": "Simmer mirepoix and herbs gently, then strain without pressing the solids hard.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show clear strained stock in a glass or light bowl."
+    ]
+  },
+  {
+    "id": 113,
+    "title": "Make a smooth velouté-style sauce",
+    "how": "Whisk warm white stock into a pale roux and simmer until it lightly coats a spoon.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the sauce coating a spoon."
+    ]
+  },
+  {
+    "id": 114,
+    "title": "Mount a sauce with cold butter",
+    "how": "Remove a small pan sauce from heat and whisk in cold butter a little at a time.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show a glossy sauce with no visible oil separation."
+    ]
+  },
+  {
+    "id": 115,
+    "title": "Practice a simple French plate",
+    "how": "Serve one protein or vegetable with a small sauce and a balanced side.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Look for a clean plate with distinct components."
+    ]
+  },
+  {
+    "id": 116,
+    "title": "Rinse short-grain rice gently",
+    "how": "Rinse rice with a light hand, draining and repeating until the water is less cloudy.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the rinsed grains and drained water."
+    ]
+  },
+  {
+    "id": 117,
+    "title": "Cook and rest Japanese-style rice",
+    "how": "Use a consistent water ratio, cover tightly, then rest before fluffing.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show glossy, distinct rice grains."
+    ]
+  },
+  {
+    "id": 118,
+    "title": "Make a simple kombu dashi",
+    "how": "Steep a clean piece of kombu in water, then warm gently and remove before a hard boil.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the pale dashi and the removed kombu."
+    ]
+  },
+  {
+    "id": 119,
+    "title": "Season a simple miso soup",
+    "how": "Dissolve miso into warm dashi off a hard boil and add tofu or scallion.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 120,
+    "title": "Cut vegetables for tempura evenly",
+    "how": "Slice vegetables into similar thickness and dry their surfaces before battering.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the cut, dried vegetables before frying."
+    ]
+  },
+  {
+    "id": 121,
+    "title": "Measure spices before heating",
+    "how": "Measure whole spices and aromatics into small bowls before starting the pan.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 122,
+    "title": "Bloom whole spices in warm oil",
+    "how": "Add cumin or mustard seeds to warm oil and cook just until fragrant and active.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 123,
+    "title": "Build a masala base in stages",
+    "how": "Add onion, then ginger-garlic, then ground spices, cooking each briefly before tomatoes.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the cooked base before adding liquid."
+    ]
+  },
+  {
+    "id": 124,
+    "title": "Simmer a simple dal",
+    "how": "Cook lentils until soft, then season with salt and a small spiced oil finish.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show creamy dal with the spice oil visible."
+    ]
+  },
+  {
+    "id": 125,
+    "title": "Balance a curry with acid and herbs",
+    "how": "Taste the finished curry, then add a little lemon and fresh coriander if needed.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 126,
+    "title": "Toast dried chiles gently",
+    "how": "Warm a dried chile briefly in a dry pan, turning often, then soak if the recipe requires it.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 127,
+    "title": "Make a fresh salsa with balanced cuts",
+    "how": "Dice tomato, onion, chile, and cilantro into similar small pieces; add lime gradually.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the salsa with ingredients still distinct."
+    ]
+  },
+  {
+    "id": 128,
+    "title": "Char tomatoes for salsa",
+    "how": "Blister tomatoes on a hot dry pan or under a broiler, turning to color several sides.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show tomatoes with even blistered patches, not fully burnt."
+    ]
+  },
+  {
+    "id": 129,
+    "title": "Warm tortillas properly",
+    "how": "Warm corn or flour tortillas on a dry hot surface and keep them covered.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show warm, pliable tortillas folded without cracking."
+    ]
+  },
+  {
+    "id": 130,
+    "title": "Build a taco with contrast",
+    "how": "Fill a warm tortilla with a main ingredient, salsa, and a crisp or acidic topping.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show a taco with each component visible."
+    ]
+  },
+  {
+    "id": 131,
+    "title": "Taste for the four-part balance",
+    "how": "Taste a simple Thai-inspired dressing and adjust sweet, sour, salty, and chile in small steps.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 132,
+    "title": "Prepare aromatics for a curry paste",
+    "how": "Finely chop garlic, shallot, ginger or galangal, and lemongrass before grinding.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the prepared aromatics grouped before grinding."
+    ]
+  },
+  {
+    "id": 133,
+    "title": "Cook curry paste in coconut cream",
+    "how": "Warm a small amount of thick coconut cream and stir curry paste until fragrant.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the fragrant paste mixture before adding broth."
+    ]
+  },
+  {
+    "id": 134,
+    "title": "Simmer vegetables in curry gently",
+    "how": "Add vegetables according to firmness and simmer until just tender.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show vegetables cooked through but holding their shape."
+    ]
+  },
+  {
+    "id": 135,
+    "title": "Finish with herbs and lime",
+    "how": "Turn off the heat, then add lime and tender herbs; taste again.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 136,
+    "title": "Toast cumin and coriander",
+    "how": "Warm whole cumin and coriander in a dry pan until fragrant, then grind.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the toasted spices before and after grinding."
+    ]
+  },
+  {
+    "id": 137,
+    "title": "Build a Moroccan-style tagine base",
+    "how": "Soften onion, add warm spices, then add vegetables and a modest amount of liquid.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the vegetables in the simmering base."
+    ]
+  },
+  {
+    "id": 138,
+    "title": "Cook couscous by steaming and resting",
+    "how": "Pour hot seasoned liquid over couscous, cover, rest, then fluff gently.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show fluffy couscous with grains separated."
+    ]
+  },
+  {
+    "id": 139,
+    "title": "Make a Turkish-style yogurt sauce",
+    "how": "Stir yogurt with garlic, salt, and mint or dill; thin only if needed.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the sauce with herbs evenly mixed."
+    ]
+  },
+  {
+    "id": 140,
+    "title": "Finish a spiced dish with preserved lemon or fresh acid",
+    "how": "Add a small amount of preserved lemon or lemon juice, then taste before adding more.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 141,
+    "title": "Choose a main, vegetable, and sauce",
+    "how": "Plan a meal with one filling element, one vegetable, and one bright or savory finish.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 142,
+    "title": "Sequence by cooking time",
+    "how": "Write which component starts first and when the faster items join.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 143,
+    "title": "Prep a work station for a full meal",
+    "how": "Wash, cut, portion, and arrange ingredients before turning on heat.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Look for the complete, organized mise en place."
+    ]
+  },
+  {
+    "id": 144,
+    "title": "Use leftovers as planned ingredients",
+    "how": "Choose a safely stored leftover and pair it with a fresh vegetable, grain, or sauce.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 145,
+    "title": "Clean as you go",
+    "how": "Wash or clear tools during natural pauses while keeping raw-food items separate.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show the tidy active work area and clean tools."
+    ]
+  },
+  {
+    "id": 146,
+    "title": "Plan a balanced dinner menu",
+    "how": "Choose a main, vegetable, starch, and sauce or bright finish; name one sensible ingredient substitution if needed.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 147,
+    "title": "Prep every component before heating",
+    "how": "Cut vegetables, portion ingredients, and set out cookware in the order you will need it.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "Look for the ready-to-cook station."
+    ]
+  },
+  {
+    "id": 148,
+    "title": "Cook the main and verify doneness",
+    "how": "Cook your chosen protein or plant-based main, using a thermometer when relevant.",
+    "kind": "none",
+    "checks": []
+  },
+  {
+    "id": 149,
+    "title": "Finish the sides and sauce on time",
+    "how": "Use your planned sequence to finish vegetables, starch, and sauce while the main rests.",
+    "kind": "photo",
+    "checks": [
+      "Show the ingredient or result clearly, with the relevant parts in the frame.",
+      "The finished result should show all components ready together before plating."
+    ]
+  },
+  {
+    "id": 150,
+    "title": "Plate, taste, and reflect",
+    "how": "Serve the dinner, taste a complete bite, and write one thing to repeat and one to improve.",
+    "kind": "photo",
+    "checks": [
+      "The finished dinner shows the main, a vegetable side and a sauce or finishing element.",
+      "The components are recognizable and served together; restaurant presentation is not required."
+    ]
+  }
+]
