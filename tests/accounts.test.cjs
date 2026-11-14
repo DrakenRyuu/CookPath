@@ -92,3 +92,22 @@ test('email code verifies in the app without an email redirect',async()=>{
   const call=x.calls.find(c=>c.name==='verify');assert.equal(call.args.token,'12345678');assert.equal(call.args.type,'email');
   assert.equal(call.args.email,'reader@example.test');assert.equal(x.api.signedIn,true);x.dom.window.close();
 });
+test('account analytics show only saved account results, refresh, and clear on account changes',async()=>{
+  const x=await setup(a,{completed:[1,2,3,4,5],qnaAnswers:{}});x.api.open();
+  assert.equal(x.w.document.querySelector('#account-progress').textContent,'Check my progress');
+  x.w.document.querySelector('#account-progress').click();
+  let analytics=x.w.document.querySelector('#account-analytics');
+  assert.match(analytics.textContent,/299 still to explore/);
+  assert.equal(analytics.querySelector('progress').value,1);
+  assert.equal(analytics.querySelectorAll('.account-challenge').length,30);
+  x.handle(()=>({data:{completed:[1,2],qnaAnswers:{}},error:null}));
+  x.w.document.querySelector('#account-refresh').click();await tick();
+  assert.equal(x.w.document.querySelector('#account-analytics progress').value,2);
+  await x.emit(b);
+  assert.equal(x.w.document.querySelector('#account-analytics'),null);
+  assert.match(x.w.document.querySelector('.account-email').textContent,/b@example.test/);
+  x.w.document.querySelector('#account-progress').click();
+  assert.ok(x.w.document.querySelector('#account-analytics'));
+  await x.emit(null);assert.equal(x.w.document.querySelector('#account-analytics'),null);
+  assert.ok(x.w.document.querySelector('#account-email'));x.dom.window.close();
+});

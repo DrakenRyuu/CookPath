@@ -30,3 +30,21 @@ test('legacy task and selected-answer progress is preserved, and scores are reco
   assert.equal(JSON.stringify(state.completed),'[1,2]');assert.equal(Object.keys(state.qnaAnswers).length,1);
   assert.equal(state.qnaAnswers[1].correct,qs[0].correctIndex===0);
 });
+test('analytics exclude unanswered questions and derive correctness from the catalogue',()=>{
+  const {P,qs}=setup(), answers={};
+  const selected=qs.filter(q=>q.day===1 || q.day===2).slice(0,12);
+  selected.forEach((q,i)=>{answers[q.id]={selectedIndex:i<7||i===10?q.correctIndex:(q.correctIndex+1)%3,correct:false};});
+  const s=P.summarize({completed:[1,2,3,4,5,6,6,151],qnaAnswers:{...answers,999:{selectedIndex:0}}});
+  assert.equal(s.tasks,6);assert.equal(s.answered,12);assert.equal(s.correct,8);assert.equal(s.wrong,4);
+  assert.equal(s.unanswered,288);assert.equal(s.accuracy,8/12*100);assert.equal(s.completedChallenges,1);
+  assert.equal(s.challenges[0].accuracy,70);assert.equal(s.challenges[1].accuracy,50);
+  assert.equal(s.challenges[1].tasks,1);assert.equal(s.challenges[1].available,true);
+  assert.equal(s.challenges[2].accuracy,null);assert.equal(s.challenges[2].available,false);
+});
+test('empty and fully completed analytics have meaningful denominators',()=>{
+  const {P,qs}=setup(), empty=P.summarize(P.fresh());
+  assert.equal(empty.accuracy,null);assert.equal(empty.wrong,0);assert.equal(empty.unanswered,300);
+  const full=P.summarize({completed:Array.from({length:150},(_,i)=>i+1),qnaAnswers:Object.fromEntries(qs.map(q=>[q.id,{selectedIndex:q.correctIndex}]))});
+  assert.equal(full.accuracy,100);assert.equal(full.correct,300);assert.equal(full.wrong,0);
+  assert.equal(full.completedChallenges,30);assert.equal(full.tasks,150);assert.equal(full.unanswered,0);
+});

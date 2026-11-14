@@ -39,5 +39,23 @@
     next.completed.push(taskId);
     return normalize(next);
   }
-  window.COOKPATH_PROGRESS = {fresh, normalize, available, answer, completeTask};
+  function summarize(value) {
+    const state = normalize(value);
+    const challenges = Array.from({length:30},(_,index) => {
+      const number = index + 1, quiz = [...questions.values()].filter(q => q.day === number);
+      const submitted = quiz.filter(q => state.qnaAnswers[q.id] !== undefined);
+      const correct = submitted.filter(q => state.qnaAnswers[q.id].correct).length;
+      return {number, tasks: state.completed.filter(id => Math.ceil(id/5) === number).length,
+        answered: submitted.length, correct, wrong: submitted.length-correct,
+        accuracy: submitted.length ? correct/submitted.length*100 : null,
+        complete: !!state.dayCompletions[number], available: available(state,number)};
+    });
+    const answered = challenges.reduce((sum,c) => sum+c.answered,0);
+    const correct = challenges.reduce((sum,c) => sum+c.correct,0);
+    return {tasks: state.completed.length, taskTotal:150, answered, questionTotal:questions.size,
+      correct, wrong:answered-correct, unanswered:questions.size-answered,
+      accuracy:answered ? correct/answered*100 : null,
+      completedChallenges:challenges.filter(c => c.complete).length, challengeTotal:30, challenges};
+  }
+  window.COOKPATH_PROGRESS = {fresh, normalize, available, answer, completeTask, summarize};
 })();

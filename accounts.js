@@ -5,7 +5,7 @@
   const {choose:L} = window.COOKPATH_I18N;
   const enabled = config.enabled === true;
   let client, user = null, ready = false, generation = 0, publish = () => {}, legacy = P.fresh(), canonical = P.fresh();
-  let dialog, status, button, busy = false, syncError = false, pendingEmail = "";
+  let dialog, status, button, busy = false, syncError = false, pendingEmail = "", progressView = false;
   const esc = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function paintStatus(message) {
     if (!status) return;
@@ -17,12 +17,16 @@
     el.textContent = message; el.classList.toggle('account-error',error);
   }
   function renderDialog() {
-    dialog.innerHTML = `<div class="account-heading"><div><span class="eyebrow">CookPath</span><h2 id="account-title">${user ? L('Your cooking progress','Η μαγειρική πρόοδός σας') : L('Your school. Your progress.','Η σχολή σας. Η πρόοδός σας.')}</h2></div><button class="btn outline" type="button" id="account-close" aria-label="${L('Close account window','Κλείσιμο παραθύρου λογαριασμού')}">×</button></div><p id="account-message" role="status" aria-live="polite"></p>`;
+    dialog.classList.toggle('account-dialog-wide',!!user && progressView);
+    dialog.innerHTML = `<div class="account-heading"><div><span class="eyebrow">CookPath</span><h2 id="account-title" tabindex="-1">${user ? progressView ? L('Your progress, at a glance','Η πρόοδός σας με μια ματιά') : L('Your cooking progress','Η μαγειρική πρόοδός σας') : L('Your school. Your progress.','Η σχολή σας. Η πρόοδός σας.')}</h2></div><button class="btn outline" type="button" id="account-close" aria-label="${L('Close account window','Κλείσιμο παραθύρου λογαριασμού')}">×</button></div><p id="account-message" role="status" aria-live="polite"></p>`;
     dialog.querySelector('#account-close').onclick = () => dialog.close();
     if (user) {
       const account = document.createElement('div');
-      account.innerHTML = `<p class="muted account-email">${esc(user.email || '')}</p><p class="muted">${L('Your completed tasks and first quiz answers belong to this account and follow you across devices.','Οι ολοκληρωμένες ασκήσεις και οι πρώτες απαντήσεις σας αποθηκεύονται στον λογαριασμό σας και σας ακολουθούν σε κάθε συσκευή.')}</p><div class="actions"><button class="btn secondary" id="account-refresh">${L('Refresh progress','Ανανέωση προόδου')}</button><button class="btn outline" id="account-signout">${L('Sign out','Αποσύνδεση')}</button></div>`;
+      account.innerHTML = `<p class="muted account-email">${esc(user.email || '')}</p><p class="muted">${L('Your completed tasks and first quiz answers belong to this account and follow you across devices.','Οι ολοκληρωμένες ασκήσεις και οι πρώτες απαντήσεις σας αποθηκεύονται στον λογαριασμό σας και σας ακολουθούν σε κάθε συσκευή.')}</p><div class="actions"><button class="btn" id="account-progress">${progressView ? L('Back to my account','Επιστροφή στον λογαριασμό') : L('Check my progress','Προβολή της προόδου μου')}</button><button class="btn secondary" id="account-refresh">${L('Refresh progress','Ανανέωση προόδου')}</button><button class="btn outline" id="account-signout">${L('Sign out','Αποσύνδεση')}</button></div>`;
       dialog.append(account);
+      account.querySelector('#account-progress').onclick = () => {
+        progressView = !progressView; renderDialog(); dialog.querySelector('#account-title').focus();
+      };
       account.querySelector('#account-refresh').onclick = async () => {
         try { await refresh(); notice(L('Your progress is up to date.','Η πρόοδός σας είναι ενημερωμένη.')); } catch { notice(L('Could not load progress. Check your connection and try again.','Δεν φορτώθηκε η πρόοδος. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.'),true); }
       };
@@ -32,7 +36,12 @@
         if (error) { event.target.disabled = false; notice(L('Could not sign out. Please try again.','Η αποσύνδεση απέτυχε. Δοκιμάστε ξανά.'),true); }
         else { await acceptSession(null); dialog.close(); }
       };
-      if (legacy.completed.length || Object.keys(legacy.qnaAnswers).length) {
+      if (progressView) {
+        const analytics = document.createElement('section'); analytics.id = 'account-analytics';
+        analytics.setAttribute('aria-label',L('Personal progress analytics','Προσωπικά στατιστικά προόδου'));
+        dialog.append(analytics); renderProgress();
+      }
+      if (!progressView && (legacy.completed.length || Object.keys(legacy.qnaAnswers).length)) {
         const importedKey = `cookpath-imported:${user.id}`;
         let handled = false;
         try { handled = localStorage.getItem(importedKey) === 'yes'; } catch {}
@@ -77,6 +86,25 @@
       if (pendingEmail) showCodeForm(pendingEmail);
     }
   }
+  function renderProgress() {
+    const host = dialog?.querySelector('#account-analytics');
+    if (!host || !user) return;
+    if (!ready) {
+      host.innerHTML = `<p class="account-analytics-note">${syncError ? L('Your saved results could not be loaded. Choose Refresh progress to try again.','Δεν φορτώθηκαν τα αποθηκευμένα αποτελέσματα. Επιλέξτε Ανανέωση προόδου για νέα προσπάθεια.') : L('Loading your saved results…','Φόρτωση των αποθηκευμένων αποτελεσμάτων…')}</p>`;
+      return;
+    }
+    const s = P.summarize(canonical);
+    const pct = value => new Intl.NumberFormat(L('en','el'),{maximumFractionDigits:1}).format(value)+'%';
+    const stat = (label,value,total,extra) => `<article class="account-stat"><h3>${label}</h3><p><strong>${value}</strong><span> / ${total}</span></p><progress value="${value}" max="${total}" aria-label="${esc(label)}"></progress><small>${extra}</small></article>`;
+    const next = s.challenges.find(c => !c.complete);
+    host.innerHTML = `${syncError ? `<p class="account-analytics-note">${L('Showing the last loaded results. Choose Refresh progress to check for updates.','Εμφανίζονται τα τελευταία φορτωμένα αποτελέσματα. Επιλέξτε Ανανέωση προόδου για ενημέρωση.')}</p>` : ''}<div class="account-stats">
+      ${stat(L('Tasks practiced','Ασκήσεις που ολοκληρώθηκαν'),s.tasks,s.taskTotal,`${pct(s.tasks/s.taskTotal*100)} ${L('complete','ολοκληρώθηκε')}`)}
+      ${stat(L('Challenges finished','Ολοκληρωμένες προκλήσεις'),s.completedChallenges,s.challengeTotal,`${pct(s.completedChallenges/s.challengeTotal*100)} ${L('complete','ολοκληρώθηκε')}`)}
+      ${stat(L('Questions answered','Απαντημένες ερωτήσεις'),s.answered,s.questionTotal,`${s.unanswered} ${L('still to explore','μένουν για εξάσκηση')}`)}
+      </div><section class="account-quiz-results" aria-labelledby="account-quiz-title"><div class="account-result-ring" style="--result-angle:${s.accuracy===null?0:s.accuracy*3.6}deg" ${s.answered?'':'data-empty="true"'}><div><strong>${s.accuracy===null?'—':pct(s.accuracy)}</strong><span>${L('correct','σωστές')}</span></div></div><div class="account-quiz-copy"><h3 id="account-quiz-title">${L('Your quiz results','Αποτελέσματα των κουίζ')}</h3><ul class="account-result-legend"><li><span class="result-dot result-correct" aria-hidden="true"></span><span>${L('Correct answers','Σωστές απαντήσεις')}</span><strong>${s.correct} · ${s.accuracy===null?'—':pct(s.accuracy)}</strong></li><li><span class="result-dot result-wrong" aria-hidden="true"></span><span>${L('Wrong answers','Λάθος απαντήσεις')}</span><strong>${s.wrong} · ${s.accuracy===null?'—':pct(100-s.accuracy)}</strong></li></ul><p>${s.answered ? L('Percentages use your submitted answers only. Unanswered questions are excluded.','Τα ποσοστά αφορούν μόνο τις απαντήσεις που υποβάλατε. Οι αναπάντητες ερωτήσεις δεν συνυπολογίζονται.') : L('No answers yet. Try your first challenge quiz to see your results here.','Δεν υπάρχουν ακόμη απαντήσεις. Δοκιμάστε το κουίζ της πρώτης πρόκλησης για να δείτε εδώ τα αποτελέσματά σας.')}</p></div></section>
+      <p class="account-next-step">${next ? L(`Keep going with challenge ${next.number}: ${window.COOKPATH_PLAN?.[next.number-1]?.theme || ''}. Complete its five tasks and ten quiz answers to unlock the next.`,`Συνεχίστε με την πρόκληση ${next.number}: ${window.COOKPATH_PLAN?.[next.number-1]?.theme || ''}. Ολοκληρώστε τις πέντε ασκήσεις και τις δέκα απαντήσεις για να ανοίξει η επόμενη.`) : L('All 30 challenges complete. Keep putting your skills into practice in the kitchen.','Ολοκληρώσατε και τις 30 προκλήσεις. Συνεχίστε να εξασκείτε τις δεξιότητές σας στην κουζίνα.')}</p>
+      <details class="account-breakdown"><summary>${L('Challenge-by-challenge results','Αποτελέσματα ανά πρόκληση')}</summary><p class="account-small">${L('Each completed challenge includes five practiced tasks and ten submitted quiz answers. Your first quiz choices stay final.','Κάθε ολοκληρωμένη πρόκληση περιλαμβάνει πέντε ασκήσεις και δέκα απαντήσεις κουίζ. Οι πρώτες επιλογές σας παραμένουν οριστικές.')}</p><ol>${s.challenges.map(c => `<li class="account-challenge"><div><span class="eyebrow">${L('Challenge','Πρόκληση')} ${String(c.number).padStart(2,'0')}</span><h4>${esc(window.COOKPATH_PLAN?.[c.number-1]?.theme || '')}</h4><span class="account-challenge-status">${c.complete ? L('Complete','Ολοκληρώθηκε') : c.tasks || c.answered ? L('In progress','Σε εξέλιξη') : c.available ? L('Ready to start','Έτοιμη για έναρξη') : L('Not unlocked yet','Δεν έχει ανοίξει ακόμη')}</span></div><dl><div><dt>${L('Tasks','Ασκήσεις')}</dt><dd>${c.tasks}/5</dd></div><div><dt>${L('Answered','Απαντήσεις')}</dt><dd>${c.answered}/10</dd></div><div><dt>${L('Correct / wrong','Σωστές / λάθος')}</dt><dd>${c.correct} / ${c.wrong}</dd></div><div><dt>${L('Accuracy','Επιτυχία')}</dt><dd>${c.accuracy===null?'—':pct(c.accuracy)}</dd></div></dl></li>`).join('')}</ol></details>`;
+  }
   function showCodeForm(email) {
     dialog.querySelector('#account-code-form')?.remove();
     const form = document.createElement('form'); form.id = 'account-code-form'; form.className = 'account-form';
@@ -93,26 +121,27 @@
       finally { busy = false; submit.disabled = false; }
     };
   }
-  function open() { if (!enabled || !client) return; renderDialog(); if (!dialog.open) dialog.showModal(); }
+  function open() { if (!enabled || !client) return; progressView = false; renderDialog(); if (!dialog.open) dialog.showModal(); }
   async function rpc(name,args = {}) {
     const id = user?.id, stamp = generation;
     if (!id) { open(); throw new Error('Sign in required'); }
     paintStatus(L('Saving your progress…','Αποθήκευση της προόδου σας…'));
     const {data,error} = await client.rpc(name,args);
     if (stamp !== generation || user?.id !== id) throw new Error('Account changed');
-    if (error) { syncError = true; paintStatus(L('Not saved · open your account to retry','Δεν αποθηκεύτηκε · ανοίξτε τον λογαριασμό για νέα προσπάθεια')); throw error; }
+    if (error) { syncError = true; renderProgress(); paintStatus(L('Not saved · open your account to retry','Δεν αποθηκεύτηκε · ανοίξτε τον λογαριασμό για νέα προσπάθεια')); throw error; }
     const received = P.normalize(data);
     const next = P.normalize({completed:[...canonical.completed,...received.completed],qnaAnswers:{...canonical.qnaAnswers,...received.qnaAnswers}});
     canonical = next;
     ready = true; syncError = false; publish(next);
     try { localStorage.setItem(`cookpath-account:${id}`,JSON.stringify(next)); } catch {}
-    paintStatus(); return next;
+    paintStatus(); renderProgress(); return next;
   }
   async function refresh() { return rpc('cookpath_get_progress'); }
   async function acceptSession(session) {
     const nextUser = session?.user || null;
     if (nextUser?.id && nextUser.id === user?.id) return;
-    generation++; user = nextUser; ready = false; syncError = false; canonical = P.fresh(); publish(P.fresh()); paintStatus();
+    generation++; user = nextUser; ready = false; syncError = false; progressView = false; canonical = P.fresh(); publish(P.fresh()); paintStatus();
+    if (dialog?.open) renderDialog();
     if (!user) return;
     try {
       await refresh();
