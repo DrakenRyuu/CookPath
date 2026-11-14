@@ -13,9 +13,9 @@ enable_confirmations = true
 # The 30-emails/hour limit is configured in the dashboard; CLI v3.1 does not manage it.
 
 [auth.email.template.confirmation]
-subject = "Sign in to CookPath / Σύνδεση στο CookPath"
+subject = "CookPath sign-in code / Κωδικός σύνδεσης"
 content_path = "./supabase/templates/sign-in.html"
 
 [auth.email.template.magic_link]
-subject = "Sign in to CookPath / Σύνδεση στο CookPath"
+subject = "CookPath sign-in code / Κωδικός σύνδεσης"
 content_path = "./supabase/templates/sign-in.html"

@@ -18,6 +18,7 @@ async function setup(initial=null,legacy={}){
     onAuthStateChange:cb=>{callback=cb;},
     getSession:async()=>({data:{session},error:null}),
     signInWithOtp:async args=>{calls.push({name:'email',args});return {error:null};},
+    verifyOtp:async args=>{calls.push({name:'verify',args});session=initial||{user:{id:'otp',email:args.email},progress:{}};return {data:{session},error:null};},
     signOut:async()=>{session=null;callback('SIGNED_OUT',null);return {error:null};}
   },rpc:async(name,args)=>{calls.push({name,args});return handler?handler(name,args):{data:session?.progress||{},error:null};}};
   w.supabase={createClient:()=>client};w.eval(fs.readFileSync(path.join(root,'accounts.js'),'utf8'));
@@ -33,7 +34,7 @@ test('email sign-in uses Supabase and a clean return URL',async()=>{
   x.w.document.querySelector('form').dispatchEvent(new x.w.Event('submit',{bubbles:true,cancelable:true}));await tick();
   const call=x.calls.find(c=>c.name==='email');assert.equal(call.args.email,'reader@example.test');
   assert.equal(call.args.options.emailRedirectTo,'https://cookpath.test/');
-  assert.match(x.w.document.querySelector('#account-message').textContent,/Check your email/);x.dom.window.close();
+  assert.match(x.w.document.querySelector('#account-message').textContent,/8-digit code/);x.dom.window.close();
 });
 test('sign-out clears displayed account progress',async()=>{
   const x=await setup(a);assert.equal(x.api.canWrite,true);x.api.open();
@@ -80,4 +81,14 @@ test('gated legacy history stays available until every earlier completion is imp
   assert.equal(x.w.localStorage.getItem('cookpath-imported:a'),'yes');
   assert.equal(x.w.document.querySelector('#account-import'),null);
   assert.equal(x.states.at(-1).qnaAnswers['1'].selectedIndex,0);x.dom.window.close();
+});
+
+test('email code verifies in the app without an email redirect',async()=>{
+  const x=await setup();x.api.open();
+  x.w.document.querySelector('#account-email').value='reader@example.test';
+  x.w.document.querySelector('.account-form').dispatchEvent(new x.w.Event('submit',{bubbles:true,cancelable:true}));await tick();
+  x.w.document.querySelector('#account-code').value='12345678';
+  x.w.document.querySelector('#account-code-form').dispatchEvent(new x.w.Event('submit',{bubbles:true,cancelable:true}));await tick();
+  const call=x.calls.find(c=>c.name==='verify');assert.equal(call.args.token,'12345678');assert.equal(call.args.type,'email');
+  assert.equal(call.args.email,'reader@example.test');assert.equal(x.api.signedIn,true);x.dom.window.close();
 });

@@ -5,7 +5,7 @@
   const {choose:L} = window.COOKPATH_I18N;
   const enabled = config.enabled === true;
   let client, user = null, ready = false, generation = 0, publish = () => {}, legacy = P.fresh(), canonical = P.fresh();
-  let dialog, status, button, busy = false, syncError = false;
+  let dialog, status, button, busy = false, syncError = false, pendingEmail = "";
   const esc = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function paintStatus(message) {
     if (!status) return;
@@ -59,7 +59,7 @@
       }
     } else {
       const form = document.createElement('form'); form.className = 'account-form';
-      form.innerHTML = `<p class="muted">${L('Sign in with a secure email link. New here? Your account is created when you confirm your email.','Συνδεθείτε με ασφαλή σύνδεσμο email. Αν είστε νέος χρήστης, ο λογαριασμός δημιουργείται με την επιβεβαίωση του email σας.')}</p><label for="account-email">${L('Email address','Διεύθυνση email')}</label><input id="account-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"><button class="btn" type="submit">${L('Email me a sign-in link','Αποστολή συνδέσμου σύνδεσης')}</button><p class="account-small">${L('No password to remember. Your quiz choices are final after submission.','Δεν χρειάζεται κωδικός. Οι επιλογές στο κουίζ είναι οριστικές μετά την υποβολή.')}</p>`;
+      form.innerHTML = `<p class="muted">${L('Sign in with an 8-digit email code. Enter it here to continue; use the newest email.','Συνδεθείτε με έναν 8ψήφιο κωδικό email. Εισαγάγετέ τον εδώ για να συνεχίσετε· χρησιμοποιήστε το πιο πρόσφατο email.')}</p><label for="account-email">${L('Email address','Διεύθυνση email')}</label><input id="account-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"><button class="btn" type="submit">${L('Email me a sign-in code','Αποστολή κωδικού σύνδεσης')}</button><p class="account-small">${L('No password to remember. Your quiz choices are final after submission.','Δεν χρειάζεται κωδικός. Οι επιλογές στο κουίζ είναι οριστικές μετά την υποβολή.')}</p>`;
       dialog.append(form);
       form.onsubmit = async event => {
         event.preventDefault(); if (busy) return;
@@ -68,11 +68,30 @@
         try {
           const {error} = await client.auth.signInWithOtp({email:form.elements.email.value.trim(),options:{emailRedirectTo:redirect.href,shouldCreateUser:true}});
           if (error) throw error;
-          notice(L('Check your email for your sign-in link. You can open it on this device or another device.','Ελέγξτε το email σας για τον σύνδεσμο σύνδεσης. Μπορείτε να τον ανοίξετε σε αυτή ή σε άλλη συσκευή.'));
+          pendingEmail = form.elements.email.value.trim();
+          showCodeForm(pendingEmail);
+          notice(L('Enter the 8-digit code from the newest CookPath email below. Stay on this page.','Εισαγάγετε παρακάτω τον 8ψήφιο κωδικό από το πιο πρόσφατο email του CookPath. Παραμείνετε σε αυτή τη σελίδα.'));
         } catch { notice(L('The sign-in email could not be sent. Please try again shortly.','Το email σύνδεσης δεν στάλθηκε. Δοκιμάστε ξανά σε λίγο.'),true); }
         finally { busy = false; submit.disabled = false; }
       };
+      if (pendingEmail) showCodeForm(pendingEmail);
     }
+  }
+  function showCodeForm(email) {
+    dialog.querySelector('#account-code-form')?.remove();
+    const form = document.createElement('form'); form.id = 'account-code-form'; form.className = 'account-form';
+    form.innerHTML = `<label for="account-code">${L('8-digit sign-in code','8ψήφιος κωδικός σύνδεσης')}</label><input id="account-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{8}" minlength="8" maxlength="8" required><button class="btn" type="submit">${L('Verify code and sign in','Επιβεβαίωση και σύνδεση')}</button>`;
+    dialog.append(form);
+    form.onsubmit = async event => {
+      event.preventDefault(); if (busy) return;
+      busy = true; const submit = form.querySelector('button'); submit.disabled = true;
+      try {
+        const {data,error} = await client.auth.verifyOtp({email,token:form.elements.code.value.trim(),type:'email'});
+        if (error) throw error;
+        pendingEmail = ''; await acceptSession(data.session); renderDialog();
+      } catch { notice(L('This code is invalid or expired. Use the newest email, or request a new code above.','Ο κωδικός δεν είναι έγκυρος ή έχει λήξει. Χρησιμοποιήστε το πιο πρόσφατο email ή ζητήστε νέο κωδικό παραπάνω.'),true); }
+      finally { busy = false; submit.disabled = false; }
+    };
   }
   function open() { if (!enabled || !client) return; renderDialog(); if (!dialog.open) dialog.showModal(); }
   async function rpc(name,args = {}) {
@@ -117,6 +136,7 @@
     if (!window.supabase) await new Promise((resolve,reject) => {
       const script = document.createElement('script'); script.src = 'vendor/supabase.js'; script.onload = resolve; script.onerror = reject; document.head.append(script);
     });
+    const callbackError = /(?:error=|error_code=)/.test(location.hash);
     client = window.supabase.createClient(config.supabaseUrl,config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
     dialog = document.createElement('dialog'); dialog.className = 'account-dialog'; dialog.setAttribute('aria-labelledby','account-title'); document.body.append(dialog);
     const host = document.createElement('div'); host.className = 'account-controls';
@@ -125,9 +145,9 @@
     host.append(status,button); document.querySelector('.status').prepend(host); paintStatus();
     client.auth.onAuthStateChange((_event,session) => { setTimeout(()=>acceptSession(session).catch(()=>{}),0); });
     const {data,error} = await client.auth.getSession();
-    if (error) throw error;
-    await acceptSession(data.session);
-    if (location.hash.includes('error')) { open(); notice(L('This sign-in link has expired. Request a new one.','Ο σύνδεσμος σύνδεσης έχει λήξει. Ζητήστε νέο σύνδεσμο.'),true); }
+    if (error && !callbackError) throw error;
+    await acceptSession(data?.session);
+    if (callbackError) { open(); notice(L('This sign-in link is invalid or expired. Request a fresh code here to sign in.','Ο σύνδεσμος δεν είναι έγκυρος ή έχει λήξει. Ζητήστε νέο κωδικό εδώ για να συνδεθείτε.'),true); }
     window.addEventListener('focus',()=>{if(user)refresh().catch(()=>{});});
     window.addEventListener('online',()=>{if(user)refresh().catch(()=>{});});
   }
