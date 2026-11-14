@@ -1,6 +1,0 @@
-.env
-.env.*
-!.env.example
-supabase/.temp/
-supabase/.branches/
-node_modules/

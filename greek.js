@@ -1,6 +1,5 @@
 // Greek translations for the public CookPath curriculum and interface.
 window.COOKPATH_GREEK = {
-  "Work through 30 challenges with five focused tasks each. Every task explains what to do and why it matters. Practice each task and save your progress as you go.": "Προχωρήστε σε 30 προκλήσεις με πέντε στοχευμένες ασκήσεις η καθεμία. Κάθε άσκηση εξηγεί τι να κάνετε και γιατί έχει σημασία. Εξασκηθείτε σε κάθε άσκηση και αποθηκεύστε την πρόοδό σας καθώς προχωράτε.",
   "Knives": "Μαχαίρια",
   "Your cooking school": "Η δική σας σχολή μαγειρικής",
   "wherever you are.": "όπου κι αν βρίσκεστε.",

@@ -1,7 +1,7 @@
   (()=>{
     const {choose:L,translate:T,changeLanguage}=window.COOKPATH_I18N;
     const TASKS=window.COOKPATH_TASKS||[], QUESTIONS=window.COOKPATH_QUESTIONS||[], DAYS=window.COOKPATH_PLAN||[], CHEF_QUOTES=window.COOKPATH_QUOTES||[], KEY='cookpath-monthly-v5';
-    const P=window.COOKPATH_PROGRESS,A=window.COOKPATH_ACCOUNTS,E=window.COOKPATH_EVIDENCE;
+    const P=window.COOKPATH_PROGRESS,A=window.COOKPATH_ACCOUNTS;
     let state=P.fresh(),legacyProgress=P.fresh(),busy=false,pendingChoice=null;
     let selectedLessonDay=1,selectedQADay=1;
     const openedRecipes=new Set();
@@ -53,12 +53,6 @@
         catch{toast(L('Could not save this task. Check your connection and try again.','Η άσκηση δεν αποθηκεύτηκε. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.'))}
         finally{busy=false;renderLessons()}
       });
-      host.querySelectorAll('[data-evidence]').forEach(button=>button.onclick=()=>{
-        if(busy)return;
-        if(!A.canWrite){A.open();return;}
-        const task=TASKS.find(t=>t.id===Number(button.dataset.evidence)),wasComplete=dayDone(task.day);
-        E.open(task,{onComplete:()=>notifyComplete(task.day,wasComplete)});
-      });
 
     }
     function renderRecipe(r,available){
@@ -68,10 +62,8 @@
     }
     function renderTask(t,canComplete,preview){
       const done=taskComplete(t.id);
-      const review=state.taskReviews[t.id],requiresEvidence=state.evidenceEnabled&&E?.rule(t.id).kind!=='none';
       let status='';
-      if(done)status=review?.status==='approved'?E.resultMarkup(review):L('<div class="eval-result pass"><b>Completed ✓</b> · self-confirmed practice</div>','<div class="eval-result pass"><b>Ολοκληρώθηκε ✓</b> · επιβεβαιώσατε την εξάσκηση</div>');
-      else if(canComplete&&requiresEvidence)status=E.card(t,review);
+      if(done)status=L('<div class="eval-result pass"><b>Completed ✓</b> · self-confirmed practice</div>','<div class="eval-result pass"><b>Ολοκληρώθηκε ✓</b> · επιβεβαιώσατε την εξάσκηση</div>');
       else if(canComplete)status=`<div class="photo-row"><button class="btn" data-complete="${t.id}" ${busy?'disabled':''}>${L('Mark task complete','Ολοκλήρωση άσκησης')}</button></div>`;
       else if(preview)status=L('<div class="locked-text">Preview only · complete the previous challenges to unlock this task.</div>','<div class="locked-text">Μόνο προεπισκόπηση · ολοκληρώστε τις προηγούμενες προκλήσεις για να ανοίξει αυτή η άσκηση.</div>');
       return `<article class="task ${done?'complete':''}"><div class="task-num">${done?'✓':String(t.slot).padStart(2,'0')}</div><div><h3>${esc(t.title)}</h3><p><b>${L('Do:','Εκτέλεση:')}</b> ${esc(t.how)}</p><div class="why"><b>${L('Why it matters','Γιατί έχει σημασία')}</b><p>${esc(t.why)}</p></div><p class="proof"><b>${L('Practice check:','Έλεγχος εξάσκησης:')}</b> ${esc(t.proof)}</p>${status}</div></article>`;
@@ -109,7 +101,7 @@
       }
       renderLessons();
       if(resume&&['welcome','lessons','qa','knives','about'].includes(resume.view))page(resume.view);
-      if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js?v=29').catch(()=>{});
+      if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js?v=28').catch(()=>{});
       if(A.enabled)A.start({legacyProgress,onState:applyProgress}).catch(()=>toast(L('Account connection is unavailable. Please try again.','Η σύνδεση λογαριασμού δεν είναι διαθέσιμη. Δοκιμάστε ξανά.')));
       else window.addEventListener('storage',event=>{if(event.key===KEY)applyProgress(readLocal())});
     }
