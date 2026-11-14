@@ -85,7 +85,12 @@ export function createHandler({env,catalog,fetch:request=globalThis.fetch}) {
       const task=tasks.get(body.taskId);validateSubmission(body,task);
       attempt=await call('/rest/v1/rpc/cookpath_begin_evidence',publicKey,token,{p_task_id:body.taskId,p_kind:body.kind});
       const response=await request('https://api.openai.com/v1/responses',{method:'POST',headers:{Authorization:'Bearer '+key,'Content-Type':'application/json'},body:JSON.stringify(reviewRequest(task,body,env('OPENAI_REVIEW_MODEL')||MODEL)),signal:AbortSignal.timeout(45000)});
-      if(!response.ok)throw new ReviewError('review_unavailable',503);
+      if(!response.ok){
+        let problem;try{problem=(await response.json()).error;}catch{}
+        const quotaCodes=['insufficient_quota','credit_balance_exhausted','organization_spend_limit_exceeded','project_spend_limit_exceeded','organization_usage_limit_exceeded'];
+        const quota=quotaCodes.includes(problem?.code)?'provider_'+problem.code:problem?.type==='insufficient_quota'?'provider_quota':'provider_limit';
+        throw new ReviewError(response.status===401?'provider_key_invalid':response.status===429?quota:'review_unavailable',503);
+      }
       const output=await response.json();
       if(output.status!=='completed')throw new ReviewError('review_unavailable',503);
       const text=(output.output||[]).flatMap(item=>item.content||[]).filter(item=>item.type==='output_text').map(item=>item.text).join('');

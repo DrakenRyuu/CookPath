@@ -29,7 +29,7 @@ test('only clear, visibly safe practice meeting both criteria passes',()=>{
   assert.throws(()=>validateVerdict({...good,checks:[good.checks[0],good.checks[0]]}),/review_unavailable/);
   const request=reviewRequest(catalog[0],photo);assert.equal(request.store,false);assert.match(request.input[0].content,/untrusted evidence/);
 });
-function fixture({active=true,key=true,auth=true,verdict=good,broken=false}={}){
+function fixture({active=true,key=true,auth=true,verdict=good,broken=false,providerError=null}={}){
   const calls=[],env={SUPABASE_URL:'https://cookpath.test',SUPABASE_ANON_KEY:'public-test-key',SUPABASE_SERVICE_ROLE_KEY:'server-only-test-key',...(key?{OPENAI_API_KEY:'ai-only-test-key'}:{})};
   const handler=createHandler({env:name=>env[name],catalog,fetch:async(url,options)=>{
     calls.push({url,options});
@@ -37,7 +37,7 @@ function fixture({active=true,key=true,auth=true,verdict=good,broken=false}={}){
     if(url.endsWith('/cookpath_get_progress'))return Response.json({completed:[],qnaAnswers:{},evidenceEnabled:active});
     if(url.endsWith('/cookpath_begin_evidence'))return Response.json('attempt-1');
     if(url.endsWith('/cookpath_finish_evidence'))return Response.json(null);
-    if(url==='https://api.openai.com/v1/responses')return Response.json(broken?{status:'incomplete'}:{status:'completed',output:[{content:[{type:'output_text',text:JSON.stringify(verdict)}]}]});
+    if(url==='https://api.openai.com/v1/responses')return providerError?Response.json({error:providerError},{status:429}):Response.json(broken?{status:'incomplete'}:{status:'completed',output:[{content:[{type:'output_text',text:JSON.stringify(verdict)}]}]});
     throw new Error('Unexpected endpoint');
   }});
   const send=(body=photo,token=true)=>handler(new Request('https://cookpath.test/functions/v1/review-evidence',{method:'POST',headers:{origin:'https://cookpath.onrender.com','Content-Type':'application/json',...(token?{Authorization:'Bearer '+'session-token-'.repeat(4)}:{})},body:JSON.stringify(body)}));
@@ -60,4 +60,9 @@ test('retry and provider failures never record a successful task review',async()
   assert.equal(JSON.parse(retry.calls.find(c=>c.url.endsWith('/cookpath_finish_evidence')).options.body).p_status,'retry');
   const fail=fixture({broken:true});assert.equal((await fail.send()).status,503);
   assert.equal(JSON.parse(fail.calls.find(c=>c.url.endsWith('/cookpath_finish_evidence')).options.body).p_status,'error');
+});
+test('billing failures are distinguished from rate limits without exposing provider messages',async()=>{
+  const x=fixture({providerError:{code:'credit_balance_exhausted',type:'insufficient_quota',message:'private provider details'}}),r=await x.send();
+  assert.deepEqual(await r.json(),{error:'provider_credit_balance_exhausted'});
+  assert.equal(JSON.parse(x.calls.find(c=>c.url.endsWith('/cookpath_finish_evidence')).options.body).p_status,'error');
 });
