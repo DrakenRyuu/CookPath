@@ -5,8 +5,28 @@
   const {choose:L} = window.COOKPATH_I18N;
   const enabled = config.enabled === true;
   let client, user = null, ready = false, generation = 0, publish = () => {}, legacy = P.fresh(), canonical = P.fresh();
-  let dialog, status, button, busy = false, syncError = false, pendingEmail = "", progressView = false;
+  let dialog, status, button, busy = false, syncError = false, pendingEmail = "", progressView = false, entryVisible = false;
+  const pendingKey = 'cookpath-pending-email';
   const esc = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function setPending(email) {
+    pendingEmail = email;
+    try { if(email)sessionStorage.setItem(pendingKey,email);else sessionStorage.removeItem(pendingKey); } catch {}
+  }
+  function entry(required) {
+    if(required)document.documentElement.setAttribute('data-account-entry','required');
+    else document.documentElement.removeAttribute('data-account-entry');
+    const shell=document.querySelector('.shell');if(shell)shell.inert=required;
+    document.querySelector('#account-entry-loader')?.remove();
+  }
+  function showEntry() {
+    entry(true); entryVisible=true; progressView=false; renderDialog();
+    if(!dialog.open)dialog.showModal();
+  }
+  function authBusy(value) {
+    busy=value;
+    dialog.querySelectorAll('[data-auth-action]').forEach(el=>el.disabled=value||!client);
+    const language=dialog.querySelector('#account-entry-language');if(language)language.disabled=value;
+  }
   function paintStatus(message) {
     if (!status) return;
     status.textContent = message || (user ? ready ? L('Saved to your account','Αποθηκεύτηκε στον λογαριασμό σας') : L('Loading your progress…','Φόρτωση της προόδου σας…') : L('Sign in to save your progress','Συνδεθείτε για να αποθηκεύσετε την πρόοδό σας'));
@@ -18,8 +38,12 @@
   }
   function renderDialog() {
     dialog.classList.toggle('account-dialog-wide',!!user && progressView);
-    dialog.innerHTML = `<div class="account-heading"><div><span class="eyebrow">CookPath</span><h2 id="account-title" tabindex="-1">${user ? progressView ? L('Your progress, at a glance','Η πρόοδός σας με μια ματιά') : L('Your cooking progress','Η μαγειρική πρόοδός σας') : L('Your school. Your progress.','Η σχολή σας. Η πρόοδός σας.')}</h2></div><button class="btn outline" type="button" id="account-close" aria-label="${L('Close account window','Κλείσιμο παραθύρου λογαριασμού')}">×</button></div><p id="account-message" role="status" aria-live="polite"></p>`;
-    dialog.querySelector('#account-close').onclick = () => dialog.close();
+    dialog.classList.toggle('account-welcome',!user);
+    const title=user ? progressView ? L('Your progress, at a glance','Η πρόοδός σας με μια ματιά') : L('Your cooking progress','Η μαγειρική πρόοδός σας') : pendingEmail ? L('Check your inbox','Δείτε τα εισερχόμενά σας') : L('Welcome to CookPath','Καλώς ήρθατε στο CookPath');
+    dialog.innerHTML = `<div class="account-heading"><div><span class="eyebrow">CookPath</span><h2 id="account-title" tabindex="-1">${title}</h2></div>${user ? `<button class="btn outline" type="button" id="account-close" aria-label="${L('Close account window','Κλείσιμο παραθύρου λογαριασμού')}">×</button>` : `<select id="account-entry-language" aria-label="Language / Γλώσσα"><option value="en">English</option><option value="el">Ελληνικά</option></select>`}</div><p id="account-message" role="status" aria-live="polite"></p>`;
+    const close=dialog.querySelector('#account-close');if(close)close.onclick = () => dialog.close();
+    const language=dialog.querySelector('#account-entry-language');
+    if(language){language.value=window.COOKPATH_I18N.language||'en';language.onchange=()=>window.COOKPATH_I18N.changeLanguage(language.value);}
     if (user) {
       const account = document.createElement('div');
       account.innerHTML = `<p class="muted account-email">${esc(user.email || '')}</p><p class="muted">${L('Your completed tasks and first quiz answers belong to this account and follow you across devices.','Οι ολοκληρωμένες ασκήσεις και οι πρώτες απαντήσεις σας αποθηκεύονται στον λογαριασμό σας και σας ακολουθούν σε κάθε συσκευή.')}</p><div class="actions"><button class="btn" id="account-progress">${progressView ? L('Back to my account','Επιστροφή στον λογαριασμό') : L('Check my progress','Προβολή της προόδου μου')}</button><button class="btn secondary" id="account-refresh">${L('Refresh progress','Ανανέωση προόδου')}</button><button class="btn outline" id="account-signout">${L('Sign out','Αποσύνδεση')}</button></div>`;
@@ -34,7 +58,7 @@
         event.target.disabled = true;
         const {error} = await client.auth.signOut({scope:'local'});
         if (error) { event.target.disabled = false; notice(L('Could not sign out. Please try again.','Η αποσύνδεση απέτυχε. Δοκιμάστε ξανά.'),true); }
-        else { await acceptSession(null); dialog.close(); }
+        else { setPending(''); await acceptSession(null); }
       };
       if (progressView) {
         const analytics = document.createElement('section'); analytics.id = 'account-analytics';
@@ -67,23 +91,17 @@
         }
       }
     } else {
+      if(pendingEmail){showCodeForm(pendingEmail);authBusy(busy);return;}
+      const intro=document.createElement('div');intro.className='account-welcome-intro';
+      intro.innerHTML=`<p>${L('Your cooking school, wherever you are.','Η δική σας σχολή μαγειρικής, όπου κι αν βρίσκεστε.')}</p><ol><li>${L('Follow the lessons and practise five tasks.','Ακολουθήστε τα μαθήματα και εξασκηθείτε σε πέντε ασκήσεις.')}</li><li>${L('Try the recipe and answer ten quiz questions.','Δοκιμάστε τη συνταγή και απαντήστε σε δέκα ερωτήσεις.')}</li><li>${L('Finish the challenge to unlock the next.','Ολοκληρώστε την πρόκληση για να ανοίξει η επόμενη.')}</li></ol><p class="account-small">${L('30 challenges. Learn at your own pace.','30 προκλήσεις. Μάθετε στον δικό σας ρυθμό.')}</p>`;
+      dialog.append(intro);
       const form = document.createElement('form'); form.className = 'account-form';
-      form.innerHTML = `<p class="muted">${L('Sign in with an 8-digit email code. Enter it here to continue; use the newest email.','Συνδεθείτε με έναν 8ψήφιο κωδικό email. Εισαγάγετέ τον εδώ για να συνεχίσετε· χρησιμοποιήστε το πιο πρόσφατο email.')}</p><label for="account-email">${L('Email address','Διεύθυνση email')}</label><input id="account-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"><button class="btn" type="submit">${L('Email me a sign-in code','Αποστολή κωδικού σύνδεσης')}</button><p class="account-small">${L('No password to remember. Your quiz choices are final after submission.','Δεν χρειάζεται κωδικός. Οι επιλογές στο κουίζ είναι οριστικές μετά την υποβολή.')}</p>`;
+      form.innerHTML = `<label for="account-email">${L('Start with your email','Ξεκινήστε με το email σας')}</label><input id="account-email" name="email" type="email" inputmode="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"><button class="btn" type="submit" data-auth-action>${L('Continue with email','Συνέχεια με email')}</button><p class="account-small">${L('We’ll email you an 8-digit code to create your account or sign in. Your progress stays saved.','Θα λάβετε έναν 8ψήφιο κωδικό για εγγραφή ή σύνδεση. Η πρόοδός σας αποθηκεύεται.')}</p>`;
       dialog.append(form);
       form.onsubmit = async event => {
-        event.preventDefault(); if (busy) return;
-        busy = true; const submit = form.querySelector('button'); submit.disabled = true;
-        const redirect = new URL(location.href); redirect.hash = ''; redirect.search = '';
-        try {
-          const {error} = await client.auth.signInWithOtp({email:form.elements.email.value.trim(),options:{emailRedirectTo:redirect.href,shouldCreateUser:true}});
-          if (error) throw error;
-          pendingEmail = form.elements.email.value.trim();
-          showCodeForm(pendingEmail);
-          notice(L('Enter the 8-digit code from the newest CookPath email below. Stay on this page.','Εισαγάγετε παρακάτω τον 8ψήφιο κωδικό από το πιο πρόσφατο email του CookPath. Παραμείνετε σε αυτή τη σελίδα.'));
-        } catch { notice(L('The sign-in email could not be sent. Please try again shortly.','Το email σύνδεσης δεν στάλθηκε. Δοκιμάστε ξανά σε λίγο.'),true); }
-        finally { busy = false; submit.disabled = false; }
+        event.preventDefault(); await sendCode(form.elements.email.value.trim());
       };
-      if (pendingEmail) showCodeForm(pendingEmail);
+      authBusy(busy);
     }
   }
   function renderProgress() {
@@ -105,23 +123,38 @@
       <p class="account-next-step">${next ? L(`Keep going with challenge ${next.number}: ${window.COOKPATH_PLAN?.[next.number-1]?.theme || ''}. Complete its five tasks and ten quiz answers to unlock the next.`,`Συνεχίστε με την πρόκληση ${next.number}: ${window.COOKPATH_PLAN?.[next.number-1]?.theme || ''}. Ολοκληρώστε τις πέντε ασκήσεις και τις δέκα απαντήσεις για να ανοίξει η επόμενη.`) : L('All 30 challenges complete. Keep putting your skills into practice in the kitchen.','Ολοκληρώσατε και τις 30 προκλήσεις. Συνεχίστε να εξασκείτε τις δεξιότητές σας στην κουζίνα.')}</p>
       <details class="account-breakdown"><summary>${L('Challenge-by-challenge results','Αποτελέσματα ανά πρόκληση')}</summary><p class="account-small">${L('Each completed challenge includes five practiced tasks and ten submitted quiz answers. Your first quiz choices stay final.','Κάθε ολοκληρωμένη πρόκληση περιλαμβάνει πέντε ασκήσεις και δέκα απαντήσεις κουίζ. Οι πρώτες επιλογές σας παραμένουν οριστικές.')}</p><ol>${s.challenges.map(c => `<li class="account-challenge"><div><span class="eyebrow">${L('Challenge','Πρόκληση')} ${String(c.number).padStart(2,'0')}</span><h4>${esc(window.COOKPATH_PLAN?.[c.number-1]?.theme || '')}</h4><span class="account-challenge-status">${c.complete ? L('Complete','Ολοκληρώθηκε') : c.tasks || c.answered ? L('In progress','Σε εξέλιξη') : c.available ? L('Ready to start','Έτοιμη για έναρξη') : L('Not unlocked yet','Δεν έχει ανοίξει ακόμη')}</span></div><dl><div><dt>${L('Tasks','Ασκήσεις')}</dt><dd>${c.tasks}/5</dd></div><div><dt>${L('Answered','Απαντήσεις')}</dt><dd>${c.answered}/10</dd></div><div><dt>${L('Correct / wrong','Σωστές / λάθος')}</dt><dd>${c.correct} / ${c.wrong}</dd></div><div><dt>${L('Accuracy','Επιτυχία')}</dt><dd>${c.accuracy===null?'—':pct(c.accuracy)}</dd></div></dl></li>`).join('')}</ol></details>`;
   }
+  async function sendCode(email) {
+    if(busy||!client)return;
+    authBusy(true);
+    const redirect=new URL(/^https?:$/.test(location.protocol)?location.href:'https://cookpath.onrender.com/');redirect.hash='';redirect.search='';
+    try{
+      const {error}=await client.auth.signInWithOtp({email,options:{emailRedirectTo:redirect.href,shouldCreateUser:true}});
+      if(error)throw error;
+      setPending(email);renderDialog();
+      notice(L('Enter the 8-digit code from your newest email. Check Spam if it’s missing.','Εισαγάγετε τον 8ψήφιο κωδικό από το πιο πρόσφατο email. Αν δεν το βρίσκετε, ελέγξτε τα ανεπιθύμητα.'));
+      dialog.querySelector('#account-code')?.focus();
+    }catch{notice(L('The email could not be sent. Wait a minute, then try again.','Το email δεν στάλθηκε. Περιμένετε ένα λεπτό και δοκιμάστε ξανά.'),true);}
+    finally{authBusy(false);}
+  }
   function showCodeForm(email) {
     dialog.querySelector('#account-code-form')?.remove();
     const form = document.createElement('form'); form.id = 'account-code-form'; form.className = 'account-form';
-    form.innerHTML = `<label for="account-code">${L('8-digit sign-in code','8ψήφιος κωδικός σύνδεσης')}</label><input id="account-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{8}" minlength="8" maxlength="8" required><button class="btn" type="submit">${L('Verify code and sign in','Επιβεβαίωση και σύνδεση')}</button>`;
+    form.innerHTML = `<p class="muted">${L('Enter the code sent to','Εισαγάγετε τον κωδικό που στάλθηκε στο')} <strong class="account-email">${esc(email)}</strong></p><label for="account-code">${L('8-digit sign-in code','8ψήφιος κωδικός σύνδεσης')}</label><input id="account-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{8}" minlength="8" maxlength="8" required><button class="btn" type="submit" data-auth-action>${L('Verify and enter CookPath','Επιβεβαίωση και είσοδος στο CookPath')}</button><div class="account-code-actions"><button class="btn outline" type="button" id="account-resend" data-auth-action>${L('Resend code','Νέος κωδικός')}</button><button class="btn outline" type="button" id="account-change-email" data-auth-action>${L('Change email','Αλλαγή email')}</button></div>`;
     dialog.append(form);
+    form.querySelector('#account-resend').onclick=()=>sendCode(email);
+    form.querySelector('#account-change-email').onclick=()=>{if(busy)return;setPending('');renderDialog();const field=dialog.querySelector('#account-email');field.value=email;field.focus();};
     form.onsubmit = async event => {
       event.preventDefault(); if (busy) return;
-      busy = true; const submit = form.querySelector('button'); submit.disabled = true;
+      authBusy(true);
       try {
         const {data,error} = await client.auth.verifyOtp({email,token:form.elements.code.value.trim(),type:'email'});
-        if (error) throw error;
-        pendingEmail = ''; await acceptSession(data.session); renderDialog();
+        if (error || !data?.session?.user) throw error || new Error('No session');
+        setPending(''); await acceptSession(data.session);
       } catch { notice(L('This code is invalid or expired. Use the newest email, or request a new code above.','Ο κωδικός δεν είναι έγκυρος ή έχει λήξει. Χρησιμοποιήστε το πιο πρόσφατο email ή ζητήστε νέο κωδικό παραπάνω.'),true); }
-      finally { busy = false; submit.disabled = false; }
+      finally { authBusy(false); }
     };
   }
-  function open() { if (!enabled || !client) return; progressView = false; renderDialog(); if (!dialog.open) dialog.showModal(); }
+  function open() { if (!enabled) return; if(!user){showEntry();return;}progressView = false; renderDialog(); if (!dialog.open) dialog.showModal(); }
   async function rpc(name,args = {}) {
     const id = user?.id, stamp = generation;
     if (!id) { open(); throw new Error('Sign in required'); }
@@ -140,13 +173,16 @@
   async function acceptSession(session) {
     const nextUser = session?.user || null;
     if (nextUser?.id && nextUser.id === user?.id) return;
+    const fromEntry=entryVisible;
     generation++; user = nextUser; ready = false; syncError = false; progressView = false; canonical = P.fresh(); publish(P.fresh()); paintStatus();
-    if (dialog?.open) renderDialog();
-    if (!user) return;
+    if (!user) {showEntry();return;}
+    setPending('');entry(false);entryVisible=false;
+    if(fromEntry&&dialog.open)dialog.close();
+    else if(dialog.open)renderDialog();
     try {
       await refresh();
       let imported = false; try { imported = localStorage.getItem(`cookpath-imported:${user.id}`) === 'yes'; } catch {}
-      if (!imported && (legacy.completed.length || Object.keys(legacy.qnaAnswers).length)) open();
+      if (!fromEntry && !imported && (legacy.completed.length || Object.keys(legacy.qnaAnswers).length)) open();
       else if (dialog?.open) renderDialog();
     } catch {
       try { publish(P.normalize(JSON.parse(localStorage.getItem(`cookpath-account:${user.id}`)||'null'))); } catch {}
@@ -154,8 +190,16 @@
     }
   }
   async function start({onState,legacyProgress}) {
-    if (!enabled) return;
+    if (!enabled) {entry(false);return;}
     publish = onState; legacy = P.normalize(legacyProgress);
+    try{const saved=sessionStorage.getItem(pendingKey);if(saved&&saved.length<=254&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(saved))pendingEmail=saved;}catch{}
+    dialog = document.createElement('dialog'); dialog.className = 'account-dialog'; dialog.setAttribute('aria-labelledby','account-title'); document.body.append(dialog);
+    dialog.addEventListener('cancel',event=>{if(!user)event.preventDefault();});
+    const host = document.createElement('div'); host.className = 'account-controls';
+    status = document.createElement('span'); status.className = 'account-save-status'; status.setAttribute('role','status');
+    button = document.createElement('button'); button.className = 'btn account-button'; button.onclick = open;
+    host.append(status,button); document.querySelector('.status').prepend(host); paintStatus();
+    try {
     const url = new URL(config.supabaseUrl);
     if (url.protocol !== 'https:' || !config.publishableKey || config.publishableKey.startsWith('sb_secret_')) throw new Error('Invalid public account configuration');
     if (config.publishableKey.startsWith('eyJ')) {
@@ -167,16 +211,16 @@
     });
     const callbackError = /(?:error=|error_code=)/.test(location.hash);
     client = window.supabase.createClient(config.supabaseUrl,config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-    dialog = document.createElement('dialog'); dialog.className = 'account-dialog'; dialog.setAttribute('aria-labelledby','account-title'); document.body.append(dialog);
-    const host = document.createElement('div'); host.className = 'account-controls';
-    status = document.createElement('span'); status.className = 'account-save-status'; status.setAttribute('role','status');
-    button = document.createElement('button'); button.className = 'btn account-button'; button.onclick = open;
-    host.append(status,button); document.querySelector('.status').prepend(host); paintStatus();
     client.auth.onAuthStateChange((_event,session) => { setTimeout(()=>acceptSession(session).catch(()=>{}),0); });
     const {data,error} = await client.auth.getSession();
     if (error && !callbackError) throw error;
     await acceptSession(data?.session);
-    if (callbackError) { open(); notice(L('This sign-in link is invalid or expired. Request a fresh code here to sign in.','Ο σύνδεσμος δεν είναι έγκυρος ή έχει λήξει. Ζητήστε νέο κωδικό εδώ για να συνδεθείτε.'),true); }
+    if (callbackError && !user) { open(); notice(L('This sign-in link is invalid or expired. Request a fresh code here to sign in.','Ο σύνδεσμος δεν είναι έγκυρος ή έχει λήξει. Ζητήστε νέο κωδικό εδώ για να συνδεθείτε.'),true); }
+    } catch {
+      client=null;showEntry();
+      notice(L('We couldn’t connect. Check your connection and try again.','Δεν ήταν δυνατή η σύνδεση. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.'),true);
+      const retry=document.createElement('button');retry.className='btn secondary';retry.textContent=L('Try again','Δοκιμάστε ξανά');retry.onclick=()=>location.reload();dialog.append(retry);
+    }
     window.addEventListener('focus',()=>{if(user)refresh().catch(()=>{});});
     window.addEventListener('online',()=>{if(user)refresh().catch(()=>{});});
   }

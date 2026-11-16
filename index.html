@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-account-entry="checking">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,8 +21,12 @@
   <link rel="stylesheet" href="additions.css">
   <link rel="stylesheet" href="refinements.css">
   <link rel="stylesheet" href="accounts.css">
+  <style>
+    html[data-account-entry] .shell{visibility:hidden;pointer-events:none}#account-entry-loader{display:none}html[data-account-entry="checking"] #account-entry-loader{position:fixed;inset:0;display:grid;place-content:center;gap:15px;text-align:center;background:#f7f5ef;color:#1e342a;z-index:50;font:600 18px system-ui}#account-entry-loader img{width:54px;height:54px;margin:auto}#account-entry-loader small{font-size:12px;font-weight:400;color:#52645a}
+  </style>
 </head>
 <body>
+  <div id="account-entry-loader" role="status"><img src="icon.svg" alt=""><span>CookPath</span><small>Loading · Φόρτωση</small><noscript><p>Enable JavaScript to sign in. · Ενεργοποιήστε τη JavaScript για σύνδεση.</p></noscript></div>
   <div class="shell">
     <header class="topbar"><div class="brand"><div class="brandmark">✳</div><span>CookPath</span></div><div class="status"><span class="status-pill">Self-paced practice</span><span class="status-pill extra"><strong id="total-done">0</strong> / 150 tasks</span><label class="language-picker" data-language-picker><span aria-hidden="true">🌐</span><select id="language-select" aria-label="Language / Γλώσσα"><option value="en" lang="en">English</option><option value="el" lang="el">Ελληνικά</option></select></label></div></header>
     <nav class="nav" aria-label="Main navigation"><button class="active" data-page="welcome">Welcome</button><button data-page="lessons">Lessons</button><button data-page="qa">Q&amp;A</button><button data-page="knives">Knives</button><button data-page="about">About CookPath</button></nav>

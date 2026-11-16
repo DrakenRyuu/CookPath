@@ -101,9 +101,9 @@
       }
       renderLessons();
       if(resume&&['welcome','lessons','qa','knives','about'].includes(resume.view))page(resume.view);
-      if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js?v=28').catch(()=>{});
-      if(A.enabled)A.start({legacyProgress,onState:applyProgress}).catch(()=>toast(L('Account connection is unavailable. Please try again.','Η σύνδεση λογαριασμού δεν είναι διαθέσιμη. Δοκιμάστε ξανά.')));
-      else window.addEventListener('storage',event=>{if(event.key===KEY)applyProgress(readLocal())});
+      if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js?v=30').catch(()=>{});
+      A.start({legacyProgress,onState:applyProgress}).catch(()=>toast(L('Account connection is unavailable. Please try again.','Η σύνδεση λογαριασμού δεν είναι διαθέσιμη. Δοκιμάστε ξανά.')));
+      if(!A.enabled)window.addEventListener('storage',event=>{if(event.key===KEY)applyProgress(readLocal())});
     }
 
     init();

@@ -5,26 +5,27 @@ const path=require('node:path');
 const {JSDOM}=require((process.env.COOKPATH_TEST_RUNTIME||'/tmp/cookpath-test-runtime')+'/node_modules/jsdom');
 const root=path.join(__dirname,'..');
 const tick=()=>new Promise(resolve=>setTimeout(resolve,15));
-async function setup(initial=null,legacy={}){
-  const dom=new JSDOM('<div class="status"></div>',{url:'https://cookpath.test/?lang=en',runScripts:'outside-only'}),w=dom.window;
-  w.COOKPATH_I18N={choose:en=>en};
+async function setup(initial=null,legacy={},options={}){
+  const dom=new JSDOM('<html data-account-entry="checking"><body><div id="account-entry-loader"></div><div class="shell"><div class="status"></div></div></body></html>',{url:options.url||'https://cookpath.test/?lang=en',runScripts:'outside-only'}),w=dom.window;
+  w.COOKPATH_I18N={choose:(en,el)=>options.greek?el:en,language:options.greek?'el':'en',changeLanguage:()=>{}};
+  if(options.pendingEmail)w.sessionStorage.setItem('cookpath-pending-email',options.pendingEmail);
   for(const f of ['lessons.js','questions.js','progress.js'])w.eval(fs.readFileSync(path.join(root,f),'utf8'));
   w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};
   w.HTMLDialogElement.prototype.close=function(){this.open=false;};
   w.COOKPATH_ACCOUNT_CONFIG={enabled:true,supabaseUrl:'https://example.supabase.co',publishableKey:'sb_publishable_test_only'};
-  let session=initial,callback,handler;
+  let session=initial,callback,handler,verifyError=false;
   const states=[],calls=[];
   const client={auth:{
     onAuthStateChange:cb=>{callback=cb;},
-    getSession:async()=>({data:{session},error:null}),
+    getSession:async()=>({data:{session},error:options.sessionError?new Error('offline'):null}),
     signInWithOtp:async args=>{calls.push({name:'email',args});return {error:null};},
-    verifyOtp:async args=>{calls.push({name:'verify',args});session=initial||{user:{id:'otp',email:args.email},progress:{}};return {data:{session},error:null};},
+    verifyOtp:async args=>{calls.push({name:'verify',args});if(verifyError)return {data:{session:null},error:new Error('invalid code')};session=initial||{user:{id:'otp',email:args.email},progress:{}};return {data:{session},error:null};},
     signOut:async()=>{session=null;callback('SIGNED_OUT',null);return {error:null};}
   },rpc:async(name,args)=>{calls.push({name,args});return handler?handler(name,args):{data:session?.progress||{},error:null};}};
   w.supabase={createClient:()=>client};w.eval(fs.readFileSync(path.join(root,'accounts.js'),'utf8'));
   const api=w.COOKPATH_ACCOUNTS;
   await api.start({onState:s=>states.push(JSON.parse(JSON.stringify(s))),legacyProgress:legacy});
-  return {dom,w,api,states,calls,handle:fn=>{handler=fn;},emit:async next=>{session=next;callback(next?'SIGNED_IN':'SIGNED_OUT',next);await tick();}};
+  return {dom,w,api,states,calls,handle:fn=>{handler=fn;},verificationFails:value=>{verifyError=value;},emit:async next=>{session=next;callback(next?'SIGNED_IN':'SIGNED_OUT',next);await tick();}};
 }
 const a={user:{id:'a',email:'a@example.test'},progress:{completed:[1],qnaAnswers:{1:{selectedIndex:0}}}};
 const b={user:{id:'b',email:'b@example.test'},progress:{completed:[2],qnaAnswers:{1:{selectedIndex:2}}}};
@@ -110,4 +111,39 @@ test('account analytics show only saved account results, refresh, and clear on a
   assert.ok(x.w.document.querySelector('#account-analytics'));
   await x.emit(null);assert.equal(x.w.document.querySelector('#account-analytics'),null);
   assert.ok(x.w.document.querySelector('#account-email'));x.dom.window.close();
+});
+test('new visitors see three steps and must verify their email before entering',async()=>{
+  const x=await setup(),doc=x.w.document,dialog=doc.querySelector('dialog');
+  assert.equal(dialog.open,true);assert.equal(doc.querySelector('.shell').inert,true);
+  assert.equal(doc.documentElement.getAttribute('data-account-entry'),'required');
+  assert.equal(doc.querySelectorAll('.account-welcome-intro li').length,3);assert.equal(doc.querySelector('#account-close'),null);
+  const cancel=new x.w.Event('cancel',{cancelable:true});dialog.dispatchEvent(cancel);assert.equal(cancel.defaultPrevented,true);
+  doc.querySelector('#account-email').value='learner@example.test';
+  doc.querySelector('form').dispatchEvent(new x.w.Event('submit',{cancelable:true}));await tick();
+  assert.equal(doc.querySelector('.account-welcome-intro'),null);assert.ok(doc.querySelector('#account-code'));
+  assert.equal(x.w.sessionStorage.getItem('cookpath-pending-email'),'learner@example.test');
+  x.verificationFails(true);doc.querySelector('#account-code').value='00000000';
+  doc.querySelector('#account-code-form').dispatchEvent(new x.w.Event('submit',{cancelable:true}));await tick();
+  assert.equal(dialog.open,true);assert.equal(x.api.signedIn,false);assert.equal(doc.querySelector('.shell').inert,true);
+  x.verificationFails(false);doc.querySelector('#account-code-form').dispatchEvent(new x.w.Event('submit',{cancelable:true}));await tick();
+  assert.equal(dialog.open,false);assert.equal(doc.querySelector('.shell').inert,false);
+  assert.equal(doc.documentElement.hasAttribute('data-account-entry'),false);assert.equal(x.w.sessionStorage.getItem('cookpath-pending-email'),null);x.dom.window.close();
+});
+test('returning authenticated learners bypass onboarding; sign-out restores it',async()=>{
+  const x=await setup(a),doc=x.w.document;
+  assert.equal(doc.documentElement.hasAttribute('data-account-entry'),false);assert.equal(doc.querySelector('dialog').open,false);
+  assert.deepEqual(x.states.at(-1).completed,[1]);x.api.open();doc.querySelector('#account-signout').click();await tick();
+  assert.equal(doc.querySelector('dialog').open,true);assert.equal(doc.documentElement.getAttribute('data-account-entry'),'required');
+  assert.ok(doc.querySelector('#account-email'));x.dom.window.close();
+});
+test('pending email survives refresh and can be changed without creating another account',async()=>{
+  const x=await setup(null,{}, {pendingEmail:'saved@example.test'}),doc=x.w.document;
+  assert.ok(doc.querySelector('#account-code'));assert.equal(x.calls.some(c=>c.name==='email'),false);
+  doc.querySelector('#account-change-email').click();assert.equal(doc.querySelector('#account-email').value,'saved@example.test');
+  assert.equal(x.w.sessionStorage.getItem('cookpath-pending-email'),null);assert.equal(doc.querySelectorAll('.account-welcome-intro li').length,3);x.dom.window.close();
+});
+test('connection failures keep a useful welcome screen with a retry action',async()=>{
+  const x=await setup(null,{}, {sessionError:true}),doc=x.w.document;
+  assert.equal(doc.querySelector('dialog').open,true);assert.match(doc.querySelector('#account-message').textContent,/couldn’t connect/);
+  assert.equal(doc.querySelector('[data-auth-action]').disabled,true);assert.ok([...doc.querySelectorAll('button')].find(b=>b.textContent==='Try again'));x.dom.window.close();
 });
