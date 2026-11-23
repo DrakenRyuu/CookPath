@@ -58,3 +58,15 @@ Object.assign(window.COOKPATH_GREEK, {
   "Let’s make it stick.": "Ας κάνουμε τη γνώση να μείνει.",
   "Browse quiz sets": "Περιήγηση στα κουίζ"
 });
+
+Object.assign(window.COOKPATH_GREEK, {
+  "TURN THE BASICS INTO DINNER": "ΑΠΟ ΤΙΣ ΒΑΣΙΚΕΣ ΤΕΧΝΙΚΕΣ ΣΤΟ ΤΡΑΠΕΖΙ",
+  "A few skills. A plate full of flavour.": "Λίγες τεχνικές. Ένα πιάτο γεμάτο γεύση.",
+  "LEARN TO TRUST YOUR TASTE": "ΜΑΘΕΤΕ ΝΑ ΕΜΠΙΣΤΕΥΕΣΤΕ ΤΗ ΓΕΥΣΗ ΣΑΣ",
+  "Warm bowls. Better instincts.": "Ζεστά πιάτα. Καλύτερο ένστικτο.",
+  "KEEP YOUR CURIOSITY HUNGRY": "ΚΡΑΤΗΣΤΕ ΖΩΝΤΑΝΗ ΤΗΝ ΠΕΡΙΕΡΓΕΙΑ ΣΑΣ",
+  "New flavours, one step at a time.": "Νέες γεύσεις, ένα βήμα τη φορά.",
+  "Show food image 4": "Προβολή εικόνας φαγητού 4",
+  "Show food image 5": "Προβολή εικόνας φαγητού 5",
+  "Show food image 6": "Προβολή εικόνας φαγητού 6"
+});

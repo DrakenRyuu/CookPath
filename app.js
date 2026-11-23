@@ -78,7 +78,7 @@
       const paused=foodPaused||reducedMotion?.matches||document.hidden||currentPage!=='welcome';
       $('.food-story').classList.toggle('is-paused',!!paused);
       const button=$('#food-pause');button.hidden=!!reducedMotion?.matches;button.textContent=foodPaused?'▶':'Ⅱ';button.setAttribute('aria-label',foodPaused?L('Play animation','Έναρξη κίνησης'):L('Pause animation','Παύση κίνησης'));
-      if(!paused)foodTimer=setInterval(()=>showFood((foodIndex+1)%3),6500);
+      if(!paused)foodTimer=setInterval(()=>showFood((foodIndex+1)%$$('.food-slide').length),6500);
     }
     $$('[data-food-slide]').forEach(button=>button.onclick=()=>{showFood(+button.dataset.foodSlide);syncFoodMotion();});
     $('#food-pause').onclick=()=>{foodPaused=!foodPaused;syncFoodMotion();};
@@ -175,7 +175,7 @@
       renderHome();renderLessons();showFood(0);
       const requested=Object.keys(viewHash).find(key=>viewHash[key]===location.hash.slice(1));
       page(resume&&views.includes(resume.view)?resume.view:requested||'welcome',{scroll:false,remember:false});
-      if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js?v=31').catch(()=>{});
+      if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js?v=32').catch(()=>{});
       A.start({legacyProgress,onState:applyProgress}).catch(()=>toast(L('Account connection is unavailable. Please try again.','Η σύνδεση λογαριασμού δεν είναι διαθέσιμη. Δοκιμάστε ξανά.')));
       if(!A.enabled)window.addEventListener('storage',event=>{if(event.key===KEY)applyProgress(readLocal())});
     }

@@ -12,6 +12,8 @@ async function setup(t,{greek=false,reducedMotion=true,canWrite=true}={}) {
   t.after(()=>dom.window.close());
   const w=dom.window,doc=w.document;
   w.scrollTo=()=>{};
+  const animations=new Map();let animationId=0;
+  w.setInterval=fn=>{animations.set(++animationId,fn);return animationId;};w.clearInterval=id=>animations.delete(id);
   w.matchMedia=()=>({matches:reducedMotion,addEventListener:()=>{}});
   for(const file of ['greek.js','experience-i18n.js','language.js','lessons.js','questions.js','recipes.js','progress.js'])w.eval(fs.readFileSync(path.join(root,file),'utf8'));
   const P=w.COOKPATH_PROGRESS;
@@ -24,7 +26,7 @@ async function setup(t,{greek=false,reducedMotion=true,canWrite=true}={}) {
   };
   w.eval(fs.readFileSync(path.join(root,'app.js'),'utf8'));
   await tick();
-  return {w,doc,P,writes,setWritable(value){writable=value;},emit(value){canonical=P.normalize(value);publish(canonical);},get state(){return canonical;},
+  return {w,doc,P,writes,advanceAnimation(){[...animations.values()].forEach(fn=>fn());},setWritable(value){writable=value;},emit(value){canonical=P.normalize(value);publish(canonical);},get state(){return canonical;},
     completeChallenge(number=1){return {completed:Array.from({length:number*5},(_,i)=>i+1),qnaAnswers:Object.fromEntries(w.COOKPATH_QUESTIONS.filter(q=>q.day<=number).map(q=>[q.id,{selectedIndex:q.correctIndex}]))};}};
 }
 
@@ -173,6 +175,8 @@ test('Explore owns reference content and main navigation keeps the current locat
 test('food animation can be paused and reduced-motion keeps images manually selectable',async t=>{
   const x=await setup(t,{reducedMotion:false}),d=x.doc;
   assert.equal(d.querySelector('.food-story').classList.contains('is-paused'),false);
+  const slides=[...d.querySelectorAll('.food-slide')];assert.ok(slides.length>3);
+  for(let i=1;i<=slides.length;i++){x.advanceAnimation();assert.equal(slides.indexOf(d.querySelector('.food-slide.active')),i%slides.length);}
   d.querySelector('#food-pause').click();
   assert.ok(d.querySelector('.food-story').classList.contains('is-paused'));
   assert.equal(d.querySelector('#food-pause').getAttribute('aria-label'),'Play animation');
@@ -183,8 +187,9 @@ test('food animation can be paused and reduced-motion keeps images manually sele
   const quiet=await setup(t,{reducedMotion:true});
   assert.ok(quiet.doc.querySelector('.food-story').classList.contains('is-paused'));
   assert.equal(quiet.doc.querySelector('#food-pause').hidden,true);
-  quiet.doc.querySelector('[data-food-slide="1"]').click();
-  assert.equal(quiet.doc.querySelector('[data-food-slide="1"]').getAttribute('aria-pressed'),'true');
+  const last=quiet.doc.querySelector('.food-dots button:last-child');last.click();
+  assert.equal(last.getAttribute('aria-pressed'),'true');
+  assert.equal(quiet.doc.querySelector('.food-slide:last-child').classList.contains('active'),true);
 });
 
 test('Greek visitors get translated navigation, home guidance, Explore and quiz controls',async t=>{
