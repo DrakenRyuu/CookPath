@@ -155,6 +155,7 @@
     };
   }
   function open() { if (!enabled) return; if(!user){showEntry();return;}progressView = false; renderDialog(); if (!dialog.open) dialog.showModal(); }
+  function openProgress() { if (!enabled) return; if(!user){showEntry();return;}progressView=true;renderDialog();if(!dialog.open)dialog.showModal(); }
   async function rpc(name,args = {}) {
     const id = user?.id, stamp = generation;
     if (!id) { open(); throw new Error('Sign in required'); }
@@ -224,7 +225,7 @@
     window.addEventListener('focus',()=>{if(user)refresh().catch(()=>{});});
     window.addEventListener('online',()=>{if(user)refresh().catch(()=>{});});
   }
-  window.COOKPATH_ACCOUNTS = {enabled,start,open,refresh,
+  window.COOKPATH_ACCOUNTS = {enabled,start,open,openProgress,refresh,
     get canWrite(){return !enabled || !!(user && ready);},
     get signedIn(){return !!user;},
     completeTask:id=>rpc('cookpath_complete_task',{p_task_id:id}),
