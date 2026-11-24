@@ -175,7 +175,7 @@
       renderHome();renderLessons();showFood(0);
       const requested=Object.keys(viewHash).find(key=>viewHash[key]===location.hash.slice(1));
       page(resume&&views.includes(resume.view)?resume.view:requested||'welcome',{scroll:false,remember:false});
-      if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js?v=32').catch(()=>{});
+      if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js?v=33').catch(()=>{});
       A.start({legacyProgress,onState:applyProgress}).catch(()=>toast(L('Account connection is unavailable. Please try again.','Η σύνδεση λογαριασμού δεν είναι διαθέσιμη. Δοκιμάστε ξανά.')));
       if(!A.enabled)window.addEventListener('storage',event=>{if(event.key===KEY)applyProgress(readLocal())});
     }
